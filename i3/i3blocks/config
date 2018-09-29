@@ -1,0 +1,76 @@
+#  _ _____    _         _       
+# (_)__ / |__| |___  __| |__ ___
+# | ||_ \ '_ \ / _ \/ _| / /(_-<
+# |_|___/_.__/_\___/\__|_\_\/__/
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+command=/usr/share/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+# Volume indicator
+#
+# The first parameter sets the step (and units to display)
+# The second parameter overrides the mixer selection
+# See the script for details.
+[volume]
+label=VOL
+instance=Master
+#instance=PCM
+interval=once
+signal=10
+
+# Memory usage
+#
+# The type defaults to "mem" if the instance is not specified.
+[memory]
+label=MEM
+separator=false
+interval=30
+
+[memory]
+label=SWAP
+instance=swap
+separator=false
+interval=30
+
+# Disk usage
+#
+# The directory defaults to $HOME if the instance is not specified.
+# The script may be called with a optional argument to set the alert
+# (defaults to 10 for 10%).
+[disk]
+label=HOME
+#instance=/mnt/data
+interval=30
+
+[wifi]
+#instance=wlp3s0
+interval=10
+separator=false
+
+# CPU usage
+#
+# The script may be called with -w and -c switches to specify thresholds,
+# see the script for details.
+[cpu_usage]
+label=CPU
+interval=10
+#separator=false
+
+# Battery indicator
+#
+# The battery instance defaults to 0.
+[battery]
+label=BAT
+#label=⚡
+#instance=1
+interval=30
+
+# Date Time
+[time]
+command=date '+%d-%m-%Y %H:%M'
+interval=5
