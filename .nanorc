@@ -1,0 +1,16 @@
+set autoindent
+set casesensitive
+set cutfromcursor
+set functioncolor yellow,black
+set titlecolor magenta,black
+set justifytrim
+set linenumbers
+set nonewlines
+set nowrap
+set smooth
+set unix
+bind ^C copytext main
+bind ^S savefile main
+bind ^V uncut main
+bind ^E end main
+bind ^Z redo main

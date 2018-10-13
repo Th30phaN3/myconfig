@@ -32,7 +32,6 @@
                		"class": "^Transmission\\-gtk$",
                		"instance": "^transmission\\-gtk$",
                		"title": "^Transmission$",
-               		// "transient_for": "^$",
                		"window_role": "^tr\\-main$"
                		}
             	],
@@ -54,8 +53,7 @@
                		{
                		"class": "^UXTerm$",
                		"instance": "^xterm$",
-               		"title": "^log$",
-               		// "transient_for": "^$"
+               		"title": "^log$"
                		}
             	],
             	"type": "con"
@@ -78,8 +76,7 @@
        		{
        		"class": "^UXTerm$",
        		"instance": "^xterm$",
-       		"title": "^htop$",
-       		// "transient_for": "^$"
+       		"title": "^htop$"
        		}
 	],
     	"type": "con"

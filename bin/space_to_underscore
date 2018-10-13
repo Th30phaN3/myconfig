@@ -1,0 +1,3 @@
+#!/bin/sh
+find -name "* *" -print0 | sort -rz | while read -d $'\0' f; do mv -v "$f" "$(dirname "$f")/$(basename "${f// /_}")"; done
+find . -type f -name "* *" -exec bash -c 'mv "$0" "${0// /_}"' {} \;

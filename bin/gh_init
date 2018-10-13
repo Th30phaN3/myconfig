@@ -47,7 +47,8 @@ true, \"has_downloads\": true, \"has_wiki\": false}"
 # Clone the freshly created repo and push basic files
 # You'll need to have added your public key to your github account
 # SSH key is used, make sure to have set it !
-git clone git@github.com:$USERNAME/$REPONAME.git .
+git clone git@github.com:$USERNAME/$REPONAME.git
+cd $REPONAME
 echo "# $REPONAME" >> README.md
 echo "" >> .gitignore
 git add README.md

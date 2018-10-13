@@ -1,18 +1,28 @@
-cp ~.xbindkeysrc ~/projs/myconfig/X/
-cp ~.Xresources ~/projs/myconfig/X/
-cp ~.taskrc ~/projs/myconfig/task/
-cp ~.asoundrc ~/projs/myconfig/alsa/
-cp ~.bash_logout ~/projs/myconfig/bash/
-cp ~.bash_profile ~/projs/myconfig/bash/
-cp ~.bashrc ~/projs/myconfig/bash/
-cp ~/bin/* ~/projs/myconfig/bin/
-cp ~/.config/compton/compton.conf ~/projs/myconfig/compton/
-cp ~/.config/htop/htoprc ~/projs/myconfig/htop/
-cp ~/.config/i3/* ~/projs/myconfig/i3/
-cp ~/.config/i3blocks/config ~/projs/myconfig/i3/i3blocks/
-cp ~/.config/mpd/mpd.conf ~/projs/myconfig/mpd/
-cp ~/.config/mpv/mpv.conf ~/projs/myconfig/mpv/
-cp ~/.config/ncmpcpp/config ~/projs/myconfig/ncmpcpp/
-cp ~/.config/neofetch/config.conf ~/projs/myconfig/neofetch/
-cp ~/.config/ranger/* ~/projs/myconfig/ranger/
-cp ~/projs/home.html ~/projs/myconfig/homepage/
+#!/bin/sh
+REPONAME=${PWD}
+#echo Repo ? ($CURRENTDIR by default)
+#read REPONAME
+#REPONAME=${REPONAME:-${CURRENTDIR}}
+
+cp ~/.xbindkeysrc $REPONAME
+cp ~/.Xresources $REPONAME
+cp ~/.asoundrc $REPONAME
+cp ~/.bash_profile $REPONAME
+cp ~/.bashrc $REPONAME
+cp ~/.nanorc $REPONAME
+cp ~/.atom/config.cson $REPONAME
+cp ~/.home.html $REPONAME
+cp ~/bin/* $REPONAME/bin
+
+cp ~/.config/*.json $REPONAME
+cp ~/.config/redshift.conf $REPONAME
+cp ~/.config/compton/compton.conf $REPONAME
+cp ~/.config/gtk-3.0/gtk.css $REPONAME
+cp ~/.config/htop/htoprc $REPONAME
+cp ~/.config/i3/* $REPONAME/i3
+cp ~/.config/mpd/mpd.conf $REPONAME
+cp ~/.config/mpv/mpv.conf $REPONAME
+cp ~/.config/ncmpcpp/ncmpcpp.conf $REPONAME
+cp ~/.config/neofetch/neofetch.conf $REPONAME
+cp ~/.config/ranger/* $REPONAME
+cp ~/.config/task/taskrc $REPONAME

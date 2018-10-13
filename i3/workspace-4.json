@@ -21,8 +21,7 @@
        		{
        		"class": "^UXTerm$",
        		"instance": "^xterm$",
-       		"title": "^ranger$",
-       		// "transient_for": "^$"
+       		"title": "^ranger$"
        		}
     	],
     	"type": "con"
@@ -43,8 +42,7 @@
        		{
        		"class": "^UXTerm$",
        		"instance": "^xterm$",
-       		"title": "^mpdclient$",
-       		// "transient_for": "^$"
+       		"title": "^mpdclient$"
        		}
     	],
     	"type": "con"
