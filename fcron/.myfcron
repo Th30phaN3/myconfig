@@ -1,0 +1,4 @@
+& * 00 23 09 * $HOME/bin/wal -nq -f ~/.config/autumn.json
+& * 00 21 12 * $HOME/bin/wal -nq -f ~/.config/winter.json
+& * 00 20 03 * $HOME/bin/wal -nq -f ~/.config/spring.json
+& * 00 21 06 * $HOME/bin/wal -nq -f ~/.config/summer.json

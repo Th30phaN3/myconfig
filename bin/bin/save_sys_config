@@ -1,0 +1,28 @@
+#!/bin/sh
+CURRENTDIR=${PWD}
+echo "Repository ? ($CURRENTDIR by default)"
+read REPONAME
+REPONAME=${REPONAME:-${CURRENTDIR}}
+
+mkdir -p $REPONAME/packages
+mkdir -p $REPONAME/X11
+
+cp ~/.gitconfig $REPONAME
+cp ~/docs/install_gentoo $REPONAME
+cp ~/.myfcron $REPONAME
+
+cp ~/.local/share/applications/mimeapps.list $REPONAME
+
+cp /etc/portage/package.use/* $REPONAME/packages
+cp /etc/portage/package.accept_keywords $REPONAME/packages
+cp /etc/portage/package.license $REPONAME/packages
+cp /etc/portage/make.conf $REPONAME/packages
+cp /var/lib/portage/world $REPONAME/packages
+
+cp /etc/tty_theme $REPONAME
+cp -r /etc/splash/kute $REPONAME
+cp /etc/init.d/splash $REPONAME
+cp /etc/fstab $REPONAME
+
+cp /etc/X11/xorg.conf.d/* $REPONAME/X11
+cp /etc/X11/xinit/xinitrc $REPONAME/X11

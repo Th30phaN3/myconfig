@@ -1,0 +1,262 @@
+#  _ ____
+# (_)__ /_ __ ___ __
+# | ||_ \ V  V / '  \
+# |_|___/\_/\_/|_|_|_|
+#
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# =============================================================================
+# Initial setup
+# =============================================================================
+
+set $mod Mod4
+
+set $WS1 1:I
+set $WS2 2:II
+set $WS3 3:III
+set $WS4 4:IV
+set $WS5 5:V
+set $WS6 6:VI
+set $WS7 7:VII
+set $WS8 8:VIII
+set $WS9 9:IX
+set $WS10 10:X
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:DejaVu Sans Mono 8
+
+# =============================================================================
+# Assign colors
+# =============================================================================
+
+#titles/borders colors
+set_from_resource $br-focus i3wm.color1 #8b2f45
+set_from_resource $text-focus i3wm.color8 #eeeeec
+set_from_resource $br-inactive i3wm.color7 #a0a0a0
+set_from_resource $text-inactive i3wm.color3 #babdb6
+set_from_resource $br-urgent i3wm.color5 #b5294a
+set_from_resource $window-bg i3wm.color0 #222222
+
+#dmenu colors
+set_from_resource $dm-bg i3wm.color0 #222222
+set_from_resource $dm-text i3wm.color2 #babdb6
+set_from_resource $dm-bg-focus i3wm.color6 #8b2f45
+set_from_resource $dm-text-focus i3wm.color1 #eeeeec
+
+#i3bar colors
+set_from_resource $bar-bg i3wm.color0 #222222
+set_from_resource $bar-separator i3wm.color7 #ffffff
+set_from_resource $bar-text i3wm.color4 #eeeeec
+
+#workspaces colors
+set_from_resource $wk-br-focus i3wm.color1 #4c7899
+set_from_resource $wk-bg-focus i3wm.color2 #285577
+set_from_resource $wk-text-focus i3wm.color8 #eeeeec
+set_from_resource $wk-br-active	i3wm.color3 #333333
+set_from_resource $wk-bg-active i3wm.color4 #222222
+set_from_resource $wk-text-inactive i3wm.color7 #888888
+set_from_resource $wk-br-urgent	i3wm.color5 #2f343a
+set_from_resource $wk-bg-urgent	i3wm.color6 #900000
+
+#                       border		background	text		indicator	child_border
+client.focused          $br-focus	$br-focus       $text-focus     $br-focus	$br-focus
+client.focused_inactive $br-inactive	$br-inactive	$text-inactive	$br-inactive	$br-inactive
+client.unfocused        $br-inactive	$br-inactive	$text-inactive	$br-inactive	$br-inactive
+client.urgent           $br-urgent	$br-urgent	$text-focus	$br-urgent	$br-urgent
+client.placeholder      $br-urgent	$br-urgent	$text-focus	$br-urgent	$br-urgent
+
+client.background       $window-bg
+
+# =============================================================================
+# Configure bar
+# =============================================================================
+
+# Start i3bar to display a workspace bar (plus the system information py3status)
+bar {
+	status_command i3status -c ~/.config/i3/i3status.conf
+	position top
+	height 25
+	strip_workspace_numbers yes
+	tray_output none
+	separator_symbol "|"
+	font pango: DejaVu Sans Mono, Awesome 12
+	colors {
+		background	$bar-bg
+		statusline	$bar-text
+		separator	$bar-separator
+
+#					border		background	text
+		focused_workspace	$wk-br-focus	$wk-bg-focus	$wk-text-focus
+		active_workspace	$wk-br-active	$wk-bg-active	$wk-text-focus
+		inactive_workspace	$wk-br-active	$wk-bg-active	$wk-text-inactive
+		urgent_workspace	$wk-br-urgent	$wk-bg-urgent	$wk-text-focus
+		binding_mode		$wk-br-urgent	$wk-bg-urgent	$wk-text-focus
+	}
+}
+
+# =============================================================================
+# Assign window behavior
+# =============================================================================
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+#Disable window titlebars for i3-gaps
+for_window [class="^.*"] border pixel 5
+
+#enable automatic back and forth between workspaces
+workspace_auto_back_and_forth yes
+
+#Assign workspaces to specific outputs
+workspace $WS2 output DP2
+workspace $WS3 output eDP1
+
+#Exec compton with config file
+exec --no-startup-id compton --config ~/.config/compton/compton.conf
+
+#Exec workspaces layouts
+exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
+exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop'
+exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient ncmpcpp'
+
+#Exec programs on startup
+#exec --no-startup-id i3-msg 'workspace $WS2; exec vivaldi'
+#exec --no-startup-id i3-msg 'workspace $WS3; exec transmission-gtk'
+#exec --no-startup-id i3-msg 'workspace $WS3; exec uxterm -title htop htop'
+#exec --no-startup-id i3-msg 'workspace $WS3; exec uxterm -title log mycustomlivelog'
+#exec --no-startup-id i3-msg 'workspace $WS4; exec uxterm -title ranger ranger'
+#exec --no-startup-id i3-msg 'workspace $WS4; exec uxterm -title mpdclient ncmpcpp'
+exec --no-startup-id i3-msg 'workspace $WS1'
+
+#Exec autolock
+exec --no-startup-id xautolock -time 5 -corners ---- -locker myi3lock-clock
+
+# =============================================================================
+# Keybinds
+# =============================================================================
+
+# start a terminal
+bindsym $mod+Tab exec uxterm -e "cd `xcwd` && $SHELL"
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+k kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec "dmenu_run -nf '$dm-text' -nb '$dm-bg' -sb '$dm-bg-focus' -sf '$dm-text-focus' -fn 'monospace-10' -p 'dmenu'"
+
+# Move the current workspace to the next output
+# (effectively toggles when you only have two outputs)
+bindsym $mod+x move workspace to output right
+
+# focus on specific window
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move windows
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+#Take a screenshot
+bindsym --release Print exec --no-startup-id scrot -q 80 "$(whoami)_%Y-%m-%d_%H-%M-%S.png" -z
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+z layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+q focus parent
+
+# switch to workspace
+bindsym $mod+1 workspace $WS1
+bindsym $mod+2 workspace $WS2
+bindsym $mod+3 workspace $WS3
+bindsym $mod+4 workspace $WS4
+bindsym $mod+5 workspace $WS5
+bindsym $mod+6 workspace $WS6
+bindsym $mod+7 workspace $WS7
+bindsym $mod+8 workspace $WS8
+bindsym $mod+9 workspace $WS9
+bindsym $mod+0 workspace $WS10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4
+bindsym $mod+Shift+5 move container to workspace $WS5
+bindsym $mod+Shift+6 move container to workspace $WS6
+bindsym $mod+Shift+7 move container to workspace $WS7
+bindsym $mod+Shift+8 move container to workspace $WS8
+bindsym $mod+Shift+9 move container to workspace $WS9
+bindsym $mod+Shift+0 move container to workspace $WS10
+
+#Custom shortcuts
+bindsym $mod+Shift+v exec "vivaldi"
+bindsym $mod+Shift+l exec "myi3lock-clock"
+bindsym $mod+Shift+t exec "transmission-gtk"
+bindsym $mod+Shift+o exec "libreoffice"
+
+# Power options
+set $sysmenu "system: re[s]tart re[l]oad  [e]xit  [p]oweroff  re[b]oot"
+
+mode $sysmenu {
+	# exit i3 (logs you out of your X session)	
+	bindsym e	exec i3-msg exit
+	# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+	bindsym s	restart
+	# reload the configuration file
+	bindsym l	reload
+	# shutdown the system
+	bindsym p	exec sudo shutdown -h now
+	# reboot the system
+	bindsym b	exec sudo reboot
+	bindsym Return	mode "default"
+	bindsym Escape	mode "default"
+}
+
+bindsym $mod+Shift+m	mode $sysmenu
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+r mode "resize"
+
+#i3-gaps
+gaps inner 5
+gaps outer 7
