@@ -1,5 +1,6 @@
 UXTerm*termName: xterm-256color
 UXTerm*renderFont: true
+UXTerm*forcePackedFont: true
 UXTerm*faceName: Anonymous
 UXTerm*faceSize: 12
 ! VT Font Menu: Unreadable

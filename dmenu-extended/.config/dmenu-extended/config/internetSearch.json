@@ -1,0 +1,33 @@
+{
+    "default": "DuckDuckGo",
+    "providers": [
+        {
+            "title": "DuckDuckGo",
+            "url": "https://duckduckgo.com/?q={searchterm}"
+        },
+        {
+            "title": "Bing",
+            "url": "https://www.bing.com/search?q={searchterm}"
+        },
+        {
+            "title": "Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Special:Search?search={searchterm}"
+        },
+        {
+            "title": "StackOverflow",
+            "url": "https://stackoverflow.com/search?q={searchterm}"
+        },
+        {
+            "title": "Github",
+            "url": "https://github.com/search?q={searchterm}"
+        },
+        {
+            "title": "Youtube",
+	    "url": "https://www.youtube.com/results?search_query={searchterm}"
+        },
+        {
+            "title": "Images",
+            "url": "https://duckduckgo.com/?q={searchterm}&iax=images&ia=images"
+        }
+    ]
+}

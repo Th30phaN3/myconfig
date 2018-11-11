@@ -41,10 +41,10 @@ set_from_resource $br-urgent i3wm.color5 #b5294a
 set_from_resource $window-bg i3wm.color0 #222222
 
 #dmenu colors
-set_from_resource $dm-bg i3wm.color0 #222222
 set_from_resource $dm-text i3wm.color2 #babdb6
-set_from_resource $dm-bg-focus i3wm.color6 #8b2f45
+set_from_resource $dm-bg i3wm.color0 #222222
 set_from_resource $dm-text-focus i3wm.color1 #eeeeec
+set_from_resource $dm-bg-focus i3wm.color6 #8b2f45
 
 #i3bar colors
 set_from_resource $bar-bg i3wm.color0 #222222
@@ -117,18 +117,10 @@ workspace $WS3 output eDP1
 #Exec compton with config file
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
 
-#Exec workspaces layouts
+#Exec workspaces layouts + programs on startup
 exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
-exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop'
-exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient ncmpcpp'
-
-#Exec programs on startup
-#exec --no-startup-id i3-msg 'workspace $WS2; exec vivaldi'
-#exec --no-startup-id i3-msg 'workspace $WS3; exec transmission-gtk'
-#exec --no-startup-id i3-msg 'workspace $WS3; exec uxterm -title htop htop'
-#exec --no-startup-id i3-msg 'workspace $WS3; exec uxterm -title log mycustomlivelog'
-#exec --no-startup-id i3-msg 'workspace $WS4; exec uxterm -title ranger ranger'
-#exec --no-startup-id i3-msg 'workspace $WS4; exec uxterm -title mpdclient ncmpcpp'
+exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog'
+exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient ncmpcpp; exec uxterm -title ranger ranger'
 exec --no-startup-id i3-msg 'workspace $WS1'
 
 #Exec autolock
@@ -146,7 +138,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+k kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec "dmenu_run -nf '$dm-text' -nb '$dm-bg' -sb '$dm-bg-focus' -sf '$dm-text-focus' -fn 'monospace-10' -p 'dmenu'"
+#bindsym $mod+d exec "dmenu_run -i -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'monospace-10' -p 'dmenu'"
+bindsym $mod+d exec "dmenu_extended_run"
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
@@ -255,7 +248,7 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+Shift+r mode "resize"
+bindsym $mod+r mode "resize"
 
 #i3-gaps
 gaps inner 5

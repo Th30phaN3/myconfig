@@ -38,11 +38,11 @@
 
 #Blackwidow macros
 #m1 increase pulseaudio volume
-"pactl set-sink-mute 0 false ; pactl set-sink-volume 0 +5%"
+"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+"
     m:0x10 + c:191
 
 #m2 decrease pulseaudio volume
-"pactl set-sink-mute 0 false ; pactl set-sink-volume 0 -5%"
+"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-"
     m:0x10 + c:192
 
 #m3 change random background
@@ -58,15 +58,15 @@
     m:0x10 + c:195
 
 #AltGr + F6 (decrease pulseaudio volume)
-"pactl set-sink-mute 0 false ; pactl set-sink-volume 0 -5%"
+"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-"
     m:0x90 + c:72
 
 #AltGr + F7 (increase pulseaudio volume)
-"pactl set-sink-mute 0 false ; pactl set-sink-volume 0 +5%"
+"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+"
     m:0x90 + c:73
 
 #AltGr + F8 (mute pulseaudio volume)
-"pactl set-sink-mute 0 true"
+"pactl set-source-mute 0 toggle; amixer -q sset Master toggle"
     m:0x90 + c:74
 
 #AltGr + F9 (decrease screen brightness)

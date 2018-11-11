@@ -1,0 +1,38 @@
+# Do not mark videos watched (YouTube only)
+--no-mark-watched
+# Make all connections via IPv4
+-4
+# Connect as <username>
+-u ugetrektmf@gmail.com
+# Bypass  geographic  restriction  via  faking  X-Forwarded-For  HTTP header (experimental)
+--geo-bypass
+# Abort downloading when some fragment is not available
+--abort-on-unavailable-fragment
+# Use ffmpeg instead of the native HLS downloader
+--hls-prefer-ffmpeg
+# Restrict filenames to only ASCII characters, and avoid "&" and spaces in filenames
+--restrict-filenames
+# Do not overwrite files
+-w
+# Continue on download errors, for example to skip unavailable videos in a playlist
+-i
+# Do NOT contact the youtube-dl server for debugging
+--no-call-home
+# Suppress HTTPS certificate validation
+--no-check-certificate
+# Write metadata to the video file
+--add-metadata
+# Always extract audio
+-x
+# Add thumbnail
+--embed-thumbnail
+# Specify ffmpeg/avconv audio quality, insert a value between 0 (better) and 9 (worse) for VBR or a specific bitrate like 128K (default 5)
+--audio-quality 0
+# Specify  audio format: "best", "aac", "flac", "mp3", "m4a", "opus", "vorbis",  or  "wav"; "best" by default; No effect without -x
+--audio-format m4a
+# Video format code, use -F on a video to list available formats (140 for m4a)
+-f 140
+# Format for simple tracks
+#-o '~/music/ytdl/%(title)s.%(ext)s'
+# Format for tracks inside playlists
+-o '~/music/ytdl/%(playlist_title)s/%(title)s.%(ext)s'

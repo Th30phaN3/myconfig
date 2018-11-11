@@ -19,6 +19,7 @@
 <body>
   <div class="container">
     <div class="row">
+      <canvas id="canvas" width="100%" height="100%"></canvas>
       <div class="col-6">
         <form id="yt" method="get" action="https://www.youtube.com/results?search_query=">
           <input type="text" name="q" class="inputbox" value="">
@@ -38,101 +39,33 @@
             <img src=".twitter.png" width="36" height="36" alt="submit"/>
           </button>
         </form>
+        <form id="bing" method="get" action="https://www.bing.com/search?q=">
+          <input type="text" name="q" class="inputbox" value="">
+          <button type="submit" style="border: 0; background: transparent">
+            <img src=".bing.png" width="36" height="36" alt="submit"/>
+          </button>
+        </form>
+        <form id="wayback" method="get" action="https://web.archive.org/web/*/">
+          <input type="text" name="q" class="inputbox" value="">
+          <button type="submit" style="border: 0; background: transparent">
+            <img src=".wayback.png" width="36" height="36" alt="submit"/>
+          </button>
+        </form>
+        <form id="startpage" method="get" action="https://www.startpage.com/do/search">
+          <input type="text" name="q" class="inputbox" value="">
+          <button type="submit" style="border: 0; background: transparent">
+            <img src=".startpage.png" width="36" height="36" alt="submit"/>
+          </button>
+        </form>
       </div>
       <div class="col-6">
         //news...
       </div>
-    </div>
-    <div class="row">
-      <canvas id="canvas" width="100%" height="100%"></canvas>
     </div>
   </div>
 </body>
 </html>
 
 <script>
-var img = new Image();
 
-// User Variables - customize these to change the image being scrolled, its
-// direction, and the speed.
-
-img.src = 'https://mdn.mozillademos.org/files/4553/Capitan_Meadows,_Yosemite_National_Park.jpg';
-var CanvasXSize = 800;
-var CanvasYSize = 200;
-var speed = 30; // lower is faster
-var scale = 1.05;
-var y = -4.5; // vertical offset
-
-// Main program
-
-var dx = 0.75;
-var imgW;
-var imgH;
-var x = 0;
-var clearX;
-var clearY;
-var ctx;
-
-img.onload = function() {
-    imgW = img.width * scale;
-    imgH = img.height * scale;
-
-    if (imgW > CanvasXSize) {
-        // image larger than canvas
-        x = CanvasXSize - imgW;
-    }
-    if (imgW > CanvasXSize) {
-        // image width larger than canvas
-        clearX = imgW;
-    } else {
-        clearX = CanvasXSize;
-    }
-    if (imgH > CanvasYSize) {
-        // image height larger than canvas
-        clearY = imgH;
-    } else {
-        clearY = CanvasYSize;
-    }
-
-    // get canvas context
-    ctx = document.getElementById('canvas').getContext('2d');
-
-    // set refresh rate
-    return setInterval(draw, speed);
-}
-
-function draw() {
-    ctx.clearRect(0, 0, clearX, clearY); // clear the canvas
-
-    // if image is <= Canvas Size
-    if (imgW <= CanvasXSize) {
-        // reset, start from beginning
-        if (x > CanvasXSize) {
-            x = -imgW + x;
-        }
-        // draw additional image1
-        if (x > 0) {
-            ctx.drawImage(img, -imgW + x, y, imgW, imgH);
-        }
-        // draw additional image2
-        if (x - imgW > 0) {
-            ctx.drawImage(img, -imgW * 2 + x, y, imgW, imgH);
-        }
-    }
-    // image is > Canvas Size
-    else {
-        // reset, start from beginning
-        if (x > (CanvasXSize)) {
-            x = CanvasXSize - imgW;
-        }
-        // draw aditional image
-        if (x > (CanvasXSize-imgW)) {
-            ctx.drawImage(img, x - imgW + 1, y, imgW, imgH);
-        }
-    }
-    // draw image
-    ctx.drawImage(img, x, y,imgW, imgH);
-    // amount to move
-    x += dx;
-}
 </script>
