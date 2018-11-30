@@ -1,6 +1,6 @@
 #!/bin/sh
 CURRENTDIR=${PWD}
-echo "Repository ? ($CURRENTDIR by default)"
+echo "Directory ? ($CURRENTDIR by default)"
 read REPONAME
 REPONAME=${REPONAME:-${CURRENTDIR}}
 
@@ -10,6 +10,9 @@ mkdir -p $REPONAME/home
 mkdir -p $REPONAME/home/ssh
 mkdir -p $REPONAME/ttytheme
 mkdir -p $REPONAME/etc
+mkdir -p $REPONAME/vivaldi
+mkdir -p $REPONAME/androidstudio
+mkdir -p $REPONAME/phpstorm
 
 cp ~/.gitconfig $REPONAME/home
 cp ~/docs/install_gentoo $REPONAME/home
@@ -17,6 +20,10 @@ cp ~/docs/utils $REPONAME/home
 cp ~/.local/share/applications/mimeapps.list $REPONAME/home
 
 cp ~/.ssh/* $REPONAME/home/ssh
+
+cp -ur ~/.AndroidStudio3.1/config/* $REPONAME/androidstudio
+cp -ur ~/.PhpStorm2018.2/config/* $REPONAME/phpstorm
+cp -ur ~/.config/vivaldi/Default/* $REPONAME/vivaldi
 
 cp /etc/portage/package.use/* $REPONAME/packages
 cp /etc/portage/package.accept_keywords $REPONAME/packages

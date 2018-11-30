@@ -7,10 +7,15 @@ set justifytrim
 set linenumbers
 set nonewlines
 set nowrap
+set positionlog
 set smooth
 set unix
 bind ^C copytext main
-bind ^S savefile main
 bind ^V uncut main
+bind ^X cut main
+bind ^S savefile main
+bind ^Q exit main
+bind ^K comment main
 bind ^E end main
-bind ^Z redo main
+bind ^Z undo main
+bind ^A redo main

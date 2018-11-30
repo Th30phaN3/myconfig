@@ -1,23 +1,36 @@
 {
-    "alias_applications": true,
-    "alias_display_format": "{name}",
-    "exclude_items": [],
+    "alias_applications": false,
+    "alias_display_format": "{name} ({command})",
+    "indicator_alias": "%",
+    "path_aliasFile": "~/.bash_aliases",
     "filebrowser": "ranger",
     "fileopener": "xdg-open",
-    "filter_binaries": false,
+    "filter_binaries": true,
     "follow_symlinks": false,
-    "frequently_used": 3,
-    "global_ignore_folders": [
-	"Android",
-	".AndroidStudio3.1"
-    ],
-    "ignore_folders": [],
     "include_applications": true,
     "include_binaries": false,
-    "include_hidden_files": false,
-    "include_hidden_folders": false,
-    "include_items": [],
-    "indicator_alias": "%",
+    "include_hidden_files": true,
+    "include_hidden_folders": true,
+    "scan_hidden_folders": true,
+    "include_items": [
+        "htop;"
+    ],
+    "exclude_items": [
+        "i3",
+        "Feh",
+        "Atom"
+    ],
+    "global_ignore_folders": [
+        "Android",
+        ".AndroidStudio3.1",
+        ".PhpStorm2018.3",
+        ".cache",
+        ".icons",
+        ".java",
+        ".lyrics",
+        ".w3m"
+    ],
+    "ignore_folders": [],
     "indicator_edit": "*",
     "indicator_submenu": "->",
     "menu": "dmenu",
@@ -36,24 +49,30 @@
         "-l",
         "20"
     ],
+    "watch_folders": [
+        "~/"
+    ],
+    "frequently_used": 3,
     "password_helper": [],
-    "path_aliasFile": "~/.bash_aliases",
-    "path_shellCommand": "~/.dmenuEextended_shellCommand.sh",
+    "path_shellCommand": "~/.dmenu_extended_shell_command.sh",
     "prompt": "Open:",
-    "scan_hidden_folders": false,
     "terminal": "uxterm",
+    "webbrowser": "vivaldi",
     "valid_extensions": [
         "py",
         "c",
         "cpp",
         "h",
+        "php",
+        "css",
+        "html",
+        "md",
         "svg",
         "pdf",
         "txt",
         "png",
         "jpg",
         "gif",
-        "php",
         "odf",
         "odt",
         "avi",
@@ -65,13 +84,6 @@
         "zip",
         "xcf",
         "doc",
-        "xlsx",
-        "md",
-        "html",
-        "css"
-    ],
-    "watch_folders": [
-        "~/"
-    ],
-    "webbrowser": "vivaldi"
+        "xlsx"
+    ]
 }
