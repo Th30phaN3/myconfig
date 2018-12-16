@@ -41,9 +41,13 @@ HOME="/home/wegeee"
 EDITOR="nano"
 export SASS_LIBSASS_PATH=/usr/local/lib/libsass
 export SASS_SASSC_PATH=/usr/local/lib/sassc
+export XDG_DATA_HOME=~/.local/share
 export XDG_CONFIG_HOME=~/.config
 export TASKRC=~/.config/task/.taskrc
+export TASKDATA=~/.config/task
 export TRANSMISSION_HOME=~/.config/transmission
+export WWW_HOME=~/.config/w3m
+export GNUPGHOME=~/.config/gnupg
 
 # Change ls colors
 eval $(dircolors ~/.dircolors)

@@ -4,7 +4,7 @@ set cutfromcursor
 set functioncolor yellow,black
 set titlecolor magenta,black
 set justifytrim
-set linenumbers
+#set linenumbers
 set nonewlines
 set nowrap
 set positionlog

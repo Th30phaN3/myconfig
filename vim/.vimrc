@@ -1,4 +1,4 @@
-#colorscheme badwolf     " awesome colorscheme
+"colorscheme badwolf     " awesome colorscheme
 syntax enable		" enable syntax processing
 set tabstop=4		" number of visual spaces per TAB
 set softtabstop=4	" number of spaces in tab when editing
@@ -18,5 +18,5 @@ set backupskip=/tmp/*
 set directory=~/tmp,/tmp
 set writebackup
 
-#call pathogen#infect()                      " use pathogen
-#call pathogen#runtime_append_all_bundles()  " use pathogen
+"call pathogen#infect()
+"call pathogen#runtime_append_all_bundles()

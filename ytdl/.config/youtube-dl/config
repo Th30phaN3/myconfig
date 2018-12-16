@@ -2,7 +2,7 @@
 --no-mark-watched
 # Make all connections via IPv4
 -4
-# Connect as <username>
+# Connect as <username> (interactive password prompt)
 -u ugetrektmf@gmail.com
 # Bypass  geographic  restriction  via  faking  X-Forwarded-For  HTTP header (experimental)
 --geo-bypass
@@ -11,7 +11,7 @@
 # Use ffmpeg instead of the native HLS downloader
 --hls-prefer-ffmpeg
 # Restrict filenames to only ASCII characters, and avoid "&" and spaces in filenames
---restrict-filenames
+#--restrict-filenames
 # Do not overwrite files
 -w
 # Continue on download errors, for example to skip unavailable videos in a playlist

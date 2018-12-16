@@ -2,8 +2,8 @@
     "alias_applications": false,
     "alias_display_format": "{name} ({command})",
     "indicator_alias": "%",
-    "path_aliasFile": "~/.bash_aliases",
-    "filebrowser": "ranger",
+    "path_aliasFile": "",
+    "filebrowser": "uxterm -e ranger",
     "fileopener": "xdg-open",
     "filter_binaries": true,
     "follow_symlinks": false,
@@ -12,13 +12,14 @@
     "include_hidden_files": true,
     "include_hidden_folders": true,
     "scan_hidden_folders": true,
-    "include_items": [
-        "htop;"
-    ],
+    "include_items": [],
     "exclude_items": [
         "i3",
-        "Feh",
-        "Atom"
+        "Atom",
+        "Htop",
+        "javaws",
+        "~",
+        "compton"
     ],
     "global_ignore_folders": [
         "Android",
@@ -28,7 +29,10 @@
         ".icons",
         ".java",
         ".lyrics",
-        ".w3m"
+        ".w3m",
+        ".git",
+        ".dbus",
+        ".gnupg"
     ],
     "ignore_folders": [],
     "indicator_edit": "*",
@@ -50,7 +54,9 @@
         "20"
     ],
     "watch_folders": [
-        "~/"
+        "/home/wegeee",
+        "/usr",
+        "/etc"
     ],
     "frequently_used": 3,
     "password_helper": [],
@@ -80,8 +86,11 @@
         "mp3",
         "mp4",
         "m4a",
+        "mkv",
         "iso",
         "zip",
+        "tar",
+        "gz",
         "xcf",
         "doc",
         "xlsx"

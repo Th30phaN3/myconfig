@@ -1,0 +1,32 @@
+articlelist-format "%4i %f %D %?T?|%-17T| ?%t"
+articlelist-title-format "%N %V - Articles in feed %T (%u unread, %t total)"
+datetime-format "%d %B"
+dialogs-title-format "%N %V - Dialogs"
+feedlist-format "%4i %S %n %11u %t"
+feedlist-title-format "%N %V - Your feeds (%u unread, %t total)%?T? - tag %T&?"
+filebrowser-title-format "%N %V - %?O?Open File&Save File? - %f"
+help-title-format "%N %V - Help"
+itemview-title-format "%N %V - Article: %T"
+notify-format "Newsboat: finished reload, %f unread feeds (%n unread articles total)"
+searchresult-title-format "%N %V - Search result (%u unread, %t total)"
+selectfilter-title-format  "%N %V - Select Filter"
+selecttag-title-format "%N %V - Select Tag"
+urlview-title-format "%N %V - URLs"
+
+color background          white   black
+color listnormal          white   black
+color listfocus           red  cyan   bold
+color listnormal_unread   magenta black
+color listfocus_unread    green cyan   bold
+color info                red  cyan   bold
+color article             white   black
+
+auto-reload yes
+browser "/usr/bin/vivaldi %u"
+download-full-page yes
+error-log "~/.config/newsboat/error.log"
+keep-articles-days 20
+max-items 100
+openbrowser-and-mark-jumps-to-next-unread yes
+refresh-on-startup yes
+reload-time 180

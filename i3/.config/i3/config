@@ -111,8 +111,10 @@ floating_modifier $mod
 #Disable window titlebars for i3-gaps
 for_window [class="^.*"] border pixel 5
 
-#Enable floating mode for feh by default
+#Enable floating mode for feh, mupdf, tor by default
 for_window [class="feh"] floating enable
+for_window [class="mupdf"] floating enable
+for_window [class="Tor Browser"] floating enable
 
 #enable automatic back and forth between workspaces
 workspace_auto_back_and_forth yes
@@ -123,17 +125,14 @@ workspace $WS2 output DP2
 workspace $WS3 output eDP1
 workspace $WS4 output eDP1
 
-#Exec compton with config file
-exec --no-startup-id compton --config ~/.config/compton/compton.conf
-
 #Exec workspaces layouts + programs on startup
 exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
 exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog'
-exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient ncmpcpp; exec uxterm -title ranger ranger'
+exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf; exec uxterm -title ranger ranger'
 exec --no-startup-id i3-msg 'workspace $WS1'
 
 #Exec autolock
-exec --no-startup-id xautolock -time 5 -corners ---- -locker myi3lock-clock
+exec --no-startup-id xautolock -time 5 -corners ---- -locker myi3lock-clock.sh
 
 # =============================================================================
 # Keybinds
@@ -148,7 +147,7 @@ bindsym $mod+Shift+k kill
 
 # start dmenu_extended (a program launcher)
 #bindsym $mod+d exec "dmenu_run -i -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'monospace-10' -p 'dmenu'"
-bindsym $mod+d exec "dmenu_extended_run"
+bindsym $mod+d exec "dmenu_extended_run.py"
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
@@ -218,7 +217,7 @@ bindsym $mod+Shift+0 move container to workspace $WS10
 
 #Custom shortcuts
 bindsym $mod+Shift+v exec "vivaldi"
-bindsym $mod+Shift+l exec "myi3lock-clock"
+bindsym $mod+Shift+l exec "myi3lock-clock.sh"
 bindsym $mod+Shift+t exec "transmission-gtk"
 bindsym $mod+Shift+o exec "libreoffice"
 
