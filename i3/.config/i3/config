@@ -125,9 +125,12 @@ workspace $WS2 output DP2
 workspace $WS3 output eDP1
 workspace $WS4 output eDP1
 
+#Start Redshift
+exec --no-startup-id redshift -c ~/.config/redshift.conf &
+
 #Exec workspaces layouts + programs on startup
 exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
-exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog'
+exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog.sh'
 exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf; exec uxterm -title ranger ranger'
 exec --no-startup-id i3-msg 'workspace $WS1'
 
