@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Nano
+GenericName=Text editor
+Comment=Simple text editor
+Exec=/usr/bin/uxterm -e nano %U
+Terminal=true
+Type=Application

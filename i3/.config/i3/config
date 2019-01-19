@@ -74,9 +74,10 @@ client.background       $window-bg
 # Configure bar
 # =============================================================================
 
-# Start i3bar to display a workspace bar (plus the system information py3status)
+# Start i3bar to display a workspace bar (plus the system information i3blocks)
 bar {
 	status_command i3status -c ~/.config/i3/i3status.conf
+	#status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	position top
 	height 25
 	strip_workspace_numbers yes
@@ -97,9 +98,12 @@ bar {
 	}
 }
 
-#i3-gaps
+# i3-gaps
 gaps inner 5
 gaps outer 7
+
+# Disable window titlebars for i3-gaps
+for_window [class="^.*"] border pixel 5
 
 # =============================================================================
 # Assign window behavior
@@ -108,34 +112,37 @@ gaps outer 7
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-#Disable window titlebars for i3-gaps
-for_window [class="^.*"] border pixel 5
-
-#Enable floating mode for feh, mupdf, tor by default
+# Enable floating mode for feh, mupdf, tor by default
 for_window [class="feh"] floating enable
 for_window [class="mupdf"] floating enable
 for_window [class="Tor Browser"] floating enable
 
-#enable automatic back and forth between workspaces
+# Resize gtk file dialog
+for_window [window_role="GtkFileChooserDialog"] resize shrink height 10 px
+
+# Enable automatic back and forth between workspaces
 workspace_auto_back_and_forth yes
 
-#Assign workspaces to specific outputs
+# Assign workspaces to specific outputs
 workspace $WS1 output DP2
 workspace $WS2 output DP2
 workspace $WS3 output eDP1
 workspace $WS4 output eDP1
 
-#Start Redshift
-exec --no-startup-id redshift -c ~/.config/redshift.conf &
+# Unclutter makes the mouse invisible after a brief period
+exec --no-startup-id unclutter
+# Starts Redshift
+exec --no-startup-id redshift -c ~/.config/redshift.conf
+# Starts dunst for notifications
+exec --no-startup-id dunst
+# Exec autolock with custom lock
+exec --no-startup-id xautolock -time 5 -corners ---- -locker myi3lock-clock.sh
 
-#Exec workspaces layouts + programs on startup
+# Exec workspaces layouts + programs on startup
 exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
 exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog.sh'
 exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf; exec uxterm -title ranger ranger'
 exec --no-startup-id i3-msg 'workspace $WS1'
-
-#Exec autolock
-exec --no-startup-id xautolock -time 5 -corners ---- -locker myi3lock-clock.sh
 
 # =============================================================================
 # Keybinds
@@ -146,11 +153,11 @@ bindsym $mod+Tab exec uxterm -e "cd `xcwd` && $SHELL"
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+k kill
+bindsym $mod+k kill
 
 # start dmenu_extended (a program launcher)
 #bindsym $mod+d exec "dmenu_run -i -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'monospace-10' -p 'dmenu'"
-bindsym $mod+d exec "dmenu_extended_run.py"
+bindsym $mod+d exec "dmenu_extended_run"
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
@@ -167,6 +174,27 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Right move right
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
+
+# Resizing by 10
+# Pressing right will shrink the window’s width.
+bindsym $mod+Ctrl+Right resize shrink width 10 px or 10 ppt
+# Pressing up will grow the window’s height.
+bindsym $mod+Ctrl+Up resize grow height 10 px or 10 ppt
+# Pressing down will shrink the window’s height.
+bindsym $mod+Ctrl+Down resize shrink height 10 px or 10 ppt
+# Pressing left will grow the window’s width.
+bindsym $mod+Ctrl+Left resize grow width 10 px or 10 ppt
+
+#increase inner gaps
+bindsym $mod+i		gaps inner current plus 5
+#reduces inner gaps
+bindsym $mod+Shift+i	gaps inner current minus 5
+#increase outer gaps
+bindsym $mod+y		gaps outer current plus 5
+#reduces outer gaps
+bindsym $mod+Shift+y	gaps outer current minus 5
+#no gaps
+bindsym $mod+Shift+d	gaps inner current set 0; gaps outer current set 0
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -190,9 +218,6 @@ bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+q focus parent
 
 # switch to workspace
 bindsym $mod+1 workspace $WS1
@@ -223,6 +248,9 @@ bindsym $mod+Shift+v exec "vivaldi"
 bindsym $mod+Shift+l exec "myi3lock-clock.sh"
 bindsym $mod+Shift+t exec "transmission-gtk"
 bindsym $mod+Shift+o exec "libreoffice"
+bindsym $mod+Shift+b exec "uxterm -e newsboat"
+bindsym $mod+Shift+n exec "uxterm -e ncmpcpp"
+bindsym $mod+Shift+w exec "uxterm -e weechat"
 
 # Power options
 set $sysmenu "system: re[s]tart re[l]oad  [e]xit  [p]oweroff  re[b]oot"
@@ -243,20 +271,3 @@ mode $sysmenu {
 }
 
 bindsym $mod+Shift+m	mode $sysmenu
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-bindsym $mod+r mode "resize"

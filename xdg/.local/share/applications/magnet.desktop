@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Magnet
+Type=Application
+Comment=Open a magnet link in transmission
+Exec=mytransmissiondaemonadd.sh %U
+Icon=transmission
+Terminal=true
+Categories=Network;FileTransfer;P2P
+MimeType=application/x-bittorrent;x-scheme-handler/magnet;

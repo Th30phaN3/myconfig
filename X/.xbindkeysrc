@@ -1,11 +1,15 @@
-###########################
-# xbindkeys configuration #
-###########################
+#
+#__  ___     _           _ _                  
+#\ \/ / |__ (_)_ __   __| | | _____ _   _ ___ 
+# \  /| '_ \| | '_ \ / _` | |/ / _ \ | | / __|
+# /  \| |_) | | | | | (_| |   <  __/ |_| \__ \
+#/_/\_\_.__/|_|_| |_|\__,_|_|\_\___|\__, |___/
+#                                   |___/     
+#
 #
 # Version: 1.8.6
 #
-# If you edit this file, do not forget to uncomment any lines
-# that you change.
+# If you edit this file, do not forget to uncomment any lines that you change.
 # The pound(#) symbol may be used anywhere for comments.
 # To reload the new configuration: xbindkeys -p
 # To find a particular key : xbindkeys -k
@@ -50,7 +54,7 @@
     m:0x10 + c:193
 
 #m4 save a part of the screen
-"scrot -s -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H-%M-%S.png -z"
+"scrot -s -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H:%M:%S.png -z"
     m:0x10 + c:194
 
 #m5 ?
@@ -83,7 +87,7 @@
     m:0x90 + c:70
 
 #AltGr + ImpEcr (screenshot)
-"scrot -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H-%M-%S.png -z"
+"scrot -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H:%M:%S.png -z"
     m:0x90 + c:118
 
 ##################################

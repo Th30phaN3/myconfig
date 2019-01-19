@@ -16,6 +16,8 @@ mkdir -p $REPONAME/etc
 mkdir -p $REPONAME/vivaldi
 mkdir -p $REPONAME/androidstudio
 mkdir -p $REPONAME/phpstorm
+mkdir -p $REPONAME/atom
+mkdir -p $REPONAME/vscode
 
 cp ~/docs/install_gentoo $REPONAME/home
 cp ~/.local/share/applications/mimeapps.list $REPONAME/home
@@ -27,6 +29,8 @@ cp ~/.config/gnupg/* $REPONAME/home/gnupg
 cp -ur ~/.AndroidStudio3.1/config/* $REPONAME/androidstudio
 cp -ur ~/.PhpStorm2018.2/config/* $REPONAME/phpstorm
 cp -ur ~/.config/vivaldi/Default/* $REPONAME/vivaldi
+cp -ur ~/.atom/config.cson $REPONAME/atom
+cp -ur ~/.config/Code/User/settings.json $REPONAME/vscode
 
 cp /etc/portage/package.use/* $REPONAME/portage/package.use/
 cp /etc/portage/package.accept_keywords $REPONAME/portage

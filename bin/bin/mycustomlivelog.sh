@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# Display a log including all errors from multiple log files
+
 multitail -D -Cs -E "[Ee]rror" --no-repeat --mergeall \
 /var/log/Xorg.0.log \
 /var/log/Xorg.1.log \

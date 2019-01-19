@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Vim
+GenericName=Text editor
+Comment=Useful text editor
+Exec=/usr/bin/uxterm -e vim %U
+Terminal=true
+Type=Application

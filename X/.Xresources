@@ -1,24 +1,30 @@
+!__  __
+!\ \/ /_ __ ___  ___  ___  _   _ _ __ ___ ___  ___
+! \  /| '__/ _ \/ __|/ _ \| | | | '__/ __/ _ \/ __|
+! /  \| | |  __/\__ \ (_) | |_| | | | (_|  __/\__ \
+!/_/\_\_|  \___||___/\___/ \__,_|_|  \___\___||___/
+!
 UXTerm*termName: xterm-256color
 UXTerm*renderFont: true
 UXTerm*forcePackedFont: true
-UXTerm*faceName: Anonymous
-UXTerm*faceSize: 12
+UXTerm*faceName: Anonymice Nerd Font
+UXTerm*faceSize: 14
 ! VT Font Menu: Unreadable
-UXTerm*faceSize1: 8
+UXTerm*faceSize1: 10
 ! VT font menu: Tiny
-UXTerm*faceSize2: 10
+UXTerm*faceSize2: 12
 ! VT font menu: Medium
-UXTerm*faceSize3: 12
+UXTerm*faceSize3: 15
 ! VT font menu: Large
-UXTerm*faceSize4: 16
+UXTerm*faceSize4: 17
 ! VT font menu: Huge
 UXTerm*faceSize5: 22
 
-UXTerm*VT100.Translations: #override \
-	Ctrl <Key> minus: smaller-vt-font() \n\
-	Ctrl <Key> plus: larger-vt-font() \n\
-	Ctrl <Key> 0: set-vt-font(d)
-	Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\
-	Ctrl Shift <Key>V:    insert-selection(CLIPBOARD) \n\
-	Ctrl Shift <Key>C:    copy-selection(CLIPBOARD) \n\
-	Ctrl <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+UXTerm*VT100.Translations: #override \n
+	Ctrl <Key> minus:		smaller-vt-font() \n
+	Ctrl <Key> plus:		larger-vt-font() \n
+	Ctrl <Key> 0:			set-vt-font(d) \n
+	Shift <KeyPress> Insert:	insert-selection(CLIPBOARD) \n
+	Ctrl Shift <Key>V:              insert-selection(CLIPBOARD) \n
+	Ctrl Shift <Key>C:              copy-selection(CLIPBOARD) \n
+	Ctrl <Btn1Up>:                  exec-formatted("xdg-open '%t'", PRIMARY)

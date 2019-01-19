@@ -11,12 +11,12 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/.task
+data.location=~/.local/share/task
 
 # Color theme (uncomment one to use)
 #include /usr/share/task/rc/light-16.theme
 #include /usr/share/task/rc/light-256.theme
-#include /usr/share/task/rc/dark-16.theme
+include /usr/share/task/rc/dark-16.theme
 #include /usr/share/task/rc/dark-256.theme
 #include /usr/share/task/rc/dark-red-256.theme
 #include /usr/share/task/rc/dark-green-256.theme
@@ -28,4 +28,3 @@ data.location=~/.task
 #include /usr/share/task/rc/solarized-dark-256.theme
 #include /usr/share/task/rc/solarized-light-256.theme
 #include /usr/share/task/rc/no-color.theme
-

@@ -1,130 +1,82 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" type="text/css" href="simple-grid.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home</title>
-    <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    html,body {
-    	background-color: #292F33;
-    }
-    body {
-    	overflow: hidden;
-    }
-    .container {
-      position: absolute;
-    }
-    </style>
-  </head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 <body>
-  <canvas id="canvas" style="z-index:0;top:0px;width:100%;height:100%;"></canvas>
-  <div class="container" style="z-index:45;top:0px;width:100%;height:100%;">
-    <div class="row">
-      <div class="col-6">
+  <canvas id="canvas"></canvas>
+  <div>
+    <span class="clock" id="clock">00:00:00</span>
+    <h2 id="date"></h2>
+    <div class="weather">
+        <a class="weatherwidget-io" href="https://forecast7.com/fr/47d22n1d55/nantes/" data-label_1="NANTES" data-label_2="WEATHER" data-font="Roboto" data-icons="Climacons"></a>
+    </div>
+    <div class="grid">
+      <div class="col">
         <form id="yt" method="get" action="https://www.youtube.com/results?search_query=">
           <input type="text" name="q" class="inputbox" value="">
           <button type="submit" style="border: 0; background: transparent">
             <img src="yt.png" width="36" height="36" alt="submit"/>
           </button>
         </form>
+      </div>
+      <div class="col">
         <form id="twitter" method="get" action="https://twitter.com/search?q=">
           <input type="text" name="q" class="inputbox" value="">
           <button type="submit" style="border: 0; background: transparent">
             <img src="tw.png" width="36" height="36" alt="submit"/>
           </button>
         </form>
-        <form id="ddg" method="get" action="https://duckduckgo.com/?q=">
-          <input type="text" name="q" class="inputbox" value="">
-          <button type="submit" style="border: 0; background: transparent">
-            <img src="ddg.png" width="36" height="36" alt="submit"/>
-          </button>
-        </form>
+      </div>
+      <div class="col">
         <form id="bing" method="get" action="https://www.bing.com/search?q=">
           <input type="text" name="q" class="inputbox" value="">
           <button type="submit" style="border: 0; background: transparent">
             <img src="bing.png" width="36" height="36" alt="submit"/>
           </button>
         </form>
-        <form id="startpage" method="get" action="https://www.startpage.com/do/search">
+      </div>
+      <div class="col">
+        <form id="ddg" method="get" action="https://duckduckgo.com/?q=">
           <input type="text" name="q" class="inputbox" value="">
           <button type="submit" style="border: 0; background: transparent">
-            <img src="st.png" width="36" height="36" alt="submit"/>
+            <img src="ddg.png" width="36" height="36" alt="submit"/>
           </button>
         </form>
       </div>
-      <div class="col-6">
-        //news...
-      </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src='flowers.js'></script>
+  <script>
+    var clockElement = document.getElementById("clock");
+    function updateClock(clock) { clock.innerHTML = new Date().toTimeString().split(" ")[0]; }
+    setInterval(function () { updateClock(clockElement); }, 1000);
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var d = new Date();
+    var weekday = new Array(7);
+    weekday[0] = "Dimanche";
+    weekday[1] = "Lundi";
+    weekday[2] = "Mardi";
+    weekday[3] = "Mercredi";
+    weekday[4] = "Jeudi";
+    weekday[5] = "Vendredi";
+    weekday[6] = "Samedi";
+    var n = weekday[d.getDay()];
+    var yyyy = today.getFullYear();
+    if (dd < 10)
+      dd = '0' + dd;
+    if (mm < 10)
+      mm = '0' + mm;
+    today = dd + '.' + mm + '.' + yyyy;
+    date.innerHTML = n + "<br>" + today;
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://weatherwidget.io/js/widget.min.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "weatherwidget-io-js");
+  </script>
 </body>
 </html>
-
-<script>
-window.onload = function()
-{
-	var canvas = document.getElementById("canvas");
-	var ctx = canvas.getContext("2d");
-	var W = window.innerWidth;
-	var H = window.innerHeight;
-	canvas.width = W;
-	canvas.height = H;
-
-	var mp = 25;
-	var particles = [];
-	for(var i = 0; i < mp; i++)
-	{
-		particles.push({
-			x: Math.random()*W, //x-coordinate
-			y: Math.random()*H, //y-coordinate
-			r: Math.random()*4+1, //radius
-			d: Math.random()*mp //density
-		})
-	}
-	function draw_flakes()
-	{
-		ctx.clearRect(0, 0, W, H);
-
-		ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-		ctx.beginPath();
-		for(var i = 0; i < mp; i++)
-		{
-			var p = particles[i];
-			ctx.moveTo(p.x, p.y);
-			ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
-		}
-		ctx.fill();
-		update_flakes();
-	};
-	var angle = 0;
-	function update_flakes()
-	{
-		angle += 0.01;
-		for(var i = 0; i < mp; i++)
-		{
-			var p = particles[i];
-			p.y += Math.cos(angle+p.d) + 1 + p.r/2;
-			p.x += Math.sin(angle) * 2;
-			if(p.x > W+5 || p.x < -5 || p.y > H)
-			{
-				if(i%3 > 0)
-					particles[i] = {x: Math.random()*W, y: -10, r: p.r, d: p.d};
-				else
-				{
-					if(Math.sin(angle) > 0)
-						particles[i] = {x: -5, y: Math.random()*H, r: p.r, d: p.d};
-					else
-						particles[i] = {x: W+5, y: Math.random()*H, r: p.r, d: p.d};
-				}
-			}
-		}
-	};
-	setInterval(draw_flakes, 33);
-}
-</script>

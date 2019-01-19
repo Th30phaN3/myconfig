@@ -3,7 +3,7 @@
 # Make all connections via IPv4
 -4
 # Connect as <username> (interactive password prompt)
--u ugetrektmf@gmail.com
+#-u ugetrektmf@gmail.com
 # Bypass  geographic  restriction  via  faking  X-Forwarded-For  HTTP header (experimental)
 --geo-bypass
 # Abort downloading when some fragment is not available
@@ -29,9 +29,9 @@
 # Specify ffmpeg/avconv audio quality, insert a value between 0 (better) and 9 (worse) for VBR or a specific bitrate like 128K (default 5)
 --audio-quality 0
 # Specify  audio format: "best", "aac", "flac", "mp3", "m4a", "opus", "vorbis",  or  "wav"; "best" by default; No effect without -x
---audio-format m4a
+#--audio-format m4a
 # Video format code, use -F on a video to list available formats (140 for m4a)
--f 140
+#-f 140
 # Format for simple tracks
 #-o '~/music/ytdl/%(title)s.%(ext)s'
 # Format for tracks inside playlists

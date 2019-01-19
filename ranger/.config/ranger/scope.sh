@@ -56,25 +56,21 @@ handle_extension() {
             # Avoid password prompt by providing empty password
             7z l -p -- "${FILE_PATH}" && exit 5
             exit 1;;
-
         # PDF
         pdf)
             # Preview as text conversion
             pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - && exit 5
             exiftool "${FILE_PATH}" && exit 5
             exit 1;;
-
         # BitTorrent
         torrent)
             transmission-show -- "${FILE_PATH}" && exit 5
             exit 1;;
-
         # OpenDocument
         odt|ods|odp|sxw)
             # Preview as text conversion
             odt2txt "${FILE_PATH}" && exit 5
             exit 1;;
-
         # HTML
         htm|html|xhtml)
             # Preview as text conversion
@@ -89,10 +85,9 @@ handle_image() {
     local mimetype="${1}"
     case "${mimetype}" in
         # SVG
-        # image/svg+xml)
-        #     convert "${FILE_PATH}" "${IMAGE_CACHE_PATH}" && exit 6
-        #     exit 1;;
-
+        image/svg+xml)
+        	convert "${FILE_PATH}" "${IMAGE_CACHE_PATH}" && exit 6
+        	exit 1;;
         # Image
         image/*)
             local orientation
@@ -103,16 +98,15 @@ handle_image() {
                 # ...auto-rotate the image according to the EXIF data.
                 convert -- "${FILE_PATH}" -auto-orient "${IMAGE_CACHE_PATH}" && exit 6
             fi
-
             # `w3mimgdisplay` will be called for all images (unless overriden as above),
             # but might fail for unsupported types.
             exit 7;;
 
         # Video
-        # video/*)
-        #     # Thumbnail
-        #     ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
-        #     exit 1;;
+        video/*)
+        # Thumbnail
+        	ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
+        	exit 1;;
         # PDF
         # application/pdf)
         #     pdftoppm -f 1 -l 1 \
@@ -143,16 +137,14 @@ handle_mime() {
             fi
             highlight --replace-tabs="${HIGHLIGHT_TABWIDTH}" --out-format="${highlight_format}" \
                 --style="${HIGHLIGHT_STYLE}" --force -- "${FILE_PATH}" && exit 5
-            # pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}" -- "${FILE_PATH}" && exit 5
+            pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}" -- "${FILE_PATH}" && exit 5
             exit 2;;
-
         # Image
         image/*)
             # Preview as text conversion
-            # img2txt --gamma=0.6 --width="${PV_WIDTH}" -- "${FILE_PATH}" && exit 4
+            img2txt --gamma=0.6 --width="${PV_WIDTH}" -- "${FILE_PATH}" && exit 4
             exiftool "${FILE_PATH}" && exit 5
             exit 1;;
-
         # Video and audio
         video/* | audio/*)
             mediainfo "${FILE_PATH}" && exit 5
