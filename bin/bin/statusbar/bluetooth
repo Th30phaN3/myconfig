@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Shows current bluetooth device connected.
+
+DEVICE=$(bluetoothctl info | grep "Name" | sed -e 's/.*Name: \(.*\)/\1/')
+[ -z "${DEVICE// }" ] && exit
+echo " $DEVICE"
+
+MOREINFO=$(bluetoothctl info | sed 10q | sed -e 's/[[:space:]]//')
+case $BLOCK_BUTTON in
+  3) pgrep -x dunst >/dev/null && notify-send "$MOREINFO" ;;
+esac

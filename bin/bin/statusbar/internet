@@ -1,18 +1,16 @@
 #!/bin/sh
+#
+# Display wifi (plus quality and ssid) and ethernet.
 
 case $BLOCK_BUTTON in
-	1) $TERMINAL -e nmtui ;;
-	3) pgrep -x dunst >/dev/null && notify-send "<b>🌐 Internet module:</b>
-		- Click for \`nmtui\` for wifi access
-		📡: no wifi connection
-		📶: wifi connection with quality
-		❎: no ethernet
-		🌐: ethernet working
-		" ;;
+	3) mynote.sh ": no wifi connection<br>: wifi connection with quality<br>: no ethernet<br>: ethernet working" ;;
 esac
 
-[ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && wifiicon="📡"
+[ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && WIFIICON=""
 
-[ ! -n "${wifiicon+var}" ] && wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "📶", int($3 * 100 / 70) "%" }')
+if [ ! -n "$WIFIICON" ]; then
+  WIFIICON=$(grep "^\s*w" /proc/net/wireless | awk '{ print "", int($3 * 100 / 70) "%" }')
+  SSIDNAME=$(wpa_cli status | grep "^ssid=" | sed -e 's/ssid=\(.*\)/(\1)/g')
+fi
 
-printf "%s %s" "$wifiicon" "$(cat /sys/class/net/e*/operstate | sed "s/down/❎/;s/up/🌐/")"
+printf "%s%s %s" "$WIFIICON" "$SSIDNAME" "$(cat /sys/class/net/e*/operstate | sed 's/down//;s/unknown//;s/up//')"

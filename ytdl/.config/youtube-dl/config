@@ -1,9 +1,15 @@
+#
+#__   __          _         _                    ____  _     
+#\ \ / /__  _   _| |_ _   _| |__   ___          |  _ \| |    
+# \ V / _ \| | | | __| | | | '_ \ / _ \  _____  | | | | |    
+#  | | (_) | |_| | |_| |_| | |_) |  __/ |_____| | |_| | |___ 
+#  |_|\___/ \__,_|\__|\__,_|_.__/ \___|         |____/|_____|
+#
+#
 # Do not mark videos watched (YouTube only)
 --no-mark-watched
 # Make all connections via IPv4
 -4
-# Connect as <username> (interactive password prompt)
-#-u ugetrektmf@gmail.com
 # Bypass  geographic  restriction  via  faking  X-Forwarded-For  HTTP header (experimental)
 --geo-bypass
 # Abort downloading when some fragment is not available
@@ -20,19 +26,25 @@
 --no-call-home
 # Suppress HTTPS certificate validation
 --no-check-certificate
+# File containing URLs to download, one URL per line. Lines starting with '#', ';' or ']' are considered as comments and ignored.
+#-a url_file
 # Write metadata to the video file
---add-metadata
+#--add-metadata
 # Always extract audio
--x
-# Add thumbnail
---embed-thumbnail
+#-x
+# Add thumbnail (use AtomicParsley)
+#--embed-thumbnail
+# Encode  the  video  to another format if necessary (currently supported: mp4|flv|ogg|webm|mkv|avi)
+--recode-video mp4
 # Specify ffmpeg/avconv audio quality, insert a value between 0 (better) and 9 (worse) for VBR or a specific bitrate like 128K (default 5)
 --audio-quality 0
-# Specify  audio format: "best", "aac", "flac", "mp3", "m4a", "opus", "vorbis",  or  "wav"; "best" by default; No effect without -x
+# Specify audio format: "best", "aac", "flac", "mp3", "m4a", "opus", "vorbis",  or  "wav"; "best" by default; No effect without -x
 #--audio-format m4a
 # Video format code, use -F on a video to list available formats (140 for m4a)
 #-f 140
 # Format for simple tracks
 #-o '~/music/ytdl/%(title)s.%(ext)s'
 # Format for tracks inside playlists
--o '~/music/ytdl/%(playlist_title)s/%(title)s.%(ext)s'
+#-o '~/music/ytdl/%(playlist_title)s/%(title)s.%(ext)s'
+# Format for videos downloads
+-o '~/videos/ytdl/%(playlist_title)s/%(title)s.%(ext)s'

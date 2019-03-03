@@ -2,7 +2,7 @@
 Name=Magnet
 Type=Application
 Comment=Open a magnet link in transmission
-Exec=mytransmissiondaemonadd.sh %U
+Exec=mytrdaemonadd.sh %U
 Icon=transmission
 Terminal=true
 Categories=Network;FileTransfer;P2P

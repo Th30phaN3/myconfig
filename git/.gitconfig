@@ -1,7 +1,56 @@
 [color]
-	ui = auto
+  #A boolean to enable/disable color in the output of git-branch.
+  branch=auto
+  #When set to auto, use colors in patch only when the output is to the terminal.
+  diff=auto
+  #When set to auto, use color to highlight matches only when the output is written to the terminal.
+  grep=auto
+  #When set to auto, use colors for interactive prompts and displays (such as those used by git-add --interactive) only when the output is to the terminal.
+  interactive=auto
+  #A boolean to enable/disable color in the output of git-show-branch.
+  showbranch=auto
+  #A boolean to enable/disable color in the output of git-status.
+  status=auto
+  #When set to auto, use colors in all git commands which are capable of colored output only when the output is to the terminal.
+  ui = auto
 [github]
-	user = Th30phaN3
+  user = Th30phaN3
 [user]
-	email = theophane.pro@tuta.io
-	name = Th30phaN3
+  email = theophane.pro@tuta.io
+  name = Th30phaN3
+[core]
+  #Commands such as commit and tag that lets you edit messages by launching an editor uses the value of this variable when it is set, and the environment variable GIT_EDITOR is not set.
+  editor=nano
+[gitcvs]
+  #Append this string to each commit message. Set to empty string to disable this feature.
+  commitmsgannotation=""
+[help]
+  #Automatically correct and execute mistyped commands after waiting for the given number of deciseconds (0.1 sec). If more than one command can be deduced from the entered text, nothing will be executed. If the value of this option is negative, the corrected command will be executed immediately. If the value is 0 - the command will be just shown but not executed.
+  autocorrect=-1
+[alias]
+co = checkout
+cp = cherry-pick
+p = pull
+sqsh = merge --squash
+st = status
+df = diff
+b = branch
+r = reset
+sl = stash list
+sa = stash apply
+ss = stash save
+cleanup = !git reset --hard && git clean -f
+alias = config --get-regexp 'alias.*'
+logol = log --pretty=format:"%h\\ %s\\ [%cn]"
+search = "grep -Iin"
+zopa = !git log --graph --decorate --pretty=oneline --abbrev-commit --all $(git fsck --no-reflogs | grep commit | cut -d\\  -f3)
+dt = difftool --no-prompt
+mt = mergetool --no-prompt
+stashall = !git add -A && git stash
+gittoday="git log --color --graph --pretty=format:'%Cgreen[%Creset%h%Cgreen]%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --since=yesterday"
+ignore = update-index --assume-unchanged
+uningore = update-index --no-assume-unchanged
+ignored = !git ls-files -v | grep '^[a-z]'
+sync = "!f(){ local branch=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e \"s/* \\(.*\\)/\\1/\"`; git pull origin $branch && git push origin $branch; }; f"
+taggings = "!f(){ echo 'Describe: '; git describe; echo 'Latest 5 tags: '; git tag | sort -V | tail -5; }; f"
+latest-tag = "!f(){ local latest=`git tag | sort -V | tail -1`; git checkout $latest; }; f"

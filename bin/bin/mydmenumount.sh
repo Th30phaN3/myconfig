@@ -1,9 +1,9 @@
 #!/bin/sh
-
+#
 # Gives a dmenu prompt to mount unmounted drives.
 # If they are in /etc/fstab, they will be mounted automatically.
-# Otherwise, you'll be prompted to give a mountpoint from already existsing directories.
-# If you input a novel directory, it will prompt you to create that directory.
+# Otherwise, you'll be prompted to give a mountpoint from already existing directories.
+# If you input a new directory, it will prompt you to create that directory.
 
 pgrep -x dmenu && exit
 

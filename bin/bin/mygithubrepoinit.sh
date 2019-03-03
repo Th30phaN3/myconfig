@@ -41,8 +41,7 @@ if [ "$OK" != "y" ]; then
 fi
 
 # Curl some json to the github API
-curl -u $USERNAME https://api.github.com/user/repos -d "{\"name\": \"$REPONAME\", \"description\": \"${DESCRIPTION}\", \"private\": $PRIVATE_TF, \"has_issues\": 
-true, \"has_downloads\": true, \"has_wiki\": false}"
+curl -u $USERNAME https://api.github.com/user/repos -d "{\"name\": \"$REPONAME\", \"description\": \"${DESCRIPTION}\", \"private\": $PRIVATE_TF, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"
 
 # Clone the freshly created repo and push basic files
 # You'll need to have added your public key to your github account
@@ -53,5 +52,5 @@ echo "# $REPONAME" >> README.md
 echo "" >> .gitignore
 git add README.md
 git add .gitignore
-git commit -m "first"
+git commit -m "First commit"
 git push -u origin master

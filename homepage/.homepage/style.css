@@ -1,0 +1,80 @@
+*
+{
+  margin: 0;
+  padding: 0;
+}
+
+html, body, canvas
+{
+  width: 100%;
+  height: 100%;
+}
+
+html
+{
+  background-color: #292F33;
+  background-image: url("/home/wegeee/.homepage/forest_winter.jpeg");
+}
+
+body
+{
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+  text-align: center;
+  color: #fff;
+  line-height: 1.5;
+  overflow: hidden;
+  line-height: 1.5;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
+
+canvas
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+h2
+{
+  font-size: 2em;
+}
+
+.clock
+{
+  font-size: 12vw;
+}
+
+.weather
+{
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  -webkit-filter: invert(100%);
+  filter: invert(100%)
+}
+
+.grid
+{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.col
+{
+  flex: 1;
+}
+
+@media screen and (max-width:600px)
+{
+  .grid
+  {
+    display: block;
+  }
+  .col
+  {
+    width: 100%;
+  }
+}

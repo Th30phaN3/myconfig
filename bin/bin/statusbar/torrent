@@ -1,26 +1,14 @@
 #!/bin/sh
+#
+# Display torrents information and opens transmission web interface with left click.
 
-transmission-remote -l | grep % |
-sed " # This first sed command is to ensure a desirable order with sort
-s/.*Stopped.*/A/g;
-s/.*Seeding.*/Z/g;
-s/.*100%.*/N/g;
-s/.*Idle.*/B/g;
-s/.*%.*/M/g" |
-
-sort -h | uniq -c | sed " # Now we replace the standin letters with icons.
-s/A/🛑/g;
-s/B/⌛️/g;
-s/M/🔽/g;
-s/N/✅/g;
-s/Z/🌱/g" | awk '{print $2, $1}' | tr '\n' ' ' | sed -e "s/ $//g"
+# The first sed command is to ensure a desirable order with sort
+REPLACE="s/.*Stopped.*/A/g;s/.*Seeding.*/Z/g;s/.*100%.*/N/g;s/.*Idle.*/B/g;s/.*%.*/M/g;s/.*Uploading.*/L/g"
+# Then we replace the standin letters with icons.
+ICONS="s/A//g;s/B//g;s/M//g;s/N//g;s/Z//g;s/L//g"
+transmission-remote -l | grep % | sed $REPLACE | sort -h | uniq -c | sed $ICONS | awk '{print $2, $1}' | tr '\n' ' ' | sed -e "s/ $//g"
 
 case $BLOCK_BUTTON in
-1) $TERMINAL -e transmission-remote-cli ;;
-3) pgrep -x dunst >/dev/null && notify-send "<b>Torrent module:</b>
-🛑: paused
-⏳: waiting
-🔽: downloading
-✅: done
-🌱: done and seeding" ;;
+1) xdg-open "http://localhost:9091/transmission/web/" &>/dev/null;;
+3) mynote.sh ": paused<br>: waiting<br>: downloading<br>: uploading (not finished)<br>: done<br>: done and seeding" ;;
 esac

@@ -29,8 +29,8 @@ else
 fi
 
 #Start some applications
-#Add wallpaper
-/home/wegeee/bin/mycustomwallpaper.sh &
+#Add random wallpaper
+feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*
 # -R restores the last colorscheme that was in use.
 # -n skip setting the wallpaper.
 # -q quiet mode, don't print anything
@@ -41,6 +41,8 @@ compton -b --config /home/wegeee/.config/compton/compton.conf
 xbindkeys
 #Enable numlock on X
 numlockx
+#Launch Transmission
+#transmission-daemon
 #Launch mpd as local user
 mpd
 #Launch i3

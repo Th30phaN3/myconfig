@@ -13,9 +13,9 @@ scihub="http://sci-hub.tw/"
 [ -z "$1" ] && { "$TRUEBROWSER"; exit; }
 
 case "$1" in
-	*mkv|*webm|*mp4|*gif|*youtube.com*|*youtu.be*|*hooktube.com*|*bitchute.com*) setsid mpv -quiet "$1" >/dev/null 2>&1 & ;;
-	*png|*jpg|*jpe|*jpeg) setsid feh "$1" >/dev/null 2>&1 & ;;
-	*mp3|*flac|*opus|*mp3?source) setsid tsp curl -LO "$1" >/dev/null 2>&1 & ;;
-	*springer.com*) setsid curl -sO "$(curl -s "$scihub$*" | grep -Po "(?<=location.href=').+.pdf")" >/dev/null 2>&1 & ;;
-	*) if [ -f "$1" ]; then "$TERMINAL" -e "$EDITOR $1" else setsid "$TRUEBROWSER" "$1" >/dev/null 2>&1 & fi ;;
+  *mkv|*webm|*mp4|*gif|*youtube.com*|*youtu.be*|*hooktube.com*|*bitchute.com*) setsid mpv -quiet "$1" >/dev/null 2>&1 & ;;
+  *png|*jpg|*jpe|*jpeg) setsid feh "$1" >/dev/null 2>&1 & ;;
+  *mp3|*m4a|*flac|*opus|*mp3?source) setsid tsp curl -LO "$1" >/dev/null 2>&1 & ;;
+  *springer.com*) setsid curl -sO "$(curl -s "$scihub$*" | grep -Po "(?<=location.href=').+.pdf")" >/dev/null 2>&1 & ;;
+  *) if [ -f "$1" ]; then "$TERMINAL" -e "$EDITOR $1" else setsid "$TRUEBROWSER" "$1" >/dev/null 2>&1 & fi ;;
 esac

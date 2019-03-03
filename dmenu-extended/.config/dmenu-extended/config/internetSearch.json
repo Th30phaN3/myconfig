@@ -23,11 +23,11 @@
         },
         {
             "title": "Youtube",
-	    "url": "https://www.youtube.com/results?search_query={searchterm}"
+            "url": "https://www.youtube.com/results?search_query={searchterm}"
         },
         {
             "title": "Images",
-            "url": "https://duckduckgo.com/?q={searchterm}&iax=images&ia=images"
+            "url": "https://www.bing.com/images/search?q={searchterm}"
         }
     ]
 }

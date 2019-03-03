@@ -41,37 +41,36 @@
 #keystate_scrolllock= enable
 
 #Blackwidow macros
-#m1 increase pulseaudio volume
-"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+"
+#m1 increase volume
+"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+; mpc -q volume +5"
     m:0x10 + c:191
 
-#m2 decrease pulseaudio volume
-"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-"
+#m2 decrease volume
+"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-; mpc -q volume -5"
     m:0x10 + c:192
 
 #m3 change random background
-"feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/current/*"
+"feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*"
     m:0x10 + c:193
 
 #m4 save a part of the screen
-"scrot -s -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H:%M:%S.png -z"
+"scrot -s -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
     m:0x10 + c:194
 
-#m5 ?
-""
+#m5 pause mpd
+"mpc -q toggle"
     m:0x10 + c:195
 
-
-#AltGr + F6 (decrease pulseaudio volume)
-"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-"
+#AltGr + F6 (decrease volume)
+"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-; mpc -q volume -5"
     m:0x90 + c:72
 
-#AltGr + F7 (increase pulseaudio volume)
-"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+"
+#AltGr + F7 (increase volume)
+"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+; mpc -q volume +5"
     m:0x90 + c:73
 
-#AltGr + F8 (mute pulseaudio volume)
-"pactl set-source-mute 0 toggle; amixer -q sset Master toggle"
+#AltGr + F8 (mute volume)
+"pactl set-source-mute 0 toggle; amixer -q sset Master toggle; mpc -q volume 0"
     m:0x90 + c:74
 
 #AltGr + F9 (decrease screen brightness)
@@ -83,11 +82,11 @@
     m:0x90 + c:76
 
 #AltGr + F4 (change wallpaper)
-"feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/current/*"
+"feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*"
     m:0x90 + c:70
 
 #AltGr + ImpEcr (screenshot)
-"scrot -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H:%M:%S.png -z"
+"scrot -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
     m:0x90 + c:118
 
 ##################################
