@@ -18,7 +18,7 @@ if [[ $- != *i* ]] ; then
   return
 fi
 
-# Don't want coredumps
+# No coredumps
 ulimit -S -c 0
 set -o notify
 set -o noclobber
@@ -35,11 +35,11 @@ shopt -s histappend histreedit histverify
 shopt -s no_empty_cmd_completion
 shopt -s sourcepath
 
-# Don't want my shell to warn me of incoming mail
+# No incoming mail
 shopt -u mailwarn
 unset MAILCHECK
 
-# Don't put duplicate lines in the history or force ignoredups and ignorespace
+# Don't put duplicate lines in the history or spaces, add timestamps
 HISTCONTROL=ignoredups:ignorespace
 HISTSIZE=100000
 HISTFILESIZE=200000
@@ -85,12 +85,13 @@ export TRANSMISSION_HOME=~/.config/transmission
 export WWW_HOME=~/.config/w3m
 export GNUPGHOME=~/.config/gnupg
 export WEECHAT_HOME=~/.config/weechat
-export GOPATH=~/app/go
+export GOPATH=~/.go
 export EXIFTOOL_HOME=~/.config/exiftool
+export EIX_LIMIT=0
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_ROOT=~/.sdk/dotnet-core-sdk
 export MSBuildSDKsPath=$DOTNET_ROOT/sdk/
-PATH=${DOTNET_ROOT}:~/bin:~/.local/bin:$PATH
+PATH=${DOTNET_ROOT}:$(go env GOPATH)/bin:~/bin:~/.local/bin:$PATH
 HOME=/home/wegeee
 EDITOR=nano
 

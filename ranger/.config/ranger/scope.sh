@@ -113,7 +113,7 @@ handle_image() {
                      -scale-to-x 1920 \
                      -scale-to-y -1 \
                      -singlefile \
-                     -jpeg -tiffcompression jpeg \
+                     -jpeg \
                      -- "${FILE_PATH}" "${IMAGE_CACHE_PATH%.*}" \
             && exit 6 || exit 1;;
     esac

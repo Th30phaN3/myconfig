@@ -5,7 +5,7 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/Xresources
 sysmodmap=/etc/X11/xinit/Xmodmap
 
-# merge in defaults and keymaps
+# Merge in defaults and keymaps
 if [ -f $sysresources ]; then
     xrdb -merge $sysresources
 fi
@@ -28,24 +28,18 @@ else
   failsafe=yes
 fi
 
-#Start some applications
-#Add random wallpaper
+# Start some applications
+# Add random wallpaper
 feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*
-# -R restores the last colorscheme that was in use.
-# -n skip setting the wallpaper.
-# -q quiet mode, don't print anything
+# Call wal to set X colors (-R restores the last colorscheme that was in use, -n skip setting the wallpaper, -q quiet mode)
 wal -Rnq
-#Init compton
-compton -b --config /home/wegeee/.config/compton/compton.conf
-#Init xbindkeys for blackwidow macros
+# Init compton
+compton -b --config ~/.config/compton/compton.conf
+# Init xbindkeys for blackwidow macros + other keyboard keys
 xbindkeys
-#Enable numlock on X
+# Enable numlock on X
 numlockx
-#Launch Transmission
-#transmission-daemon
-#Launch mpd as local user
-mpd
-#Launch i3
+# Launch i3
 exec i3
 
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then

@@ -21,6 +21,7 @@
 [core]
   #Commands such as commit and tag that lets you edit messages by launching an editor uses the value of this variable when it is set, and the environment variable GIT_EDITOR is not set.
   editor=nano
+  excludesfile = /home/wegeee/.gitignore_global
 [gitcvs]
   #Append this string to each commit message. Set to empty string to disable this feature.
   commitmsgannotation=""

@@ -37,6 +37,18 @@ function mcd() { mkdir -p $1; cd $1; }
 # Move into directory and list files
 function cls() { cd "$1"; ll; }
 
+# Remove junk, cache data, history files, trash, etc...
+function cleanhome()
+{
+  JUNKLIST="$HOME/.junk"
+  LOGFILE="/var/log/cleanhome.log"
+  history -cw
+  while IFS= read -r line
+  do
+    \rm -rv $line >> "$LOGFILE"
+  done < "$JUNKLIST"
+}
+
 # Make a backup of the specified file
 function backup() { cp "$1"{,.bak}; }
 
@@ -330,4 +342,14 @@ function atmp3()
     TITLE=$(echo "$SONG" | awk -F " - " '{print $2}')
     eyeD3 --artist "$ARTIST" --title "$TITLE" "$SONG.mp3"
   done
+}
+
+# Allow to run same instance of ranger from shell inside ranger
+function ranger()
+{
+  if [ -z "$RANGER_LEVEL" ]; then
+    /usr/bin/ranger "$@"
+  else
+    exit
+  fi
 }

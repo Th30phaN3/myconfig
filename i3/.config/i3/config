@@ -113,7 +113,7 @@ for_window [class="Tor Browser"] floating enable
 for_window [title="Android Emulator.*"] floating enable
 
 # Resize gtk file dialog
-for_window [window_role="GtkFileChooserDialog"] resize set 800 600
+for_window [window_role="GtkFileChooserDialog"] resize set 1000 600
 for_window [window_role="GtkFileChooserDialog"] move position center
 
 # Enable automatic back and forth between workspaces
@@ -134,13 +134,12 @@ exec --no-startup-id dunst
 # Exec autolock with custom lock
 exec --no-startup-id xautolock -time 5 -corners ---- -locker myi3lock-clock.sh
 # Run the script to update the mpd i3block on change
-exec_always --no-startup-id mpdupdate
+exec_always --no-startup-id ~/bin/statusbar/mpdupdate
 
 # Exec workspaces layouts + programs on startup
-exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
-exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog.sh'
-exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf; exec uxterm -title ranger ranger'
-exec --no-startup-id i3-msg 'workspace $WS1'
+#exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
+#exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog.sh'
+#exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf; exec uxterm -title ranger ranger' exec --no-startup-id i3-msg 'workspace $WS1'
 
 # =============================================================================
 # Keybinds
@@ -251,7 +250,7 @@ bindsym $mod+Shift+l exec "myi3lock-clock.sh"
 bindsym $mod+Shift+t exec "transmission-gtk"
 bindsym $mod+Shift+o exec "libreoffice"
 bindsym $mod+Shift+b exec "uxterm -e newsboat" && pkill -RTMIN+6 i3blocks
-bindsym $mod+Shift+n exec "uxterm -e ncmpcpp"
+bindsym $mod+Shift+n exec "uxterm -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf"
 bindsym $mod+Shift+w exec "uxterm -e weechat"
 bindsym $mod+Shift+r exec "uxterm -e ranger"
 bindsym $mod+Shift+a exec "uxterm -e pulsemixer"
