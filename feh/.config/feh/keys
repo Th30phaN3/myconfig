@@ -1,0 +1,10 @@
+save_filelist
+save_filelist l
+toggle_pause
+toggle_pause p space
+prev_img
+prev_img Left
+next_img
+next_img Right
+toggle_fullscreen
+toggle_fullscreen f

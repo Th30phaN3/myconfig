@@ -13,12 +13,15 @@ html, body, canvas
 html
 {
   background-color: #292F33;
-  background-image: url("/home/wegeee/.homepage/forest_winter.jpeg");
+  background-image: url("winter.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body
 {
-  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+  font-family: Arial, sans-serif;
   text-align: center;
   color: #fff;
   line-height: 1.5;

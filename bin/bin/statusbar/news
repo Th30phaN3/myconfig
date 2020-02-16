@@ -1,8 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 #
-# i3blocks newsboat module.
-# Displays number of unread news items
-# When clicked, brings up newsboat.
+# Displays number of unread news items.
+# When left clicked, brings up newsboat.
 
 case $BLOCK_BUTTON in
         1) setsid "$TERMINAL" -e newsboat ;;

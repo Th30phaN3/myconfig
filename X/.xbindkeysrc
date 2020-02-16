@@ -6,16 +6,11 @@
 #/_/\_\_.__/|_|_| |_|\__,_|_|\_\___|\__, |___/
 #                                   |___/     
 #
-#
 # Version: 1.8.6
 #
-# If you edit this file, do not forget to uncomment any lines that you change.
-# The pound(#) symbol may be used anywhere for comments.
 # To reload the new configuration: xbindkeys -p
-# To find a particular key : xbindkeys -k
-#
-# To specify a key, you can use 'xbindkeys --key' or
-# 'xbindkeys --multikey' and put one of the two lines in this file.
+# To find a particular key : xbindkeys -k (or --key)
+# To find a particular multikey: xbindkeys -mk (or --multikey)
 #
 # The format of a command line is:
 #    "command to start"
@@ -30,7 +25,7 @@
 #   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
 #
 # The release modifier is not a standard X modifier, but you can
-# use it if you want to catch release events instead of press events
+# use it if you want to catch release events instead of press events.
 #
 # By defaults, xbindkeys does not pay attention with the modifiers
 # NumLock, CapsLock and ScrollLock.
@@ -44,51 +39,42 @@
 #m1 increase volume
 "pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+; mpc -q volume +5"
     m:0x10 + c:191
-
 #m2 decrease volume
 "pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-; mpc -q volume -5"
     m:0x10 + c:192
-
 #m3 change random background
 "feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*"
     m:0x10 + c:193
-
-#m4 save a part of the screen
-"scrot -s -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
+#m4 screenshot
+"scrot -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
     m:0x10 + c:194
-
 #m5 pause mpd
 "mpc -q toggle"
     m:0x10 + c:195
 
+#Laptop F keys
+#AltGr + F3 (turn off screen)
+"sleep 1; xset dpms force off"
+    m:0x90 + c:69
 #AltGr + F6 (decrease volume)
 "pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-; mpc -q volume -5"
     m:0x90 + c:72
-
 #AltGr + F7 (increase volume)
 "pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+; mpc -q volume +5"
     m:0x90 + c:73
-
 #AltGr + F8 (mute volume)
 "pactl set-source-mute 0 toggle; amixer -q sset Master toggle; mpc -q volume 0"
     m:0x90 + c:74
-
 #AltGr + F9 (decrease screen brightness)
 "xbacklight -dec 7"
     m:0x90 + c:75
-
 #AltGr + F10 (increase screen brightness)
 "xbacklight -inc 7"
     m:0x90 + c:76
-
 #AltGr + F4 (change wallpaper)
 "feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*"
     m:0x90 + c:70
-
 #AltGr + ImpEcr (screenshot)
-"scrot -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
+#"scrot -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
+"scrot -s -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
     m:0x90 + c:118
-
-##################################
-# End of xbindkeys configuration #
-##################################

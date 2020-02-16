@@ -12,19 +12,20 @@
   #A boolean to enable/disable color in the output of git-status.
   status=auto
   #When set to auto, use colors in all git commands which are capable of colored output only when the output is to the terminal.
-  ui = auto
+  ui=auto
 [github]
-  user = Th30phaN3
+  user=Th30phaN3
 [user]
-  email = theophane.pro@tuta.io
-  name = Th30phaN3
+  email=theophane.pro@tuta.io
+  name=Th30phaN3
 [core]
   #Commands such as commit and tag that lets you edit messages by launching an editor uses the value of this variable when it is set, and the environment variable GIT_EDITOR is not set.
   editor=nano
-  excludesfile = /home/wegeee/.gitignore_global
+  excludesfile=~/.gitignore_global
 [gitcvs]
   #Append this string to each commit message. Set to empty string to disable this feature.
   commitmsgannotation=""
+  #init.templateDir=~/.git-template
 [help]
   #Automatically correct and execute mistyped commands after waiting for the given number of deciseconds (0.1 sec). If more than one command can be deduced from the entered text, nothing will be executed. If the value of this option is negative, the corrected command will be executed immediately. If the value is 0 - the command will be just shown but not executed.
   autocorrect=-1
@@ -48,7 +49,7 @@ zopa = !git log --graph --decorate --pretty=oneline --abbrev-commit --all $(git 
 dt = difftool --no-prompt
 mt = mergetool --no-prompt
 stashall = !git add -A && git stash
-gittoday="git log --color --graph --pretty=format:'%Cgreen[%Creset%h%Cgreen]%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --since=yesterday"
+today="!git log --color --graph --pretty=format:'%Cgreen[%Creset%h%Cgreen]%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --since=yesterday"
 ignore = update-index --assume-unchanged
 uningore = update-index --no-assume-unchanged
 ignored = !git ls-files -v | grep '^[a-z]'

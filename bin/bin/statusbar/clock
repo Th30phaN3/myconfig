@@ -1,9 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 #
-# Show date and display calendar when left clicked.
+# Show date.
+# Display calendar for current month when right clicked.
+# Display calendar for next 3 months when left clicked.
 
-date '+%A %d %b %H:%M'
+date '+%A %d %b %H:%M '
 
 case $BLOCK_BUTTON in
-	3) mynote.sh "$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;
+  1) notify.sh "$(cal -n 3 --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;
+  3) notify.sh "$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;
 esac

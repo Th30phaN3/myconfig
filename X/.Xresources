@@ -23,7 +23,6 @@ UXTerm*faceSize3: 15
 UXTerm*faceSize4: 17
 ! VT font menu: Huge
 UXTerm*faceSize5: 22
-UXTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]!#+,./=?@_~-]|(%[[:xdigit:]][[:xdigit:]]))+
 
 UXTerm*VT100*translations: #override \n\
 	Ctrl <Key> minus:		smaller-vt-font() \n\

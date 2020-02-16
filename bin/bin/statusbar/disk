@@ -1,11 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 #
-# Show disk space. $1 should be drive mountpoint.
+# Show main disk space. Argument is drive mountpoint.
+# Shows all disks info with right click.
 
 [ -z "$1" ] && exit
 
 case $BLOCK_BUTTON in
-	3) pgrep -x dunst >/dev/null && notify-send "$(df -h --output=target,used,size -t ext4 -t fuseblk -t fuse.simple-mtpfs)" ;;
+	3) notify.sh "$(df -h --output=target,used,size -t ext4 -t fuseblk -t fuse.simple-mtpfs)" ;;
 esac
 
 printf " %s" "$(df -h "$1" | awk ' /[0-9]/ {print $3 "/" $2 " (" $5 ")" }')"

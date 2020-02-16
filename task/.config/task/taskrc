@@ -1,0 +1,47 @@
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+# Use the command 'task show' to see all defaults and overrides
+
+# Force color even in redirection
+_forcecolor=yes
+
+# Delete "more urgent tasks" message
+nag=
+
+# A week start at Monday
+weekstart=monday
+
+# Display the details of tasks with due dates
+calendar.details=full
+
+# Days are color-coded, no additional details
+calendar.holidays=sparse
+
+# Minimum length of any abbreviated command/value
+abbreviation.minimum=4
+
+# Tasks can be tracked for 3 years
+urgency.age.max=1095
+
+# Default project name
+default.project=perso
+
+# Hide header and recur messages
+verbose=blank,footnote,label,new-id,affected,edit,special,project,sync,unwait
+
+# Where to store task files
+data.location=~/.local/share/task
+
+# Include french holidays
+include ~/.config/task/holidays.fr-FR.rc
+
+# Color theme
+include /usr/share/task/rc/dark-16.theme
+
+# Simple Custom Report
+report.simple.description=My simple list of tasks
+report.simple.columns=id,project,description.count,status.short,entry.age,start,until,due,end,depends,tags
+report.simple.labels=ID,Project,Description,Status,Age,Start,Until,Due,End,Depends,Tags
+report.simple.sort=project+\/,due+
+report.simple.filter=status:pending

@@ -1,8 +1,8 @@
-articlelist-format "%4i %f %D %?T?|%-17T| ?%t"
-articlelist-title-format "%N %V - Articles in feed %T (%u unread, %t total)"
-datetime-format "%d %B"
+articlelist-format "%D %?T?|%-17T| ?%t"
+articlelist-title-format "%N %V - %T (%u unread, %t total)"
+datetime-format "%e %B %R"
 dialogs-title-format "%N %V - Dialogs"
-feedlist-format "%3i  %n %2U/%-2c  %t %> %-6T "
+feedlist-format "%S %2U/%-3c  %t %> %-12T"
 feedlist-title-format "%N %V - Your feeds (%u unread, %t total)%?T? - tag %T&?"
 filebrowser-title-format "%N %V - %?O?Open File&Save File? - %f"
 help-title-format "%N %V - Help"
@@ -13,11 +13,11 @@ selectfilter-title-format  "%N %V - Select Filter"
 selecttag-title-format "%N %V - Select Tag"
 urlview-title-format "%N %V - URLs"
 
-color listnormal          color1  color0
-color listfocus           color7  color2  bold
+color listnormal          color13  color0
+color listfocus           color0  color2
 color listnormal_unread   color3  color0
-color listfocus_unread    color7  color2  bold
-color info                color7  color3  bold
+color listfocus_unread    color0  color2
+color info                color4  color3  bold
 color background          color7  color0
 color article             color7  color0
 
@@ -25,12 +25,15 @@ auto-reload yes
 browser "/usr/bin/vivaldi %u"
 download-full-page yes
 error-log "~/.config/newsboat/error.log"
+feed-sort-order lastupdated
+ignore-article "*" "title =~ \"Agile\" or title =~ \"Windows\" or title =~ \"Coding\" or title =~ \"Transexual\" or title =~ \"Diversity\""
 keep-articles-days 20
 max-items 100
 openbrowser-and-mark-jumps-to-next-unread yes
 refresh-on-startup yes
-reload-time 180
+reload-time 300
 reload-threads 10
+save-path "~/.config/newsboat"
 
 bind-key "LEFT" quit
 bind-key "RIGHT" open

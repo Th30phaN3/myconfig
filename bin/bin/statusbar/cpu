@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 #
-# Shows CPU temperature and CPU hogs with left click.
+# Shows CPU temperature and CPU hogs with right click.
 
 case $BLOCK_BUTTON in
-	3) mynote.sh "<b> CPU hogs</b>:<br>$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)" ;;
+	3) notify.sh "<b> CPU hogs:</b><br>$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)" ;;
 esac
 
 sensors | awk '/temp1/ {print $2}'

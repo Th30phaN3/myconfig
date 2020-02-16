@@ -20,7 +20,7 @@ set $WS8   8:VIII
 set $WS9   9:IX
 set $WS10 10:X
 
-# Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.
+# Font for window titles. Will also be used by the bar unless a different font is used in the bar block.
 font pango:Anonymice Nerd Font, Awesome 14
 
 # =============================================================================
@@ -28,33 +28,33 @@ font pango:Anonymice Nerd Font, Awesome 14
 # =============================================================================
 
 # Titles/borders colors
-set_from_resource $br-focus i3wm.color1 #8b2f45
-set_from_resource $text-focus i3wm.color8 #eeeeec
-set_from_resource $br-inactive i3wm.color7 #a0a0a0
-set_from_resource $text-inactive i3wm.color3 #babdb6
-set_from_resource $br-urgent i3wm.color5 #b5294a
-set_from_resource $window-bg i3wm.color0 #222222
+set_from_resource $br-focus         i3wm.color13 #8b2f45
+set_from_resource $text-focus       i3wm.color7  #eeeeec
+set_from_resource $br-inactive      i3wm.color8  #a0a0a0
+set_from_resource $text-inactive    i3wm.color15 #babdb6
+set_from_resource $br-urgent        i3wm.color1  #b5294a
+set_from_resource $window-bg        i3wm.color0  #222222
 
 # dmenu colors
-set_from_resource $dm-text i3wm.color2 #babdb6
-set_from_resource $dm-bg i3wm.color0 #222222
-set_from_resource $dm-text-focus i3wm.color1 #eeeeec
-set_from_resource $dm-bg-focus i3wm.color6 #8b2f45
+set_from_resource $dm-text          i3wm.color11 #babdb6
+set_from_resource $dm-bg            i3wm.color0  #222222
+set_from_resource $dm-text-focus    i3wm.color0  #eeeeec
+set_from_resource $dm-bg-focus      i3wm.color14 #8b2f45
 
 # i3bar colors
-set_from_resource $bar-bg i3wm.color0 #222222
-set_from_resource $bar-separator i3wm.color7 #ffffff
-set_from_resource $bar-text i3wm.color4 #eeeeec
+set_from_resource $bar-bg           i3wm.color0  #222222
+set_from_resource $bar-separator    i3wm.color7  #ffffff
+set_from_resource $bar-text         i3wm.color4  #eeeeec
 
 # Workspaces colors
-set_from_resource $wk-br-focus i3wm.color1 #4c7899
-set_from_resource $wk-bg-focus i3wm.color2 #285577
-set_from_resource $wk-text-focus i3wm.color8 #eeeeec
-set_from_resource $wk-br-active	i3wm.color3 #333333
-set_from_resource $wk-bg-active i3wm.color4 #222222
-set_from_resource $wk-text-inactive i3wm.color7 #888888
-set_from_resource $wk-br-urgent	i3wm.color5 #2f343a
-set_from_resource $wk-bg-urgent	i3wm.color6 #900000
+set_from_resource $wk-br-focus      i3wm.color2  #4c7899
+set_from_resource $wk-bg-focus      i3wm.color13 #285577
+set_from_resource $wk-text-focus    i3wm.color2  #eeeeec
+set_from_resource $wk-br-active	    i3wm.color12 #333333
+set_from_resource $wk-bg-active     i3wm.color14 #222222
+set_from_resource $wk-text-inactive i3wm.color0  #888888
+set_from_resource $wk-br-urgent	    i3wm.color1  #2f343a
+set_from_resource $wk-bg-urgent	    i3wm.color9  #900000
 
 #                       border		background	text		indicator	child_border
 client.focused          $br-focus	$br-focus       $text-focus     $br-focus	$br-focus
@@ -72,12 +72,14 @@ client.background       $window-bg
 # Start i3bar to display a workspace bar (plus the system information i3blocks)
 bar {
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
+	#status_command i3status -c ~/.config/i3/i3status.conf
 	position top
 	height 30
 	strip_workspace_numbers yes
 	tray_output none
 	separator_symbol "|"
 	font pango:Anonymice Nerd Font, Awesome 14
+	#verbose yes
 	colors
 	{
 	  background	$bar-bg
@@ -92,13 +94,6 @@ bar {
 	}
 }
 
-# i3-gaps
-gaps inner 5
-gaps outer 7
-
-# Disable window titlebars for i3-gaps
-for_window [class="^.*"] border pixel 5
-
 # =============================================================================
 # Assign window behavior
 # =============================================================================
@@ -106,18 +101,31 @@ for_window [class="^.*"] border pixel 5
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Enable floating mode for some windows by default
+# i3-gaps
+gaps inner 5
+gaps outer 7
+
+# Disable window titlebars for i3-gaps
+for_window [class="^.*"] border pixel 5
+
+# Modify behavior and sizes for some windows
 for_window [class="feh"] floating enable
 for_window [class="mupdf"] floating enable
-for_window [class="Tor Browser"] floating enable
+for_window [class="xsane"] floating enable
+for_window [class="lxappearance"] floating enable
 for_window [title="Android Emulator.*"] floating enable
-
-# Resize gtk file dialog
-for_window [window_role="GtkFileChooserDialog"] resize set 1000 600
-for_window [window_role="GtkFileChooserDialog"] move position center
+for_window [title="Gestionnaire de tâches - Vivaldi"] floating enable
+for_window [window_role="GtkFileChooserDialog"] resize set 1000 600, move position center
+for_window [window_role="tr-info"] resize set 740 570, move position center
+for_window [title="Libreoffice" window_type="splash"] resize set 800 600, move position center
+for_window [class="pgadmin4" window_type="normal"] move scratchpad, move position 1599 px 829 px
+for_window [title="pulsemixer"] floating enable, resize set 860 340, move position 1053 px 41 px
 
 # Enable automatic back and forth between workspaces
 workspace_auto_back_and_forth yes
+
+# The window will always be marked urgent, but the focus will not be stolen
+focus_on_window_activation urgent
 
 # Assign workspaces to specific outputs
 workspace $WS1 output DP2
@@ -125,36 +133,39 @@ workspace $WS2 output DP2
 workspace $WS3 output eDP1
 workspace $WS4 output eDP1
 
+# =============================================================================
+# Start programs
+# =============================================================================
+
 # Unclutter makes the mouse invisible after a brief period
 exec --no-startup-id unclutter
-# Starts Redshift
-exec --no-startup-id redshift -c ~/.config/redshift.conf
+# Starts redshift
+exec --no-startup-id redshift
 # Starts dunst for notifications
 exec --no-startup-id dunst
 # Exec autolock with custom lock
-exec --no-startup-id xautolock -time 5 -corners ---- -locker myi3lock-clock.sh
+exec --no-startup-id xautolock -time 5 -corners ---- -locker i3lock-clock.sh
 # Run the script to update the mpd i3block on change
 exec_always --no-startup-id ~/bin/statusbar/mpdupdate
+# Run the script to open windows in fibonacci style (h -> v -> h -> v...)
+exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
 
-# Exec workspaces layouts + programs on startup
-#exec --no-startup-id i3-msg 'workspace $WS2; append_layout ~/.config/i3/workspace-2.json; exec vivaldi'
-#exec --no-startup-id i3-msg 'workspace $WS3; append_layout ~/.config/i3/workspace-3.json; exec uxterm -title htop htop; exec uxterm -title log mycustomlivelog.sh'
-#exec --no-startup-id i3-msg 'workspace $WS4; append_layout ~/.config/i3/workspace-4.json; exec uxterm -title mpdclient -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf; exec uxterm -title ranger ranger' exec --no-startup-id i3-msg 'workspace $WS1'
+# Load saved layouts from previous x session on startup
+exec --no-startup-id i3reloadworkspaces.sh -l
 
 # =============================================================================
 # Keybinds
 # =============================================================================
 
-# Start a terminal (either with current path or $HOME)
-bindsym $mod+Tab exec uxterm -e "cd `xcwd` && $SHELL"
+# Start a terminal (either with path from focused window or $HOME)
+bindsym $mod+Shift+Return exec uxterm -e "cd $(xcwd) && $SHELL"
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Kill focused window
 bindsym $mod+q kill
 
-# Start dmenu (a program launcher)
-bindsym $mod+d exec "dmenu_run -i -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'Anonymice Nerd Font-14' -p 'dmenu'"
-bindsym $mod+Menu exec "dmenu_run -i -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'Anonymice Nerd Font-14' -p 'dmenu'"
+# Start patched dmenu (fuzzy match, mouse support, line height)
+bindsym $mod+d exec "dmenu_run -i -h 30 -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'Anonymice Nerd Font-14' -p 'dmenu'"
 
 # Move the current workspace to the next output (effectively toggles when you only have two outputs)
 bindsym $mod+x move workspace to output right
@@ -181,11 +192,11 @@ bindsym $mod+Ctrl+Down resize shrink height 5 px or 5 ppt
 bindsym $mod+Ctrl+Left resize grow width 5 px or 5 ppt
 
 # Increase inner gaps
-bindsym $mod+i		gaps inner current plus 5
+bindsym $mod+i		    gaps inner current plus 5
 # Reduces inner gaps
 bindsym $mod+Shift+i	gaps inner current minus 5
 # Increase outer gaps
-bindsym $mod+y		gaps outer current plus 5
+bindsym $mod+y		    gaps outer current plus 5
 # Reduces outer gaps
 bindsym $mod+Shift+y	gaps outer current minus 5
 # No gaps
@@ -201,10 +212,12 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # Take a screenshot
-bindsym --release Print exec --no-startup-id scrot -q 80 '%d-%m-%Y_%H:%M:%S.png' -z -e 'mv $f ~/pics/screenshots/'
+bindsym $mod+Print exec "scrot -q 80 'scrot_%Y-%m-%d_%H:%M:%S.png' -z -e 'mv $f ~/pics/screenshots/'; notify.sh 'Screenshot taken !'"
+bindsym --release $mod+Ctrl+Print exec "scrot -s -q 80 'scrot_%Y-%m-%d_%H:%M:%S.png' -z -e 'mv $f ~/pics/screenshots/'; notify.sh 'Screenshot taken !'"
 
 # Binds to custom scripts
-bindsym $mod+Insert	exec --no-startup-id myshowclipboard.sh
+bindsym $mod+Insert exec --no-startup-id showclipboard.sh
+bindsym $mod+Shift+s exec --no-startup-id striphosts.sh
 
 # Change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -220,7 +233,18 @@ bindsym $mod+space focus mode_toggle
 # Toggle i3bar
 bindsym $mod+b bar mode toggle
 
-# Switch to workspace
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+Menu move scratchpad
+
+# Show scratchpads
+bindsym $mod+Menu scratchpad show
+
+# Switch to next workspace
+bindsym $mod+Tab workspace --no-auto-back-and-forth next_on_output
+# Switch to previous workspace
+bindsym $mod+Shift+Tab workspace --no-auto-back-and-forth prev_on_output
+
+# Switch to specific workspace
 bindsym $mod+1 workspace $WS1
 bindsym $mod+2 workspace $WS2
 bindsym $mod+3 workspace $WS3
@@ -232,7 +256,7 @@ bindsym $mod+8 workspace $WS8
 bindsym $mod+9 workspace $WS9
 bindsym $mod+0 workspace $WS10
 
-# Move focused container to workspace
+# Move focused container to specific workspace
 bindsym $mod+Shift+1 move container to workspace $WS1
 bindsym $mod+Shift+2 move container to workspace $WS2
 bindsym $mod+Shift+3 move container to workspace $WS3
@@ -245,29 +269,30 @@ bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS10
 
 # Custom shortcuts
-bindsym $mod+Shift+v exec "vivaldi"
-bindsym $mod+Shift+l exec "myi3lock-clock.sh"
-bindsym $mod+Shift+t exec "transmission-gtk"
+bindsym $mod+Shift+a exec "uxterm -title pulsemixer -e pulsemixer"
+bindsym $mod+Shift+b exec "uxterm -title newsboat -e newsboat"
+bindsym $mod+Shift+h exec "uxterm -title htop -e htop"
+bindsym $mod+Shift+l exec "i3lock-clock.sh"
+bindsym $mod+Shift+n exec "uxterm -title ncmpcpp -e ncmpcpp"
 bindsym $mod+Shift+o exec "libreoffice"
-bindsym $mod+Shift+b exec "uxterm -e newsboat" && pkill -RTMIN+6 i3blocks
-bindsym $mod+Shift+n exec "uxterm -e ncmpcpp -c ~/.config/ncmpcpp/ncmpcpp.conf"
-bindsym $mod+Shift+w exec "uxterm -e weechat"
-bindsym $mod+Shift+r exec "uxterm -e ranger"
-bindsym $mod+Shift+a exec "uxterm -e pulsemixer"
+bindsym $mod+Shift+r exec "uxterm -title ranger -e ranger"
+bindsym $mod+Shift+t exec "transmission-gtk"
+bindsym $mod+Shift+v exec "launch-vivaldi.sh"
+bindsym $mod+Shift+w exec "uxterm -title weechat -e weechat"
 
 # Power options
 set $sysmenu "system: re[s]tart re[l]oad  [e]xit  [p]oweroff  re[b]oot"
 mode $sysmenu {
-	# exit i3 (logs you out of your X session)
-	bindsym e	exec i3-msg exit
-	# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+	# Exit i3 (logs you out of your X session)
+	bindsym e	exec "myi3reloadworkspaces.sh -s; i3-msg exit"
+	# Restart i3 (preserves your layout/session, can be used to upgrade i3)
 	bindsym s	restart
-	# reload the configuration file
+	# Reload the configuration file
 	bindsym l	reload
-	# shutdown the system
-	bindsym p	exec sudo shutdown -h now
-	# reboot the system
-	bindsym b	exec sudo reboot
+	# Shutdown the system
+	bindsym p	exec "i3reloadworkspaces.sh -s; sudo shutdown -h now"
+	# Reboot the system
+	bindsym b	exec "i3reloadworkspaces.sh -s; sudo reboot"
 	bindsym Return	mode "default"
 	bindsym Escape	mode "default"
 }

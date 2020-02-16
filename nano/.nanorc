@@ -6,33 +6,44 @@
 # |_| \_|\__,_|_| |_|\___/|_|  \___|
 # 
 
+set afterends
+set atblanks
 set autoindent
+set backup
+set backupdir ~/.local/share/nano_backup
 set casesensitive
 set cutfromcursor
+set historylog
 set nonewlines
-set atblanks
-set softwrap
 set positionlog
-set smooth
+set softwrap
+set suspend
+set tabsize 4
+set tabstospaces
+set titlecolor green,black
+set trimblanks
 set unix
+set zap
 
-bind ^C copytext main
-bind ^V uncut main
-bind ^X cut main
-bind ^S savefile main
+bind ^H help main
 bind ^Q exit main
-bind ^K comment main
-bind ^E lastline main
-bind ^B firstline main
-bind ^Z undo main
-bind ^A redo main
+bind ^S savefile main
 bind ^F whereis main
-bind ^G searchagain main
 bind ^P findprevious main
 bind ^N findnext main
 bind ^R replace main
+bind ^X cut main
+bind ^C copy main
+bind ^V paste main
+bind ^U cutrestoffile main
+#bind ^J justify main
+bind ^W wordcount main
+bind ^K comment main
+bind ^B firstline main
+bind ^E lastline main
+bind ^Z undo main
+bind ^A redo main
 bind ^L refresh main
-bind ^W cutrestoffile main
 
 include "~/.nano/apacheconf.nanorc"
 include "~/.nano/arduino.nanorc"
@@ -40,9 +51,7 @@ include "~/.nano/asciidoc.nanorc"
 include "~/.nano/asm.nanorc"
 include "~/.nano/awk.nanorc"
 include "~/.nano/c.nanorc"
-include "~/.nano/clojure.nanorc"
 include "~/.nano/cmake.nanorc"
-include "~/.nano/coffeescript.nanorc"
 include "~/.nano/colortest.nanorc"
 include "~/.nano/conf.nanorc"
 include "~/.nano/csharp.nanorc"
@@ -57,9 +66,6 @@ include "~/.nano/gentoo.nanorc"
 include "~/.nano/git.nanorc"
 include "~/.nano/glsl.nanorc"
 include "~/.nano/go.nanorc"
-include "~/.nano/groff.nanorc"
-include "~/.nano/haml.nanorc"
-include "~/.nano/haskell.nanorc"
 include "~/.nano/html.nanorc"
 include "~/.nano/html.j2.nanorc"
 include "~/.nano/ical.nanorc"
@@ -72,7 +78,6 @@ include "~/.nano/json.nanorc"
 include "~/.nano/keymap.nanorc"
 include "~/.nano/kickstart.nanorc"
 include "~/.nano/ledger.nanorc"
-include "~/.nano/lisp.nanorc"
 include "~/.nano/lua.nanorc"
 include "~/.nano/makefile.nanorc"
 include "~/.nano/man.nanorc"
@@ -92,25 +97,17 @@ include "~/.nano/pkgbuild.nanorc"
 include "~/.nano/po.nanorc"
 include "~/.nano/pov.nanorc"
 include "~/.nano/privoxy.nanorc"
-include "~/.nano/puppet.nanorc"
 include "~/.nano/python.nanorc"
 include "~/.nano/reST.nanorc"
-include "~/.nano/rpmspec.nanorc"
 include "~/.nano/ruby.nanorc"
-include "~/.nano/rust.nanorc"
-include "~/.nano/scala.nanorc"
 include "~/.nano/sed.nanorc"
 include "~/.nano/sh.nanorc"
 include "~/.nano/sls.nanorc"
 include "~/.nano/sql.nanorc"
-include "~/.nano/svn.nanorc"
-include "~/.nano/swift.nanorc"
 include "~/.nano/tcl.nanorc"
 include "~/.nano/tex.nanorc"
 include "~/.nano/vala.nanorc"
-include "~/.nano/verilog.nanorc"
 include "~/.nano/vi.nanorc"
 include "~/.nano/xml.nanorc"
 include "~/.nano/xresources.nanorc"
 include "~/.nano/yaml.nanorc"
-include "~/.nano/yum.nanorc"

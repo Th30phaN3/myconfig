@@ -5,18 +5,10 @@
 # | |_) / ___ \ ___) |  _  |  _ <| |___
 # |____/_/   \_\____/|_| |_|_| \_\\____|
 #
-# This file is sourced by all *interactive* bash shells on startup,
-# including some apparently interactive shells such as scp and rcp
-# that can't tolerate any output.  So make sure this doesn't display
-# anything or bad things will happen !
+# This file is sourced by all *interactive* bash shells on startup.
 
-# Test for an interactive shell. There is no need to set anything
-# past this point for scp and rcp and it's important to refrain from
-# outputting anything in those cases.
-if [[ $- != *i* ]] ; then
-  # Shell is non-interactive.  Be done now!
-  return
-fi
+# Test for an interactive shell.
+[[ $- != *i* ]] && return
 
 # No coredumps
 ulimit -S -c 0
@@ -31,6 +23,7 @@ shopt -s cdspell
 shopt -s checkhash
 shopt -s checkwinsize
 shopt -s cmdhist
+shopt -s extglob
 shopt -s histappend histreedit histverify
 shopt -s no_empty_cmd_completion
 shopt -s sourcepath
@@ -39,9 +32,9 @@ shopt -s sourcepath
 shopt -u mailwarn
 unset MAILCHECK
 
-# Don't put duplicate lines in the history or spaces, add timestamps
+# Don't put duplicate/empty lines in the history and add timestamps
 HISTCONTROL=ignoredups:ignorespace
-HISTSIZE=100000
+HISTSIZE=10000
 HISTFILESIZE=200000
 HISTTIMEFORMAT="%F %T "
 
@@ -50,63 +43,85 @@ HISTTIMEFORMAT="%F %T "
 # ( ) Hide shell job control messages
 (cat ~/.cache/wal/sequences &)
 
-# Export $DBUS_SESSION_BUS_ADDRESS
+# Export $DBUS_SESSION_BUS_ADDRESS and DBUS_SESSION_BUS
 export $(dbus-launch)
 
-# Colors for the prompt
-RED='\[\e[0;31m\]'
-GREEN='\[\033[38;5;2m\]'
-YELLOW='\[\033[38;5;226m\]'
-#Remove effects
-DF='\[$(tput sgr0)\]'
-#Bold text
-BOLD='\[$(tput bold)\]'
+# Prompt
+if [ -h ~/.local/bin/gitprompt.sh ]; then
+  . ~/.local/bin/gitprompt.sh
+fi
+NOCOLOR="\[\e[m\]"
+BOLD="\[\e[1m\]"
+INVERSE="\[\e[7m\]"
+BLA="\[\e[30m\]"
+RED="\[\e[31m\]"
+GRE="\[\e[32m\]"
+BRO="\[\e[33m\]"
+BLU="\[\e[34m\]"
+PUR="\[\e[35m\]"
+CYA="\[\e[36m\]"
+GRA="\[\e[37m\]"
+njobs() { n=$(jobs | wc -l) && [ "$n" -gt 0 ] && echo " $n"; }
+PS1="${BOLD}${BRO}\w\$(__git_ps1 ' [%s]')${RED}\$(njobs)${NOCOLOR}\$ "
 
-# Git prompt
-GIT_PROMPT_START="${YELLOW}\w${DF}"
-GIT_PROMPT_END="\$ "
-GIT_PROMPT_IGNORE_SUBMODULES=1
-GIT_PROMPT_THEME=Solarized
-GIT_PS1_SHOWDIRTYSTATE=yes
-source ~/app/bash-git-prompt/gitprompt.sh
+# Source Git flow bash completion
+if [ -f ~/app/git-flow-completion/git-flow-completion.sh ]; then
+  . ~/app/git-flow-completion/git-flow-completion.sh
+fi
 
-# Env variables
-export VISUAL=vim
-export TERMINAL=uxterm
-export TZ=Europe/Paris
-export CDPATH=:..:~
-export SASS_LIBSASS_PATH=/usr/local/lib/libsass
-export SASS_SASSC_PATH=/usr/local/lib/sassc
-export XDG_DATA_HOME=~/.local/share
-export XDG_CONFIG_HOME=~/.config
-export TASKRC=~/.config/task/.taskrc
-export TASKDATA=~/.local/share/task
-export TRANSMISSION_HOME=~/.config/transmission
-export WWW_HOME=~/.config/w3m
-export GNUPGHOME=~/.config/gnupg
-export WEECHAT_HOME=~/.config/weechat
-export GOPATH=~/.go
-export EXIFTOOL_HOME=~/.config/exiftool
-export EIX_LIMIT=0
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export DOTNET_ROOT=~/.sdk/dotnet-core-sdk
-export MSBuildSDKsPath=$DOTNET_ROOT/sdk/
-PATH=${DOTNET_ROOT}:$(go env GOPATH)/bin:~/bin:~/.local/bin:$PATH
-HOME=/home/wegeee
-EDITOR=nano
+# Env variables (export allows use of variables in shell)
+#export TERMINAL=uxterm
+#TZ=Europe/Paris
+##CDPATH=:..:~
+#SASS_LIBSASS_PATH=/usr/local/lib/libsass
+#SASS_SASSC_PATH=/usr/local/lib/sassc
+#export XDG_DATA_HOME=~/.local/share
+#export XDG_CONFIG_HOME=~/.config
+#export TASKRC=~/.config/task/.taskrc
+#export TASKDATA=~/.local/share/task
+#export TRANSMISSION_HOME=~/.config/transmission
+#export WWW_HOME=~/.config/w3m
+#export GRADLE_HOME=/usr/bin/gradle-5.2.1
+#export GNUPGHOME=~/.config/gnupg
+#export WEECHAT_HOME=~/.config/weechat
+#export GOPATH=~/.go
+#export EXIFTOOL_HOME=~/.config/exiftool
+#EIX_LIMIT=0
+#DOTNET_ROOT=/opt/dotnet_core
+#DOTNET_CLI_TELEMETRY_OPTOUT=1
+#DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+#MSBuildSDKsPath=$DOTNET_ROOT/sdk/2.2.105/Sdks
+#PATH=${DOTNET_ROOT}:$(go env GOPATH)/bin:~/bin:~/.local/bin:$PATH
+#HOME=/home/wegeee
+#EDITOR=nano
+export SONAR_SCANNER_VERSION=4.2.0.1873
+export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+export SONAR_SCANNER_OPTS="-server"
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWCOLORHINTS=true
+GIT_PS1_SHOWUPSTREAM="auto verbose git"
+GIT_PS1_STATESEPARATOR="|"
 
 # Change ls colors
 eval $(dircolors ~/.dircolors)
 
 # Source Nerd Font icons
-source ~/.local/share/fonts/i_all.sh
+if [ -f ~/.local/share/fonts/i_all.sh ]; then
+  . ~/.local/share/fonts/i_all.sh
+fi
 
 # Source aliases
 if [ -f ~/.bash_aliases ]; then
-. ~/.bash_aliases
+  . ~/.bash_aliases
 fi
 
 # Source functions
 if [ -f ~/.bash_functions ]; then
-. ~/.bash_functions
+  . ~/.bash_functions
 fi
+
+# Update terminal title before every command using history (strip command number and dates)
+trap 'echo -ne "\033]2;$(xcwd) -> $(history 1 | sed "s/^[ ]*[0-9]*[ ]*[0-9\-]*[ ]*[0-9:]*[ ]*//g")\007"' DEBUG

@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 #
-# Show used RAM and memory hogs with left click.
+# Show used RAM and memory hogs with right click.
 
 case $BLOCK_BUTTON in
-	3) notify-send "<b> Memory hogs:</b><br>$(ps axch -o cmd:15,%mem --sort=-%mem | head)" ;;
+	3) notify.sh "<b> Memory hogs:</b><br>$(ps axch -o cmd:15,%mem --sort=-%mem | head)" ;;
 esac
 
 free -h | awk '/^Mem:/ {print $3 "/" $2}'

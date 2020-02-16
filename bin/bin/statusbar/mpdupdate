@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+# Whenever the mpd state changes, update the mpd module.
 
-[ "$(pgrep -x "$(basename "$0")" | wc -l)" -gt 2 ] && exit
+kill -0 "$(cat /tmp/mpdupdate)" 2>/dev/null && exit || echo $$ > /tmp/mpdupdate
 
 sleep 5 && while : ; do
-	pgrep -x mpd || exit
-	mpc idle > /dev/null
-	pkill -RTMIN+11 i3blocks ;
+  pkill -RTMIN+11 i3blocks
+  mpc idle >/dev/null || exit
 done

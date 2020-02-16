@@ -1,26 +1,27 @@
-#!/bin/sh
+#!/bin/bash
 #
-# Give a battery name (e.g. BAT0) as an argument.
+# Display battery level and shows info with right click.
+# Take a battery name (e.g. BAT0) as an argument.
 
-# get xresources colors
-for x in "$(xrdb -query | sed "s/.*\./export /g;s/:\s*/=\"/g;s/$/\"/g")"; do eval "$x"; done
+# Get xresources colors
+for x in "$(xrdb -query | grep "*.color" | sed "s/.*\./export /g;s/:\s*/=\"/g;s/$/\"/g")"; do eval "$x"; done
 
 case $BLOCK_BUTTON in
-    3) mynote.sh ": discharging<br>: stagnant charge<br>: charging<br>: charged" ;;
+    3) notify.sh ": discharging<br>: stagnant charge<br>: charging<br>: charged" ;;
 esac
 
 CAPACITY=$(cat /sys/class/power_supply/"$1"/capacity) || exit
 STATUS=$(cat /sys/class/power_supply/"$1"/status)
 
 if [ "$CAPACITY" -ge 75 ]; then
-	COLOR="$color1"
+  COLOR="$color5"
 elif [ "$CAPACITY" -ge 50 ]; then
-	COLOR="$color7"
+  COLOR="$color2"
 elif [ "$CAPACITY" -ge 25 ]; then
-	COLOR="$color5"
+  COLOR="$color3"
 else
-	COLOR="$color2"
-	mynote.sh "Battery level low !" "critical"
+  COLOR="$color1"
+  notify.sh "Battery level low !" "critical"
 fi
 
 [ "$STATUS" = "Charging" ] && COLOR="$color7"

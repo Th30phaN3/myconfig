@@ -1,0 +1,3 @@
+slide -q -Y -Z --on-last-slide quit --auto-rotate -F -r
+thumb -P -d -t
+act -q -Y -Z --auto-rotate -F -r -A "trash-put %F"

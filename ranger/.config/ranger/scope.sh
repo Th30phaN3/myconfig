@@ -39,20 +39,29 @@ HIGHLIGHT_TABWIDTH=8
 HIGHLIGHT_STYLE='pablo'
 PYGMENTIZE_STYLE='autumn'
 
+drop_bigsize() {
+  # 102400 == 100 MB * 1024
+  if [[ $(du "${FILE_PATH}" | cut -f1) -gt 102400 ]]; then
+    echo '----- FILE TOO BIG -----'
+    exit 0
+  fi
+}
 
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
         # Archive
         a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
         rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
-            atool --list -- "${FILE_PATH}" && exit 5
+            drop_bigsize
             bsdtar --list --file "${FILE_PATH}" && exit 5
             exit 1;;
         rar)
+            drop_bigsize
             # Avoid password prompt by providing empty password
             unrar lt -p- -- "${FILE_PATH}" && exit 5
             exit 1;;
         7z)
+            drop_bigsize
             # Avoid password prompt by providing empty password
             7z l -p -- "${FILE_PATH}" && exit 5
             exit 1;;
@@ -75,8 +84,6 @@ handle_extension() {
         htm|html|xhtml)
             # Preview as text conversion
             w3m -dump "${FILE_PATH}" && exit 5
-            lynx -dump -- "${FILE_PATH}" && exit 5
-            elinks -dump "${FILE_PATH}" && exit 5
             ;; # Continue with next handler on failure
     esac
 }
@@ -101,12 +108,11 @@ handle_image() {
             # `w3mimgdisplay` will be called for all images (unless overriden as above),
             # but might fail for unsupported types.
             exit 7;;
-
         # Video
         video/*)
         # Thumbnail
-        	ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
-        	exit 1;;
+            ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
+            exit 1;;
         # PDF
         application/pdf)
             pdftoppm -f 1 -l 1 \
@@ -123,7 +129,7 @@ handle_mime() {
     local mimetype="${1}"
     case "${mimetype}" in
         # Text
-        text/* | */xml)
+        text/* | */xml | application/json )
             # Syntax highlight
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2
@@ -142,12 +148,10 @@ handle_mime() {
         # Image
         image/*)
             # Preview as text conversion
-            img2txt --gamma=0.6 --width="${PV_WIDTH}" -- "${FILE_PATH}" && exit 4
             exiftool "${FILE_PATH}" && exit 5
             exit 1;;
         # Video and audio
         video/* | audio/*)
-            mediainfo "${FILE_PATH}" && exit 5
             exiftool "${FILE_PATH}" && exit 5
             exit 1;;
     esac

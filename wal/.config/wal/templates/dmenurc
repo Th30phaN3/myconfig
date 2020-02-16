@@ -1,0 +1,2 @@
+export DMENU='dmenu -i -h 30 -nf "{color11}" -nb "{color0}" -sf "{color0}" -sb "{color14}" -fn "Anonymice Nerd Font-14"'
+export DMENU_RUN='dmenu_run -i -h 30 -nf "{color11}" -nb "{color0}" -sf "{color0}" -sb "{color14}" -fn "Anonymice Nerd Font-14" -p "run:"'

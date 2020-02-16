@@ -1,16 +1,35 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Display wifi (plus quality and ssid) and ethernet.
+# Shows info with right click.
+
+# Get xresources colors
+for x in "$(xrdb -query | grep "*.color" | sed "s/.*\./export /g;s/:\s*/=\"/g;s/$/\"/g")"; do eval "$x"; done
 
 case $BLOCK_BUTTON in
-	3) mynote.sh ": no wifi connection<br>: wifi connection with quality<br>: no ethernet<br>: ethernet working" ;;
+  3) WIFI_SPOTS=$(wpa_cli scan_results | sed 1,2d | awk '{print $3,$5}')
+     notify.sh "${WIFI_SPOTS}"
+     ;;
 esac
 
 [ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && WIFIICON=""
+COLOR="$color12"
 
 if [ ! -n "$WIFIICON" ]; then
   WIFIICON=$(grep "^\s*w" /proc/net/wireless | awk '{ print "", int($3 * 100 / 70) "%" }')
   SSIDNAME=$(wpa_cli status | grep "^ssid=" | sed -e 's/ssid=\(.*\)/(\1)/g')
+  if [[ $SSIDNAME == *"IMIE"* ]]; then
+    if PORTAL=$(ping -c 1 controller.access.network); then
+      COLOR="$color2"
+    else
+      RES=$(echo $PORTAL | grep -oP '\d+(?=% packet loss)')
+      if [ "$RES" -eq 100 ]; then
+        COLOR="$color9"
+      else
+        COLOR="$color2"
+      fi
+    fi
+  fi
 fi
 
-printf "%s%s %s" "$WIFIICON" "$SSIDNAME" "$(cat /sys/class/net/e*/operstate | sed 's/down//;s/unknown//;s/up//')"
+printf "%s<span color='%s'>%s</span> %s" "$WIFIICON" "$COLOR" "$SSIDNAME" "$(cat /sys/class/net/e*/operstate | sed 's/down//;s/unknown//;s/up//')"
