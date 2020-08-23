@@ -10,5 +10,5 @@ transmission-remote -l | grep % | sed $REPLACE | sort -h | uniq -c | sed $ICONS 
 
 case $BLOCK_BUTTON in
   1) xdg-open "http://localhost:9091/transmission/web/" &>/dev/null;;
-  3) notify.sh ": paused<br>: waiting<br>: downloading<br>: uploading (not finished)<br>: done<br>: done and seeding" ;;
+  3) notify.sh "Help:" ": paused<br>: waiting<br>: downloading<br>: uploading (not finished)<br>: done<br>: done and seeding" ;;
 esac

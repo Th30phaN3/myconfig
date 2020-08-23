@@ -41,6 +41,7 @@ r = reset
 sl = stash list
 sa = stash apply
 ss = stash save
+toob = "git stash && git checkout <branch> && git stash pop"
 cleanup = !git reset --hard && git clean -f
 alias = config --get-regexp 'alias.*'
 logol = log --pretty=format:"%h\\ %s\\ [%cn]"

@@ -5,15 +5,33 @@
 # |  _| | |_| | |\  | |___  | |  | | |_| | |\  |___) |
 # |_|    \___/|_| \_|\____| |_| |___\___/|_| \_|____/
 #
+# These functions depends on aliases described in .bash_aliases
+# ##<function name>: <description>
+
+# ranger: Override "ranger", allows to run same instance of ranger from shell inside ranger
+ranger()
+{
+  if [ -z "$RANGER_LEVEL" ]; then
+    /usr/bin/ranger "$@"
+  else
+    exit
+  fi
+}
+
+## func_help: Display help for $1 (custom bash function)
+func_help() { grep "## .*$1.*" "$HOME"/.bash_functions | grep -v "## $1" | sort ; }
 
 ## mcd: Create $1 directory and move into it
-mcd() { mkdir -p $1; cd $1; }
+mcd() { mkdir -p "$1"; cd "$1" || return; }
 
 ## cls: Move into $1 directory and list files
-cls() { cd "$1"; ll; }
+cls() { cd "$1" || return; ll; }
 
 ## fdup: Find and print duplicate lines in $1 (filename)
-fdup() { sort "$1" | uniq -cd | sort -nr; }
+fdup() { sort "$1" | uniq -cd | sort -nr ; }
+
+## esearch: Search for $1 ebuild (main tree + overlays) or as a python package via pip if not found
+esearch() { eix -R "$1" || pip search "$1" ; }
 
 ## cleanhome: Remove junk, cache data, history files, etc...
 cleanhome()
@@ -22,14 +40,14 @@ cleanhome()
   local LOGFILE="/var/log/cleanhome.log"
   history -cw
   echo "Clean effectued on $(date +%c)" 1>> "$LOGFILE" 2> /dev/null
-  while IFS= read -r line
+  while IFS= read -r LINE
   do
-    \rm -rv $line 1>> "$LOGFILE" 2> /dev/null
+    \rm -rv "$LINE" 1>> "$LOGFILE" 2> /dev/null
   done < "$JUNKLIST"
 }
 
 ## backup: Make a backup of $1 (filename)
-backup() { cp "$1"{,.bak}; }
+backup() { cp "$1"{,.bak} ; }
 
 ## mymount: Mount based on filesystems ($1 is either "android" or block device name, $2 is mountpoint)
 mymount()
@@ -44,7 +62,7 @@ mymount()
         else
           FSTYPE=$(lsblk -lfmp | grep "$1" | sed "s/[^ ]* \([[:alnum:]]\+\).*/\1/g")
           SUDO=''
-          if (( $EUID != 0 )); then
+          if (( EUID != 0 )); then
             SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
           fi
           case "$FSTYPE" in
@@ -56,15 +74,32 @@ mymount()
   fi
 }
 
-## editassudo: Run $1 (text editor) as sudo if $2 (filename) is not writable by standard user
+## editassudo: Run $EDITOR as sudo if $1 (filename) is not writable by standard user
 editassudo()
 {
+  local sudo edit
   sudo=
-  editor="$1"
-  if test -e "$2" && test ! -w "$2"; then
+  edit="${EDITOR:-VISUAL}"
+  if test -e "$1"; then
+    if test ! -w "$1"; then
+      if test -t 0 && test -t 2; then
+        printf "%s is not writable. Edit with sudo? [y/n]\n" "$1" 1>&2
+        read -rn 1
+        case $REPLY in
+          y|Y|yes|Yes) sudo=true;;
+          n|N|no|No) sudo=;;
+          *) printf "\nExpected y or n. Exiting.\n" 1>&2
+             exit 1;;
+        esac
+      else
+        printf "%s is not writable. Fix the permissions." "$1" 1>&2
+        exit 1
+      fi
+    fi
+  elif test ! -w .; then
     if test -t 0 && test -t 2; then
-      printf "%s is not writable. Edit with sudo? [y/n]\n" "$2" 1>&2
-      read -n 1
+      printf "%s is not writable. Edit with sudo? [y/n]\n" "$1" 1>&2
+      read -rn 1
       case $REPLY in
         y|Y|yes|Yes) sudo=true;;
         n|N|no|No) sudo=;;
@@ -72,25 +107,25 @@ editassudo()
            exit 1;;
       esac
     else
-      printf "%s is not writable. Fix the permissions." "$2" 1>&2
+      printf "%s is not writable. Fix the permissions." "$1" 1>&2
       exit 1
     fi
   fi
-  ${sudo:+sudo} "$1" "$2"
+  ${sudo:+sudo} "$edit" "$1"
 }
 
 ## sysbackup: Backup the entire system (! WARNING ! CAN TAKE A LONG TIME !)
 sysbackup()
 {
   printf "WARNING ! This command will perform a global backup of your system and may take a long time to complete. Do you wish to proceed ? Type 'y' to proceed, any other character to cancel.\n"
-  read OK
+  read -r OK
   if [ "$OK" != "y" ]; then
     echo "User cancelled"
     exit
   fi
   TARFILE="$HOME/backup/sysbackup-$(date +%F).tar.xz"
   SUDO=''
-  if (( $EUID != 0 )); then
+  if (( EUID != 0 )); then
     SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
   fi
   "$SUDO" tar --exclude-from="$HOME/backup/sys_exclude" -cJpvf "$TARFILE" /
@@ -100,14 +135,14 @@ sysbackup()
 ubackup()
 {
   printf "WARNING ! This command will perform a global backup of your data and may take a long time to complete. Do you wish to proceed ? Type 'y' to proceed, any other character to cancel.\n"
-  read OK
+  read -r OK
   if [ "$OK" != "y" ]; then
     echo "User cancelled"
     exit
   fi
   TARFILE="$HOME/backup/databackup-$(date +%F).tar.xz"
   SUDO=''
-  if (( $EUID != 0 )); then
+  if (( EUID != 0 )); then
     SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
   fi
   "$SUDO" tar --exclude-from="$HOME/backup/data_exclude" -cJpvf "$TARFILE" "$HOME"
@@ -126,14 +161,17 @@ safe_rm()
     s=$(basename "$f")
     /bin/mv "$f" "$d/${t}_$s" || break
   done
-  echo -e "[$? $t $(pwd)]$@\n" >> "$d/log_rm.txt"
+  echo -e "[$? $t $(pwd)]$*\n" >> "$d/log_rm.txt"
 }
+
+## tpt: Put the file $1 in the Trash with its associated image-preview
+tpt() { tp "${1}" && tp Thumbnails/"${1}.png" ; }
 
 ## ff: Find a file with pattern $1
 ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
 ## fe: Find a file with pattern $1 and execute $2 on it
-fe() { find . -type f -iname '*'"${1:-}"'*' -exec ${2:-file} {}; }
+fe() { find . -type f -iname '*'"${1:-}"'*' -exec "${2:-file}" {} \; ; }
 
 ## fstr: Find $1 (pattern) in $2 (filename pattern) and highlight result
 fstr()
@@ -148,12 +186,12 @@ fstr()
       *) echo "$usage"; return ;;
     esac
   done
-  shift $(( $OPTIND - 1 ))
+  shift $(( OPTIND - 1 ))
   if [ "$#" -lt 1 ]; then
     echo "$usage"
     return;
   fi
-  find . -type f -name "${2:-*}" -print0 | xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
+  find . -type f -name "${2:-*}" -print0 | xargs -0 egrep --color=always -sn "${mycase}" "$1" 2>&- | more
 }
 
 ## swap: Swap $1 with $2 (filenames)
@@ -161,8 +199,8 @@ swap()
 {
   local TMPFILE=tmp.$$
   [ $# -ne 2 ] && echo "swap: 2 arguments needed" && return 1
-  [ ! -e $1 ] && echo "swap: $1 does not exist" && return 1
-  [ ! -e $2 ] && echo "swap: $2 does not exist" && return 1
+  [ ! -e "$1" ] && echo "swap: $1 does not exist" && return 1
+  [ ! -e "$2" ] && echo "swap: $2 does not exist" && return 1
   mv "$1" "$TMPFILE"
   mv "$2" "$1"
   mv "$TMPFILE" "$2"
@@ -171,7 +209,7 @@ swap()
 ## rmprefix: Remove $2 prefix from all files with $1 extension
 rmprefix()
 {
-  for f in *.$1; do
+  for f in *."$1"; do
     mv "$f" "${f/$2/}"
   done
 }
@@ -179,12 +217,12 @@ rmprefix()
 ## addprefix: Add $2 prefix from all files with $1 extension
 addprefix()
 {
-  for f in *.$1; do
+  for f in *."$1"; do
     mv "$f" "$2${f%%}"
   done
 }
 
-## extract: extract $1 (archive) based on extension
+## extract: Extract $1 (archive) based on extension
 extract()
 {
   if [ -f "$1" ] ; then
@@ -221,7 +259,7 @@ mytop()
   history | awk "$COUNT" | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n10
 }
 
-## pong: Nothing more useful than watching your cursor bounce
+## pong: Nothing more useful than watching your cursor bounce (cannot be stopped !)
 pong()
 {
   yes $COLUMNS $LINES | awk 'BEGIN{x=y=e=f=1}{if(x==$1||!x){e*=-1};if(y==$2||!y){f*=-1};x+=e;y+=f;printf "\033[%s;%sH",y,x;system("sleep .02")}'
@@ -233,18 +271,8 @@ ntwk()
   echo "Ethernet:  $(ifconfig enp0s25 | awk '/inet/ { print $2 } ' | tr '\n' ' ')"
   echo "Wifi:      $(ifconfig wlo1 | awk '/inet/ { print $2 } ' | tr '\n' ' ')"
   echo "Public IP: $(curl -s ifconfig.me)"
-  echo "DHCP:      $(cat /etc/resolv.conf | sed '/^#/d' | tr '\n' ' ')"
+  echo "DHCP:      $(sed '/^#/d' /etc/resolv.conf | tr '\n' ' ')"
   echo -e "Routes:\n$(ip route)"
-}
-
-# Allows to run same instance of ranger from shell inside ranger
-ranger()
-{
-  if [ -z "$RANGER_LEVEL" ]; then
-    /usr/bin/ranger "$@"
-  else
-    exit
-  fi
 }
 
 ## mvfltosamedir: Move files in sub-directories with $1 extension to $2 directory (preserve duplicates)
@@ -261,7 +289,7 @@ stripurls()
   then
     touch "$FILETOWRITE"
   fi
-  while read l; do
+  while read -r l; do
     # keep only domain name
     DN=$(echo "$l" | sed -e 's|^[^/]*//||' -e 's|/.*$||')
     echo "0.0.0.0 $DN" >> "$FILETOWRITE"
@@ -275,7 +303,7 @@ stripurls()
 ## livelog: Display a log including all errors from multiple log files
 livelog()
 {
-  multitail -D -Cs -E "[Ee]rror" --no-repeat --mergeall \
+  multitail --config "$HOME/.config/multitail/multitail.conf" -ts -M 0 -D -Cs -E "[Ee]rror" --no-repeat --mergeall \
   /var/log/Xorg.0.log \
   /var/log/Xorg.1.log \
   /var/log/Xorg.2.log \
@@ -296,8 +324,6 @@ livelog()
   /var/log/kern.log \
   /var/log/lpr.log \
   /var/log/messages \
-  /var/log/mpd \
-  /var/log/newsboat.log \
   /var/log/syslog \
   /var/log/user.log \
   /var/log/wpa_supplicant.log \
@@ -310,19 +336,19 @@ gifwal()
   local FILE DIR_GIF CMD
   DIR_GIF=$HOME/pics/wallpapers/gif
   #Get 1 random file from directory
-  FILE=$(ls $DIR_GIF | shuf -n 1)
+  FILE=$(find "$DIR_GIF" -type f | shuf -n 1)
   #Kill all xwinwrap process (alternative: pidof xwinwrap | kill)
   killall -q xwinwrap
-  CMD="xwinwrap -g 1920x1080 -ov -- mpv --no-terminal --loop-file=inf --no-stop-screensaver --no-input-default-bindings --no-osc --osd-level=0 -wid WID $DIR_GIF/$FILE"
+  CMD="xwinwrap -g 1920x1080 -ov -- mpv --no-terminal --loop-file=inf --no-stop-screensaver --no-input-default-bindings --no-osc --osd-level=0 -wid WID $FILE"
   #Detach cmd from terminal
-  nohup $CMD > /dev/null 2>&1 &
+  nohup "$CMD" > /dev/null 2>&1 &
 }
 
 ## pserv: Start a local phph test server with random port
 pserv()
 {
   local PORT
-  PORT=$(($RANDOM%6000+2001))
+  PORT=$((RANDOM%6000+2001))
   echo "Starting PHP test server on port $PORT..."
   #php -S 127.0.0.1:$PORT
   php bin/console server:start 127.0.0.1:$PORT
@@ -332,7 +358,7 @@ pserv()
 typethis()
 {
   if [ -r "$1" ]; then
-    cat "$1" | pv -qL 10
+    pv -qL 10 "$1"
   else
     echo "$1" | pv -qL 10
   fi
@@ -353,15 +379,15 @@ atmp3()
 ## togoodmp3: Convert files with $1 extension to 220-260kbps mp3 files
 togoodmp3()
 {
-  for f in *.$1; do
+  for f in *."$1"; do
     ffmpeg -hide_banner -i "$f" -acodec libmp3lame -aq 0 "TGMP3_${f%.$1}.mp3"
   done
 }
 
-## m2ts_to_mp4: Transform $1 (m2ts file) to mp4 file with 1920x1080 resolution (CPU-intensive function !)
-m2ts_to_mp4()
+## m2tstomp4: Transform $1 (m2ts file) to mp4 file with 1920x1080 resolution (CPU-intensive function !)
+m2tstomp4()
 {
-  if (( $EUID != 0 )); then
+  if (( EUID != 0 )); then
     SUDO='sudo'
   fi
   "$SUDO" nice --10 ffmpeg -hide_banner -i "$1" -ar 48000 -ab 128k -vcodec libx264 -s 1920x1080 -aspect 16:9 -crf 25 "${1%.m2ts}.mp4"
@@ -370,10 +396,10 @@ m2ts_to_mp4()
 ## recordX: Record x11 screen and save it as "$1.avi" (or "xrecord.avi" by default)
 recordX() { ffmpeg -f X11grab -s 1920x1080 -r 30 -i :0.0 -qscale 0 -vcodec huffyuv "${1:-xrecord}.avi" ; }
 
-## cutvid: Cut portion of video $1 beginning from $2 (h:m:s) to $3 (h:m:s)
+## cutvid: Cut portion of video $1 beginning from $2 (h:m:s) to $3 (h:m:s) for a simple cut
 cutvid() { ffmpeg -hide_banner -i "$1" -c copy -ss "$2" -to "$3" "kut_$1" ; }
 
-## kutvid: Cut portion of video $1 beginning from $2 (h:m:s) to $3 (h:m:s)
+## kutvid: Cut portion of video $1 beginning from $2 (h:m:s) to $3 (h:m:s) for consecutive cuts
 kutvid()
 {
   local NWFILE NB
@@ -388,42 +414,45 @@ kutvid()
   ffmpeg -hide_banner -ss "$2" -i "$1" -to "$3" -c copy -copyts -avoid_negative_ts 1 "$NWFILE"
 }
 
-## mergevid: Concatenate multiple videos together (should be listed in order) with format $1 into new video
-mergevid() { ffmpeg -hide_banner -f concat -safe 0 -i <(printf "file '$PWD/%s'\n" ./*."$1") -c copy "$RANDOM.$1" ; }
+## mergvid: Concatenate multiple videos together (should be listed in order) with format $1 into new video
+mergvid() { ffmpeg -hide_banner -f concat -safe 0 -i <(printf "file '$PWD/%s'\n" ./*."$1") -c copy "$RANDOM.$1" ; }
 
 ## nicevid: Reencode video $1 using 1920x1080 resolution and H264
 nicevid() { ffmpeg -hide_banner -i "$1" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${1%.*}.mp4" ; }
 
-## cleanvids: Reencode all large mp4 videos (size superior to 2G) using 1920x1080 resolution and H264 (CPU-intensive function !)
+## cleanvids: Reencode all large mp4 videos (size superior to 1.8G) using 1920x1080 resolution and H264 (CPU-intensive function !)
 cleanvids()
 {
-  local SUDO MAXSIZE ACTUALSIZE
-  MAXSIZE=2001000000 #2.0G
+  local SUDO MAXSIZE ACTUALSIZE FRES
+  MAXSIZE=1801000000 #1.801G
   SUDO=''
-  if (( $EUID != 0 )); then
+  if (( EUID != 0 )); then
     SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
   fi
   for f in *.mp4; do
     if [[ "$f" != nice_*.mp4 ]]; then
       ACTUALSIZE=$(wc -c < "$f")
-      if [ "$ACTUALSIZE" -ge "$MAXSIZE" ]; then
+      FRES=$(exiftool -ImageSize "$f" | tr -d '[:space:]' | sed 's/ImageSize\://g;s/x.*//g')
+      FRES=$((FRES+0)) # Transform a string to an int
+      if [[ "$ACTUALSIZE" -ge "$MAXSIZE" ]] && [[ $FRES -ge 1920 ]]; then
         "$SUDO" nice --10 ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${f}"
       fi
     fi
   done
 }
 
-## mkthumb: Create mosaic-like image to preview video content
+## mkthumb: Create mosaic-like image to preview video content with $1(columns x rows)(opt.) thumbnails
 mkthumb()
 {
-  local THUMBDIR
+  NBIMG="${1:-3x5}" # Default to 15 images
+  local THUMBDIR FONT
   THUMBDIR="Thumbnails"
   FONT="/usr/share/fonts/dejavu/DejaVuSansMono.ttf"
   mkdir -pv "$THUMBDIR"
   for f in *.*; do
     if [ ! -f "${THUMBDIR}/${f}.png" ]; then
-      # 1000 pixels width, 15 images, PNG format
-      vcsi "$f" --timestamp-font $FONT --metadata-font $FONT -t -w 1000 -g 3x5 -f png -o "${THUMBDIR}/${f}.png"
+      # 1000 pixels width, ${NBIMG} thumbnails, PNG format
+      vcsi "$f" --timestamp-font $FONT --metadata-font $FONT -t -w 1000 -g "${NBIMG}" -f png -o "${THUMBDIR}/${f}.png"
     fi
   done
 }
@@ -432,14 +461,19 @@ mkthumb()
 sm()
 {
   if [ -r ~/.config/dmenu/dmenurc ]; then
-    . ~/.config/dmenu/dmenurc
+    # shellcheck source=/dev/null
+    source ~/.config/dmenu/dmenurc
   else
     DMENU='dmenu'
   fi
-  man -k . | dmenu -l 30 | awk '{print $1}' | xargs -r man -Tpdf | zathura -
+  #set -x
+  #echo $DMENU
+  #echo "$DMENU"
+  man -k . | $DMENU -l 30 #| awk '{print $1}' | xargs -r "man" -Tpdf #| zathura -
+  #set +x
 }
 
-## man: Display man pages with colors
+## man: Override "man", display pages with colors
 man()
 {
   LESS_TERMCAP_md=$'\e[01;31m' \
@@ -454,23 +488,19 @@ man()
 ## postjson: POST $1 (json) to $2 (URL)
 postjson() { curl -X POST -H "Content-Type: application/json" -d "$1" "$2" ; }
 
-## get_4chan_thread: Downloads all images from $1 (4chan thread URL)
-get_4chan_thread() { wget -P ~/pics/4chan/rip/$(date +%F-%R) -nd -nc -r -l 1 -H -D i.4cdn.org -A png,gif,jpg,jpeg,webm --reject-regex='s.jpg' "$1" ; }
+## get4chanthread: Downloads all images from $1 (4chan thread URL)
+get4chanthread() { wget -P ~/pics/4chan/rip/"$(date +%F-%R)" -nd -nc -r -l 1 -H -D i.4cdn.org -A png,gif,jpg,jpeg,webm --reject-regex='s.jpg' "$1" ; }
 
-## func_help: Display help for $1 (custom bash function)
-func_help() { grep "## $1" "$HOME"/.bash_functions | grep -v '## $1' | sort ; }
-
-## rnmfileindir: Rename files in all subdirectories with their names
+## rnmfileindir: Prefix files in all subdirectories with directory's name
 rnmfileindir()
 {
   for i in *; do
     if [ -d "$i" ]; then
-      cd "$i"
+      cd "$i" || return
       for j in *; do
-        mv -v "$j" "${i}_${j}"
+        \mv -v "$j" "${i}_${j}"
       done
       cd ..
     fi
   done
 }
-

@@ -9,6 +9,6 @@ echo " $DEVICE"
 
 case $BLOCK_BUTTON in
   3) MOREINFO=$(bluetoothctl info | sed 10q | sed -e 's/[[:space:]]//')
-     notify.sh "$MOREINFO"
+     notify.sh "$DEVICE:" "$MOREINFO"
      ;;
 esac

@@ -10,11 +10,20 @@
 # Test for an interactive shell.
 [[ $- != *i* ]] && return
 
+# Use colors defined in ~/.Xresources in virtual console
+if [ "$TERM" = "linux" ]; then
+  _SEDCMD='s/.*\*color\([0-9]\{1,\}\).*#\([0-9a-fA-F]\{6\}\).*/\1 \2/p'
+  for i in $(sed -n "$_SEDCMD" $HOME/.Xresources | awk '$1 < 16 {printf "\\e]P%X%s", $1, $2}'); do
+    echo -en "$i"
+  done
+  clear
+fi
+
 # No coredumps
 ulimit -S -c 0
-set -o notify
-set -o noclobber
 set -o ignoreeof
+set -o noclobber
+set -o notify
 
 # Enable options
 shopt -s autocd
@@ -52,6 +61,7 @@ if [ -h ~/.local/bin/gitprompt.sh ]; then
 fi
 NOCOLOR="\[\e[m\]"
 BOLD="\[\e[1m\]"
+NOBOLD="\[\e[0m\]"
 INVERSE="\[\e[7m\]"
 BLA="\[\e[30m\]"
 RED="\[\e[31m\]"
@@ -62,7 +72,7 @@ PUR="\[\e[35m\]"
 CYA="\[\e[36m\]"
 GRA="\[\e[37m\]"
 njobs() { n=$(jobs | wc -l) && [ "$n" -gt 0 ] && echo " $n"; }
-PS1="${BOLD}${BRO}\w\$(__git_ps1 ' [%s]')${RED}\$(njobs)${NOCOLOR}\$ "
+PS1="${BOLD}${BRO}\w${NOBOLD}${PUR}\$(__git_ps1 ' [%s]')${BOLD}${RED}\$(njobs)${CYA}\$${NOCOLOR}${NOBOLD} "
 
 # Source Git flow bash completion
 if [ -f ~/app/git-flow-completion/git-flow-completion.sh ]; then
@@ -70,34 +80,6 @@ if [ -f ~/app/git-flow-completion/git-flow-completion.sh ]; then
 fi
 
 # Env variables (export allows use of variables in shell)
-#export TERMINAL=uxterm
-#TZ=Europe/Paris
-##CDPATH=:..:~
-#SASS_LIBSASS_PATH=/usr/local/lib/libsass
-#SASS_SASSC_PATH=/usr/local/lib/sassc
-#export XDG_DATA_HOME=~/.local/share
-#export XDG_CONFIG_HOME=~/.config
-#export TASKRC=~/.config/task/.taskrc
-#export TASKDATA=~/.local/share/task
-#export TRANSMISSION_HOME=~/.config/transmission
-#export WWW_HOME=~/.config/w3m
-#export GRADLE_HOME=/usr/bin/gradle-5.2.1
-#export GNUPGHOME=~/.config/gnupg
-#export WEECHAT_HOME=~/.config/weechat
-#export GOPATH=~/.go
-#export EXIFTOOL_HOME=~/.config/exiftool
-#EIX_LIMIT=0
-#DOTNET_ROOT=/opt/dotnet_core
-#DOTNET_CLI_TELEMETRY_OPTOUT=1
-#DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
-#MSBuildSDKsPath=$DOTNET_ROOT/sdk/2.2.105/Sdks
-#PATH=${DOTNET_ROOT}:$(go env GOPATH)/bin:~/bin:~/.local/bin:$PATH
-#HOME=/home/wegeee
-#EDITOR=nano
-export SONAR_SCANNER_VERSION=4.2.0.1873
-export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
-export PATH=$SONAR_SCANNER_HOME/bin:$PATH
-export SONAR_SCANNER_OPTS="-server"
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true

@@ -6,7 +6,7 @@
 
 date '+%A %d %b %H:%M '
 
-case $BLOCK_BUTTON in
-  1) notify.sh "$(cal -n 3 --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;
-  3) notify.sh "$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;
+case "${BLOCK_BUTTON}" in
+  1) notify.sh "Calendrier:" "$(cal -n 3 --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;
+  3) notify.sh "Calendrier:" "$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;
 esac

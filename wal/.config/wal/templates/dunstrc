@@ -186,10 +186,11 @@
     # Xev might be helpful to find names for keys.
 
     # Close notification.
-    close = ctrl+space
+    #close = ctrl+space
+    close = mod1+space
 
     # Close all notifications.
-    close_all = ctrl+shift+space
+    close_all = mod1+shift+space
 
     # Context menu.
     context = ctrl+shift+period
@@ -210,4 +211,8 @@
     background = "{background}"
     foreground = "{color9}"
     frame_color = "{color1}"
+    timeout = 0
+
+[calendar_status_bar]
+    summary = "Calendrier:"
     timeout = 0

@@ -26,7 +26,10 @@ browser "/usr/bin/vivaldi %u"
 download-full-page yes
 error-log "~/.config/newsboat/error.log"
 feed-sort-order lastupdated
-ignore-article "*" "title =~ \"Agile\" or title =~ \"Windows\" or title =~ \"Coding\" or title =~ \"Transexual\" or title =~ \"Diversity\""
+ignore-article "*" "title =~ \"Agile\" or title =~ \"Windows\" or title =~ \"Transexual\" or title =~ \"Diversity\""
+ignore-article "https://packages.gentoo.org/packages/stable.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\""
+ignore-article "https://packages.gentoo.org/packages/added.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\"
+ignore-article "https://packages.gentoo.org/packages/updated.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\"
 keep-articles-days 20
 max-items 100
 openbrowser-and-mark-jumps-to-next-unread yes

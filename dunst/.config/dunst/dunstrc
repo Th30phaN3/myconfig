@@ -220,8 +220,11 @@
     # Close all notifications.
     close_all = ctrl+shift+space
 
+    # Redisplay last messages
+    history = ctrl+Tab
+
     # Context menu.
-    context = ctrl+shift+period
+    context = ctrl+shift+Tab
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.

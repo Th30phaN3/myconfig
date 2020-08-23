@@ -1,4 +1,5 @@
 #!/bin/bash
+#
 # Whenever the mpd state changes, update the mpd module.
 
 kill -0 "$(cat /tmp/mpdupdate)" 2>/dev/null && exit || echo $$ > /tmp/mpdupdate

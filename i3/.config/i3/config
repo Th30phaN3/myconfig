@@ -56,12 +56,12 @@ set_from_resource $wk-text-inactive i3wm.color0  #888888
 set_from_resource $wk-br-urgent	    i3wm.color1  #2f343a
 set_from_resource $wk-bg-urgent	    i3wm.color9  #900000
 
-#                       border		background	text		indicator	child_border
-client.focused          $br-focus	$br-focus       $text-focus     $br-focus	$br-focus
+#                       border          background	    text		    indicator	    child_border
+client.focused          $br-focus	    $br-focus       $text-focus     $br-focus	    $br-focus
 client.focused_inactive $br-inactive	$br-inactive	$text-inactive	$br-inactive	$br-inactive
 client.unfocused        $br-inactive	$br-inactive	$text-inactive	$br-inactive	$br-inactive
-client.urgent           $br-urgent	$br-urgent	$text-focus	$br-urgent	$br-urgent
-client.placeholder      $br-urgent	$br-urgent	$text-focus	$br-urgent	$br-urgent
+client.urgent           $br-urgent	    $br-urgent	    $text-focus	    $br-urgent	    $br-urgent
+client.placeholder      $br-urgent	    $br-urgent	    $text-focus	    $br-urgent	    $br-urgent
 
 client.background       $window-bg
 
@@ -72,25 +72,24 @@ client.background       $window-bg
 # Start i3bar to display a workspace bar (plus the system information i3blocks)
 bar {
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	#status_command i3status -c ~/.config/i3/i3status.conf
 	position top
 	height 30
 	strip_workspace_numbers yes
 	tray_output none
 	separator_symbol "|"
 	font pango:Anonymice Nerd Font, Awesome 14
-	#verbose yes
+	#verbose yes # To write detailed errors
 	colors
 	{
 	  background	$bar-bg
-	  statusline	$bar-text
-	  separator	$bar-separator
-#				border		background	text
-	  focused_workspace	$wk-br-focus	$wk-bg-focus	$wk-text-focus
-	  active_workspace	$wk-br-active	$wk-bg-active	$wk-text-focus
+	  statusline    $bar-text
+	  separator     $bar-separator
+#		                    border		    background	    text
+	  focused_workspace     $wk-br-focus	$wk-bg-focus	$wk-text-focus
+	  active_workspace	    $wk-br-active	$wk-bg-active	$wk-text-focus
 	  inactive_workspace	$wk-br-active	$wk-bg-active	$wk-text-inactive
-	  urgent_workspace	$wk-br-urgent	$wk-bg-urgent	$wk-text-focus
-	  binding_mode		$wk-br-urgent	$wk-bg-urgent	$wk-text-focus
+	  urgent_workspace	    $wk-br-urgent	$wk-bg-urgent	$wk-text-focus
+	  binding_mode		    $wk-br-urgent	$wk-bg-urgent	$wk-text-focus
 	}
 }
 
@@ -101,7 +100,7 @@ bar {
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# i3-gaps
+# Gaps
 gaps inner 5
 gaps outer 7
 
@@ -115,11 +114,14 @@ for_window [class="xsane"] floating enable
 for_window [class="lxappearance"] floating enable
 for_window [title="Android Emulator.*"] floating enable
 for_window [title="Gestionnaire de tâches - Vivaldi"] floating enable
+for_window [title="Mode PIP (Picture-in-Picture)"] floating enable, resize set 860 340, move position 1599 px 829 px
 for_window [window_role="GtkFileChooserDialog"] resize set 1000 600, move position center
 for_window [window_role="tr-info"] resize set 740 570, move position center
 for_window [title="Libreoffice" window_type="splash"] resize set 800 600, move position center
 for_window [class="pgadmin4" window_type="normal"] move scratchpad, move position 1599 px 829 px
 for_window [title="pulsemixer"] floating enable, resize set 860 340, move position 1053 px 41 px
+for_window [class="xsane" title="Erreur"] floating enable, resize set 500 300
+for_window [title="Notification Microsoft Teams" class="Microsoft Teams - Preview"] floating enable, resize set 50 20
 
 # Enable automatic back and forth between workspaces
 workspace_auto_back_and_forth yes
@@ -144,11 +146,11 @@ exec --no-startup-id redshift
 # Starts dunst for notifications
 exec --no-startup-id dunst
 # Exec autolock with custom lock
-exec --no-startup-id xautolock -time 5 -corners ---- -locker i3lock-clock.sh
+exec --no-startup-id xautolock -time 5 -corners ---- -locker i3lock-color.sh
 # Run the script to update the mpd i3block on change
-exec_always --no-startup-id ~/bin/statusbar/mpdupdate
+#exec_always --no-startup-id ~/bin/statusbar/mpdupdate
 # Run the script to open windows in fibonacci style (h -> v -> h -> v...)
-exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
+#exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
 
 # Load saved layouts from previous x session on startup
 exec --no-startup-id i3reloadworkspaces.sh -l
@@ -221,8 +223,8 @@ bindsym $mod+Shift+s exec --no-startup-id striphosts.sh
 
 # Change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
-bindsym $mod+z layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+t layout tabbed
+bindsym $mod+n layout toggle split
 
 # Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -243,6 +245,8 @@ bindsym $mod+Menu scratchpad show
 bindsym $mod+Tab workspace --no-auto-back-and-forth next_on_output
 # Switch to previous workspace
 bindsym $mod+Shift+Tab workspace --no-auto-back-and-forth prev_on_output
+# Swap workspaces
+bindsym $mod+Ctrl+s exec i3swapworkspaces.sh
 
 # Switch to specific workspace
 bindsym $mod+1 workspace $WS1
@@ -272,7 +276,7 @@ bindsym $mod+Shift+0 move container to workspace $WS10
 bindsym $mod+Shift+a exec "uxterm -title pulsemixer -e pulsemixer"
 bindsym $mod+Shift+b exec "uxterm -title newsboat -e newsboat"
 bindsym $mod+Shift+h exec "uxterm -title htop -e htop"
-bindsym $mod+Shift+l exec "i3lock-clock.sh"
+bindsym $mod+Shift+l exec "i3lock-color.sh"
 bindsym $mod+Shift+n exec "uxterm -title ncmpcpp -e ncmpcpp"
 bindsym $mod+Shift+o exec "libreoffice"
 bindsym $mod+Shift+r exec "uxterm -title ranger -e ranger"
@@ -284,7 +288,7 @@ bindsym $mod+Shift+w exec "uxterm -title weechat -e weechat"
 set $sysmenu "system: re[s]tart re[l]oad  [e]xit  [p]oweroff  re[b]oot"
 mode $sysmenu {
 	# Exit i3 (logs you out of your X session)
-	bindsym e	exec "myi3reloadworkspaces.sh -s; i3-msg exit"
+	bindsym e	exec "i3reloadworkspaces.sh -s; i3-msg exit"
 	# Restart i3 (preserves your layout/session, can be used to upgrade i3)
 	bindsym s	restart
 	# Reload the configuration file

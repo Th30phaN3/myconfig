@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
-
-set -o noclobber -o noglob -o nounset -o pipefail
-IFS=$'\n'
-
+#
 # If the option `use_preview_script` is set to `true`,
-# then this script will be called and its output will be displayed in ranger.
+# then this script will be called and its output will be displayed in Ranger.
 # ANSI color codes are supported.
-# STDIN is disabled, so interactive scripts won't work properly
+# STDIN is disabled, so interactive scripts won't work properly !
 
 # This script is considered a configuration file and must be updated manually.
-# It will be left untouched if you upgrade ranger.
+# It will be left untouched if you upgrade Ranger.
 
 # Meanings of exit codes:
 # code | meaning    | action of ranger
@@ -22,6 +19,9 @@ IFS=$'\n'
 # 5    | fix both   | Don't ever reload
 # 6    | image      | Display the image `$IMAGE_CACHE_PATH` points to as an image preview
 # 7    | image      | Display the file directly as an image
+
+set -o noclobber -o noglob -o nounset -o pipefail
+IFS=$'\n'
 
 # Script arguments
 FILE_PATH="${1}"         # Full path of the highlighted file
@@ -39,10 +39,11 @@ HIGHLIGHT_TABWIDTH=8
 HIGHLIGHT_STYLE='pablo'
 PYGMENTIZE_STYLE='autumn'
 
+# Cancel preview if the file is too big
 drop_bigsize() {
   # 102400 == 100 MB * 1024
   if [[ $(du "${FILE_PATH}" | cut -f1) -gt 102400 ]]; then
-    echo '----- FILE TOO BIG -----'
+    echo '----- TOO BIG TO DISPLAY -----'
     exit 0
   fi
 }
@@ -65,12 +66,6 @@ handle_extension() {
             # Avoid password prompt by providing empty password
             7z l -p -- "${FILE_PATH}" && exit 5
             exit 1;;
-        # PDF
-        #pdf)
-            # Preview as text conversion
-            #pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - && exit 5
-            #exiftool "${FILE_PATH}" && exit 5
-            #exit 1;;
         # BitTorrent
         torrent)
             transmission-show -- "${FILE_PATH}" && exit 5
@@ -111,7 +106,9 @@ handle_image() {
         # Video
         video/*)
         # Thumbnail
-            ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
+            if [[ "${mimetype}" != "video/mpeg" ]]; then
+              ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
+            fi
             exit 1;;
         # PDF
         application/pdf)
@@ -128,7 +125,6 @@ handle_image() {
 handle_mime() {
     local mimetype="${1}"
     case "${mimetype}" in
-        # Text
         text/* | */xml | application/json )
             # Syntax highlight
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
@@ -145,14 +141,18 @@ handle_mime() {
                 --style="${HIGHLIGHT_STYLE}" --force -- "${FILE_PATH}" && exit 5
             pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}" -- "${FILE_PATH}" && exit 5
             exit 2;;
-        # Image
         image/*)
-            # Preview as text conversion
-            exiftool "${FILE_PATH}" && exit 5
+            exiftool -FileName -Directory -FileSize -MIMEType -FileType -FileTypeExtension -FileAccessDate -FileModifyDate -FilePermissions \
+                -Model -Orientation -Flash -ImageSize -Megapixels -FOV "${FILE_PATH}" && exit 5
             exit 1;;
-        # Video and audio
-        video/* | audio/*)
-            exiftool "${FILE_PATH}" && exit 5
+        audio/*)
+            exiftool -FileName -Directory -FileSize -MIMEType -FileType -FileTypeExtension -FileAccessDate -FileModifyDate -FilePermissions \
+                -AudioBitrate -ChannelMode -Encoder -Duration -Artist -Title -Album -Genre -Track -Year -Band -PictureFormat "${FILE_PATH}" && exit 5
+            exit 1;;
+        video/*)
+            exiftool -FileName -Directory -FileSize -MIMEType -FileType -FileTypeExtension -FileAccessDate -FileModifyDate -FilePermissions \
+                -Duration -Encoder -ImageSize -AvgBitrate -VideoFrameRate \
+                -AudioFormat -AudioChannels -AudioBitsPerSample -AudioSampleRate "${FILE_PATH}" && exit 5
             exit 1;;
     esac
 }

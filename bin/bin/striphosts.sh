@@ -20,4 +20,4 @@ fi
 
 "$SUDO" sed -i 's/\(^0.0.0.0 '"${SELECT}"'$\)/#\1/; s/\(^0.0.0.0 '"${WWWSELECT}"'$\)/#\1/' "$HOSTS"
 
-notify.sh "Commented ${SELECT} and ${WWWSELECT}"
+notify.sh "/etc/hosts:" "Commented ${SELECT} and ${WWWSELECT}"

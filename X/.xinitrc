@@ -33,13 +33,20 @@ else
   failsafe=yes
 fi
 
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+  for f in /etc/X11/xinit/xinitrc.d/?* ; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
 # Start some applications
 # Add random wallpaper
 feh --bg-scale --randomize --no-fehbg /home/wegeee/pics/wallpapers/desktop/*
 # Call wal to set X colors (-R restores the last colorscheme, -n skip setting the wallpaper, -q quiet mode, -o restore config files)
-wal -Rnq -o "/home/wegeee/.config/wal/done.sh"
+wal -Rnq -o "${HOME}/.config/wal/done.sh"
 # Init compton
-compton -b --config /home/wegeee/.config/compton/compton.conf
+compton -b --config "${HOME}/.config/compton/compton.conf"
 # Enable Razor macros
 bwidow -s
 # Init xbindkeys
@@ -52,20 +59,3 @@ source ~/.bashrc
 #source ~/.config/dmenu/dmenurc
 # Launch i3
 exec i3
-
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-  for f in /etc/X11/xinit/xinitrc.d/?* ; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
-fi
-
-if [ -n "$failsafe" ]; then
-  twm &
-  xclock -geometry 50x50-1+1 &
-  xterm -geometry 80x50+494+51 &
-  xterm -geometry 80x20+494-0 &
-  exec xterm -geometry 80x66+0+0 -name login
-else
-  exec $command
-fi

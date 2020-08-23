@@ -30,6 +30,9 @@ default.project=perso
 # Hide header and recur messages
 verbose=blank,footnote,label,new-id,affected,edit,special,project,sync,unwait
 
+# Disable hooks
+hooks=off
+
 # Where to store task files
 data.location=~/.local/share/task
 
@@ -37,7 +40,7 @@ data.location=~/.local/share/task
 include ~/.config/task/holidays.fr-FR.rc
 
 # Color theme
-include /usr/share/task/rc/dark-16.theme
+include ~/.config/task/mydark16.theme
 
 # Simple Custom Report
 report.simple.description=My simple list of tasks

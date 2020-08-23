@@ -7,21 +7,21 @@
 for x in "$(xrdb -query | grep "*.color" | sed "s/.*\./export /g;s/:\s*/=\"/g;s/$/\"/g")"; do eval "$x"; done
 
 case $BLOCK_BUTTON in
-    3) notify.sh ": discharging<br>: stagnant charge<br>: charging<br>: charged" ;;
+    3) notify.sh "Help:" ": discharging<br>: stagnant charge<br>: charging<br>: charged" ;;
 esac
 
 CAPACITY=$(cat /sys/class/power_supply/"$1"/capacity) || exit
 STATUS=$(cat /sys/class/power_supply/"$1"/status)
 
 if [ "$CAPACITY" -ge 75 ]; then
-  COLOR="$color5"
+  COLOR="$color4"
 elif [ "$CAPACITY" -ge 50 ]; then
-  COLOR="$color2"
-elif [ "$CAPACITY" -ge 25 ]; then
+  COLOR="$color6"
+elif [ "$CAPACITY" -ge 20 ]; then
   COLOR="$color3"
 else
   COLOR="$color1"
-  notify.sh "Battery level low !" "critical"
+  [ "$STATUS" != "Charging" ] && notify.sh "Battery level low !" "" "" "critical"
 fi
 
 [ "$STATUS" = "Charging" ] && COLOR="$color7"

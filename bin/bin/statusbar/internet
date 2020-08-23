@@ -7,7 +7,7 @@
 for x in "$(xrdb -query | grep "*.color" | sed "s/.*\./export /g;s/:\s*/=\"/g;s/$/\"/g")"; do eval "$x"; done
 
 case $BLOCK_BUTTON in
-  3) WIFI_SPOTS=$(wpa_cli scan_results | sed 1,2d | awk '{print $3,$5}')
+  3) WIFI_SPOTS=$(wpa_cli scan_results | sed 1,2d | awk '{print $3,$4,$5}')
      notify.sh "${WIFI_SPOTS}"
      ;;
 esac

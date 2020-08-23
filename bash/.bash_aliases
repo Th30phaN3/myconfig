@@ -23,9 +23,7 @@ alias lc='ls -ogtcr'     	# Sort by change time,most recent last
 alias lu='ls -ogtur'		# Sort by access time,most recent last
 alias fn='ls . | wc -l'
 alias hs='history'
-alias hg='history | grep'
-alias empdir='find . -type d -empty -delete'
-alias rmsymlinks='find -L . -maxdepth 1 -type l -delete'
+alias hg="history | sed -r '/[0-9]+ hg/d' | grep" # Search a term in terminal history
 alias perm='stat -c "%A %a %n" *'
 alias cp='cp -iv'
 alias mv='mv -iv'
@@ -34,8 +32,7 @@ alias rm='echo "Use trash-put (alias tp)."; false'
 alias tp='trash-put'
 alias bc='bc -lq'
 alias more='less'
-alias nano='editassudo /usr/bin/nano'
-alias micro='editassudo /home/wegeee/.go/bin/micro'
+alias ed='editassudo '
 alias mkdir='mkdir -pv'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -45,17 +42,17 @@ alias lsblk='lsblk -po NAME,FSTYPE,SIZE,FSAVAIL,FSUSE%,MODE,LABEL,MOUNTPOINT,HOT
 alias jo='jobs -l'
 alias fr='find -L -readable -regextype posix-extended -regex'
 alias qt='quotes.sh'
+alias gpalldirs='find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && git pull" \;'
 alias update_media_vivaldi='sudo /opt/vivaldi/update-widevine --system && sudo /opt/vivaldi/update-ffmpeg'
-alias medinfo='exiftool -s -ImageSize -FileSize -MIMEType -Duration -XResolution -YResolution -VideoFrameRate -BitDepth -AudioFormat -AudioChannels -AudioBitsPerSample -AudioSampleRate -Encoder -AvgBitrate -Artist -Title -Album -Genre'
+alias medinfo='exiftool -s -FileName -Directory -ImageSize -FileSize -MIMEType -Duration -XResolution -YResolution -VideoFrameRate -BitDepth -AudioFormat -AudioChannels -AudioBitsPerSample -AudioSampleRate -Encoder -AvgBitrate -Artist -Title -Album -Genre'
 alias stripinfo='exiftool -ProjectRefType= -WindowsAtomUncProjectPath= -IngredientsFilePath= -IngredientsMaskMarkers= -IngredientsInstanceID= -IngredientsDocumentID= -IngredientsFromPart= -HistorySoftwareAgent= -HistoryChanged= -HistoryWhen= -Format= -CreatorTool= -XMPToolkit= -Title= -Comment= -Software= -HDVideo= -TVEpisode= -TVSeason= -TrackNumber='
 alias dh='date --help | sed -n "/^ *%%/,/^ *%Z/p" | while read l;do F=${l/% */}; date +%$F:"|'"'"'${F//%n/ }'"'"'|${l#* }";done | sed "s/\ *|\ */|/g" | column -s "|" -t'
 alias xx='xrandr > /dev/null 2>&1; xrandr --output DP2 --left-of eDP1'	        # Add second screen
 alias diapo='feh -q -p -Y -Z --on-last-slide quit --auto-rotate -F -r'		    # Show a slideshow of all images in directory and sub-directories
 alias sc='scrot -s -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H:%M:%S.png -z'	# Capture part of the screen
-alias neo='neofetch --config ~/.config/neofetch/neofetch.conf'
-alias matrix='cmatrix -b -u 5 -C blue'					# Enter the matrix
+alias matrix='cmatrix -b -u 5 -C blue'					                        # Enter the matrix
 alias mupdf='mupdf -r 75'
-alias post='curl --request POST -H "Content-Type: application/json" --data '    # Use "@dt" to pass data in file named "dt"
+alias post='curl --request POST -H "Content-Type: application/json" --data '    # Post JSON. Use "@dt" to pass data in file named "dt"
 alias wal='wal -q -t -n -o /home/wegeee/.config/wal/done.sh -f '
 alias timer='echo "Timer started. Stop with Ctrl-D." && date "+%a, %d %b %H:%M:%S" && time cat && date "+%a, %d %b %H:%M:%S"'
 alias weather='curl -s "https://wttr.in/Nantes?2" | sed -n "1,27p"'		# Display weather (large terminal width recommended)
@@ -65,26 +62,23 @@ alias bcolor='for code in {0..15}; do echo -e "\e[38;05;${code}m $code: Color"; 
 
 # Kernel / Packages manipulation
 alias kernel_rebuild='sudo make -j5 && sudo make modules_install && sudo mount /boot/efi/ && sudo make install && sudo grub-mkconfig -o /boot/efi/grub/grub.cfg'
-alias ehelp='apropos -e portage layman qcheck eselect equery euse emaint'
-alias esync='sudo eix-sync && eix-update'
+alias ehelp='apropos -e portage layman qcheck eselect equery euse emaint genlop'
+alias esync='sudo eix-sync'
 alias elogs='tail -f /var/log/emerge-fetch.log' # Show fetch logs when emerging
 alias emerge='sudo emerge'						# Install/upgrade packages
-alias esearch='emerge --search'					# Search for packages
-alias erm='emerge --depclean --verbose'			# Delete packages
+alias erm='emerge --depclean --verbose'			# Delete packages (select all not used without arguments)
 # System upgrade (ignore use flags changes)
-alias epgrade_quick='emerge --quiet        --tree --update --keep-going    --verbose-conflicts                                          @world'
+alias epgrade_quick='emerge --update --tree --unordered-display --keep-going --verbose-conflicts @world'
 # System upgrade (full use flags rebuild)
-alias epgrade='emerge      --newuse --deep --tree --update --keep-going    --verbose-conflicts --with-bdeps=y                           @world'
+alias epgrade='emerge -ut --unordered-display --keep-going --verbose-conflicts --with-bdeps=y --newuse --deep @world'
 # System upgrade (used when upgrading Perl)
-alias epgrade_full='emerge --newuse --deep --tree --update --backtrack=100 --verbose-conflicts --with-bdeps=y --autounmask-keep-masks=y @world'
-alias eclean='erm && sudo eclean-dist -d -t1m -s40M'    # Remove unnecessary packages/dependencies
+alias epgrade_perl='emerge -utND --unordered-display --verbose-conflicts --with-bdeps=y --backtrack=100 --autounmask-keep-masks @world'
+alias eclean='erm && sudo eclean-dist -d -t1m -s40M'    # Remove unnecessary packages/dependencies & ebuilds files too big
 alias econf_up='sudo find /etc -name "._cfg????_*"'		# Check for new config files
 alias esecure='glsa-check -lv'							# Check packages vulnerabilities
-alias uppack='eix --care -u --world-file --compact'		# Show available updates for packages
+alias uppack='eix -u -x --nonvirtual --deps-installed --world-file --compact'		# Show available updates for packages
 
-# Mount
-#alias mount='sudo mount'
-#alias umount='sudo umount'
+# Peripherics
 alias toshiba='sudo mount ~/media/toshiba; cd ~/media/toshiba; ll'
 alias maxtor='sudo mount ~/media/maxtor; cd ~/media/maxtor; ll'
 alias seagate='sudo mount ~/media/seagate; cd ~/media/seagate; ll'
@@ -125,3 +119,4 @@ alias ytdl='youtube-dl'
 alias text2ascii='figlet'
 alias wifi='wpa_cli'
 alias loonix='man hier'
+alias coof='curl https://corona-stats.online/FR'

@@ -1,0 +1,58 @@
+#
+#  _   _
+# | \ | | __ _ _ __   ___  _ __ ___
+# |  \| |/ _` | '_ \ / _ \| '__/ __|
+# | |\  | (_| | | | | (_) | | | (__
+# |_| \_|\__,_|_| |_|\___/|_|  \___|
+#
+
+set afterends
+set atblanks
+set autoindent
+set backup
+set backupdir ~/.local/share/nano_backup
+set boldtext
+#set casesensitive
+set constantshow
+set cutfromcursor
+set historylog
+#set mouse
+set multibuffer
+set nonewlines
+set positionlog
+#set selectedcolor fgcolor,bgcolor
+set smarthome
+set softwrap
+set suspendable
+set tabsize 4
+set tabstospaces
+set titlecolor green,black
+set trimblanks
+set unix
+set zap
+
+# Bind functions to keys (Control = ^ and Alt/Meta = M- )
+bind ^H help main
+bind ^Q exit main
+bind ^S savefile main
+bind ^F whereis main
+bind ^P findprevious main
+bind ^N findnext main
+bind ^R replace main
+bind ^X cut main
+bind ^C copy main
+bind ^V paste main
+bind ^U cutrestoffile main
+#bind ^J justify main
+bind ^W wordcount main
+bind ^K comment main
+bind ^B firstline main
+bind ^E lastline main
+bind ^Z undo main
+bind ^A redo main
+bind ^L refresh main
+
+# Include system-wide files syntax
+include "/usr/share/nano/*.nanorc"
+# Include user-specific files syntax (overrides system)
+include "/home/wegeee/.config/nano/syntax/*.nanorc"

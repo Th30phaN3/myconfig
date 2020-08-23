@@ -71,7 +71,7 @@ awk '!seen[$0]++' "$TMPSORT" > "$FINALFILE"
 WHITELIST="$HOME/.whitelist"
 while IFS= read -r line
 do
-sed -i "/0.0.0.0 $line/d" "$FINALFILE"
+  sed -i "/0.0.0.0 $line/d" "$FINALFILE"
 done < "$WHITELIST"
 
 DURATION="$SECONDS"

@@ -132,7 +132,7 @@ do
   if [ "$CAMEL" == "y" ]; then # Camel Case
     NAME=$(echo "$NAME" | tr '[:upper:]' '[:lower:]' | sed "s/^./\U&/g; s/${SEP}./\U&/g")
   fi
-  # Check if $NAME is not empty -> attribute random name if its the case
+  # Check if $NAME is not empty -> replace by random name if its the case
   if [ -z "$NAME" ]; then
     NAME="$RANDOM"
   fi

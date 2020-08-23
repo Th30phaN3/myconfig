@@ -1,0 +1,39 @@
+# Security relevant options: They are evaluated by the shell if you call the scripts with the corresponding name
+#EIX_SYNC_OPTS
+#EIX_SYNC_CONF
+#EIX_REMOTE_OPTS
+#EIX_LAYMAN_OPTS
+#EIX_TEST_OBSOLETE_OPTS
+
+# Limit to packages displayed (0 for no limit)
+EIX_LIMIT=20
+# Limit to packages displayed (compact mode)
+EIX_LIMIT_COMPACT=0
+# Do not read the slots of installed versions which cannot be guessed
+#QUICKMODE=true
+# Slots of installed version are always read
+CAREMODE=true
+# If true, eix and eix-diff will use --quiet by default
+#QUIETMODE=true
+# Defines  whether  --compact or --verbose is on by default
+#DEFAULT_FORMAT=compact
+# eix-diff will only consider version changes for installed packages
+DIFF_ONLY_INSTALLED=true
+# eix-diff will print deleted packages in a section on their own
+DIFF_SEPARATE_DELETED=true
+# Dependency information for installed versions are always fetched from disk
+DEPS_INSTALLED=true
+# Display only the overlays actually used, keeping the numbering consistent over all queries
+OVERLAYS_LIST='only-used'
+# Whether eix-update -v is on by default (output of cache method per version)
+UPDATE_VERBOSE=false
+# All upgrade tests will give a positive result for an installed package for which the slot with the best stable version is not installed
+UPGRADE_TO_HIGHEST_SLOT=true
+# If repository data was stored during emerge, then this repository data is always used
+CHECK_INSTALLED_OVERLAYS=repository
+# Always print the number of matches in the last line, even if this number is 0 or 1
+PRINT_COUNT_ALWAYS=true
+# Defines whether non-existent installed versions are positive for -T
+TEST_FOR_NONEXISTENT=true
+# Defines whether masked versions are non-existent for TEST_FOR_NONEXISTENT
+NONEXISTENT_IF_MASKED=true
