@@ -30,8 +30,8 @@ cls() { cd "$1" || return; ll; }
 ## fdup: Find and print duplicate lines in $1 (filename)
 fdup() { sort "$1" | uniq -cd | sort -nr ; }
 
-## esearch: Search for $1 ebuild (main tree + overlays) or as a python package via pip if not found
-esearch() { eix -R "$1" || pip search "$1" ; }
+## pack: Search for $1 as ebuild, python package, npm package, rust package and nuget package
+pack() { echo -e "-----\nEBUILDS:" && eix -R "$1"; echo -e "\n-----\nPYTHON PACKAGES:" && pip search "$1"; echo -e "\n-----\nJS PACKAGES:" && npm search "$1"; echo -e "\n-----\nCRATES:" && cargo search --color always -v "$1"; echo -e "\n-----\nNUGET PACKAGES:" && mono /usr/local/bin/nuget.exe list "$1" -ForceEnglishOutput -NonInteractive; }
 
 ## cleanhome: Remove junk, cache data, history files, etc...
 cleanhome()

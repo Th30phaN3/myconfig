@@ -1,12 +1,12 @@
 # Security relevant options: They are evaluated by the shell if you call the scripts with the corresponding name
 #EIX_SYNC_OPTS
 #EIX_SYNC_CONF
-#EIX_REMOTE_OPTS
+#EIX_REMOTE_OPTS='-X -q'
 #EIX_LAYMAN_OPTS
 #EIX_TEST_OBSOLETE_OPTS
 
 # Limit to packages displayed (0 for no limit)
-EIX_LIMIT=20
+EIX_LIMIT=0
 # Limit to packages displayed (compact mode)
 EIX_LIMIT_COMPACT=0
 # Do not read the slots of installed versions which cannot be guessed
@@ -37,3 +37,16 @@ PRINT_COUNT_ALWAYS=true
 TEST_FOR_NONEXISTENT=true
 # Defines whether masked versions are non-existent for TEST_FOR_NONEXISTENT
 NONEXISTENT_IF_MASKED=true
+#If using the same cachefile, save remote-data over eix-update calls
+#KEEP_VIRTUALS=true
+# eix and emerge use the same color palette
+# https://wiki.gentoo.org/wiki/Eix
+COLOR_INST_VERSION="white,1;blue|33,1;%{BG1}|black;green|30,1;%{BG3}"
+BG0=none;
+BG1=none;
+BG2=none;
+BG3=none;
+COLORSCHEME0=0;
+COLORSCHEME1=0;
+COLORSCHEME2=0;
+COLORSCHEME3=0;

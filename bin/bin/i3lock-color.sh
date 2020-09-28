@@ -43,4 +43,4 @@ i3lock \
 --verifsize=25 \
 --wrongsize=25 \
 --ring-width=20 \
---radius=115
+--radius=130

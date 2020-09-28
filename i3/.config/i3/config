@@ -104,14 +104,15 @@ floating_modifier $mod
 gaps inner 5
 gaps outer 7
 
-# Disable window titlebars for i3-gaps
+# Disable windows titlebars
 for_window [class="^.*"] border pixel 5
 
 # Modify behavior and sizes for some windows
+# See https://i3wm.org/docs/userguide.html#command_criteria for matching criteria
 for_window [class="feh"] floating enable
 for_window [class="mupdf"] floating enable
 for_window [class="xsane"] floating enable
-for_window [class="lxappearance"] floating enable
+for_window [class="^lxappearance$"] floating enable
 for_window [title="Android Emulator.*"] floating enable
 for_window [title="Gestionnaire de tâches - Vivaldi"] floating enable
 for_window [title="Mode PIP (Picture-in-Picture)"] floating enable, resize set 860 340, move position 1599 px 829 px
@@ -121,7 +122,8 @@ for_window [title="Libreoffice" window_type="splash"] resize set 800 600, move p
 for_window [class="pgadmin4" window_type="normal"] move scratchpad, move position 1599 px 829 px
 for_window [title="pulsemixer"] floating enable, resize set 860 340, move position 1053 px 41 px
 for_window [class="xsane" title="Erreur"] floating enable, resize set 500 300
-for_window [title="Notification Microsoft Teams" class="Microsoft Teams - Preview"] floating enable, resize set 50 20
+for_window [window_role="dupe" class="^geeqie$"] floating enable, resize set 1000 800
+for_window [class="Microsoft Teams - Preview" title="Notification Microsoft Teams"] floating enable, resize set 50 20
 
 # Enable automatic back and forth between workspaces
 workspace_auto_back_and_forth yes
@@ -147,8 +149,6 @@ exec --no-startup-id redshift
 exec --no-startup-id dunst
 # Exec autolock with custom lock
 exec --no-startup-id xautolock -time 5 -corners ---- -locker i3lock-color.sh
-# Run the script to update the mpd i3block on change
-#exec_always --no-startup-id ~/bin/statusbar/mpdupdate
 # Run the script to open windows in fibonacci style (h -> v -> h -> v...)
 #exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
 
@@ -160,14 +160,16 @@ exec --no-startup-id i3reloadworkspaces.sh -l
 # =============================================================================
 
 # Start a terminal (either with path from focused window or $HOME)
-bindsym $mod+Shift+Return exec uxterm -e "cd $(xcwd) && $SHELL"
+bindsym $mod+Shift+Return exec i3-sensible-terminal -e "cd $(xcwd) && $SHELL"
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Kill focused window
 bindsym $mod+q kill
 
 # Start patched dmenu (fuzzy match, mouse support, line height)
-bindsym $mod+d exec "dmenu_run -i -h 30 -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'Anonymice Nerd Font-14' -p 'dmenu'"
+#bindsym $mod+d exec "dmenu_run -i -h 30 -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'Anonymice Nerd Font-14' -p 'dmenu'"
+# Start j4-dmenu-desktop with custom dmenu
+bindsym $mod+d exec "j4-dmenu-desktop --dmenu='dmenu -i -h 30 -nf \$dm-text -nb \$dm-bg -sf \$dm-text-focus -sb \$dm-bg-focus -fn 'Anonymice Nerd Font-14' -p dmenu' --term='i3-sensible-terminal' --no-generic --usage-log='/home/wegeee/.cache/j4-dmenu-desktop/usage.log'"
 
 # Move the current workspace to the next output (effectively toggles when you only have two outputs)
 bindsym $mod+x move workspace to output right
@@ -273,30 +275,33 @@ bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS10
 
 # Custom shortcuts
-bindsym $mod+Shift+a exec "uxterm -title pulsemixer -e pulsemixer"
-bindsym $mod+Shift+b exec "uxterm -title newsboat -e newsboat"
-bindsym $mod+Shift+h exec "uxterm -title htop -e htop"
+bindsym $mod+Shift+a exec "i3-sensible-terminal -title pulsemixer -e pulsemixer"
+bindsym $mod+Shift+b exec "i3-sensible-terminal -title newsboat -e newsboat"
+bindsym $mod+Shift+h exec "i3-sensible-terminal -title htop -e htop"
 bindsym $mod+Shift+l exec "i3lock-color.sh"
-bindsym $mod+Shift+n exec "uxterm -title ncmpcpp -e ncmpcpp"
+bindsym $mod+Shift+n exec "i3-sensible-terminal -title ncmpcpp -e ncmpcpp"
 bindsym $mod+Shift+o exec "libreoffice"
-bindsym $mod+Shift+r exec "uxterm -title ranger -e ranger"
+bindsym $mod+Shift+r exec "i3-sensible-terminal -title ranger -e ranger"
 bindsym $mod+Shift+t exec "transmission-gtk"
 bindsym $mod+Shift+v exec "launch-vivaldi.sh"
-bindsym $mod+Shift+w exec "uxterm -title weechat -e weechat"
 
 # Power options
-set $sysmenu "system: re[s]tart re[l]oad  [e]xit  [p]oweroff  re[b]oot"
+set $sysmenu "re[l]oad [r]estart e[x]it [s]uspend [h]ibernate re[b]oot [p]oweroff"
 mode $sysmenu {
-	# Exit i3 (logs you out of your X session)
-	bindsym e	exec "i3reloadworkspaces.sh -s; i3-msg exit"
-	# Restart i3 (preserves your layout/session, can be used to upgrade i3)
-	bindsym s	restart
-	# Reload the configuration file
+    # Reload the configuration file
 	bindsym l	reload
-	# Shutdown the system
-	bindsym p	exec "i3reloadworkspaces.sh -s; sudo shutdown -h now"
-	# Reboot the system
-	bindsym b	exec "i3reloadworkspaces.sh -s; sudo reboot"
+	# Restart i3 (preserves layout/session, can be used to upgrade i3)
+	bindsym r	restart
+	# Exit i3 (logs user out of X session)
+	bindsym x	exec "i3reloadworkspaces.sh -s; i3-msg exit"
+    # Suspend the system
+	bindsym s	exec "loginctl suspend"
+	# Hibernate the system
+	bindsym h	exec "loginctl hibernate"
+	# Reboot the system (before elogind: <sudo reboot>)
+	bindsym b	exec "i3reloadworkspaces.sh -s; loginctl reboot"
+	# Shutdown the system (before elogind: <sudo shutdown -h now>)
+	bindsym p	exec "i3reloadworkspaces.sh -s; loginctl poweroff"
 	bindsym Return	mode "default"
 	bindsym Escape	mode "default"
 }

@@ -10,10 +10,10 @@
 # Test for an interactive shell.
 [[ $- != *i* ]] && return
 
-# Use colors defined in ~/.Xresources in virtual console
+# Use colors defined in ~/.Xresources in virtual console (tty)
 if [ "$TERM" = "linux" ]; then
-  _SEDCMD='s/.*\*color\([0-9]\{1,\}\).*#\([0-9a-fA-F]\{6\}\).*/\1 \2/p'
-  for i in $(sed -n "$_SEDCMD" $HOME/.Xresources | awk '$1 < 16 {printf "\\e]P%X%s", $1, $2}'); do
+  SEDCMD='s/.*\*color\([0-9]\{1,\}\).*#\([0-9a-fA-F]\{6\}\).*/\1 \2/p'
+  for i in $(sed -n "$SEDCMD" $HOME/.Xresources | awk '$1 < 16 {printf "\\e]P%X%s", $1, $2}'); do
     echo -en "$i"
   done
   clear
@@ -52,9 +52,6 @@ HISTTIMEFORMAT="%F %T "
 # ( ) Hide shell job control messages
 (cat ~/.cache/wal/sequences &)
 
-# Export $DBUS_SESSION_BUS_ADDRESS and DBUS_SESSION_BUS
-export $(dbus-launch)
-
 # Prompt
 if [ -h ~/.local/bin/gitprompt.sh ]; then
   . ~/.local/bin/gitprompt.sh
@@ -79,7 +76,7 @@ if [ -f ~/app/git-flow-completion/git-flow-completion.sh ]; then
   . ~/app/git-flow-completion/git-flow-completion.sh
 fi
 
-# Env variables (export allows use of variables in shell)
+# Env variables for Git prompt
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true

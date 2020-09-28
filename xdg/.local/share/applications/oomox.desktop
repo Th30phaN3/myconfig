@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=Oomox
+GenericName=Oomox: customize icons and GTK themes
+Comment=Graphical application for generating different color variations of Numix and Materia GTK themes, gnome-colors and ArchDroid icon themes
+Icon=com.github.themix_project.Oomox
+Exec=cd /home/wegeee/app/oomox && python3 -m oomox_gui
+Categories=GNOME;GTK;Settings;DesktopSettings;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;
+Keywords=color;gtk;highlight;theme;widget;numix;
+StartupWMClass=Oomox
+X-GNOME-Gettext-Domain=Oomox
+X-Desktop-File-Install-Version=0.22

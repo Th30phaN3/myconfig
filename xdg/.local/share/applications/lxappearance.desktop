@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=LXappearance
+GenericName=Customize GTK Look and Feel
+Comment=Customizes look and feel of your desktop and applications
+Icon=preferences-desktop-theme
+TryExec=/usr/bin/lxappearance
+Exec=/usr/bin/lxappearance
+Categories=GTK;Settings;DesktopSettings;X-LXDE-Settings;
+Keywords=windows;preferences;settings;theme;style;appearance;

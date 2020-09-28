@@ -1,9 +1,10 @@
 #!/bin/bash
 #
-# This script can save each i3 workspace layout in a temporary directory
-# It can also load those layouts and call each command attributed to a window
-# It behave as a "session restore" feature
-# It is usually called with -[s]ave when quitting i3 and -[l]oad when starting i3
+# This script can save each i3 workspace layout in a temporary directory.
+# It can also load those layouts and call each command attributed to a window.
+# It behave as a "session restore" feature for i3.
+# It is usually called with -[s]ave when quitting i3 and -[l]oad when starting i3.
+# ! BE AWARE THAT IT IS LIMITED AND CAN BE EASILY BROKEN !
 
 # Directory where temporary workspaces are stored
 WK_DIR="$HOME/.cache/i3/wk"
@@ -37,7 +38,7 @@ if [ "$SAVE_WK" == "y" ]; then
     if [ -s "$WK_FILE" ]
       then
         # Decomment necessary lines to allow swallowing
-        sed -i 's#// "class"#"class"#g; s#// "instance"#"instance"#g; s#// \("title": ".*"\),#\1#g' $WK_FILE
+        sed -i 's#// "class"#"class"#g; s#// "instance"#"instance"#g; s#// \("title": ".*"\)#\1#g' $WK_FILE
         # Remove transient_for and window_role properties
         sed -i '/\/\/\ \"transient_for\"/d; /\/\/\ \"window_role\"/d' $WK_FILE
         # If the container isn't a terminal, remove title property
@@ -52,7 +53,8 @@ if [ "$SAVE_WK" == "y" ]; then
           sed -i '/'"${CLEAN}"'/d' $WK_FILE
           COMMA=$(pcregrep -M '\$\",\n +}' $WK_FILE | tr -d '\n' | sed 's/ \+/ /g; s/}//g; s/^ //g; s/ $//g')
           CCLEAN=$(echo $COMMA | sed 's/\\/\\\\/g; s/\//\\\//g; s/\"/\\\"/g; s/\[/\\\[/g; s/\]/\\\]/g; s/\ /\\\ /g; s/\^/\\\^/g; s/\$/\\\$/g')
-          sed -i "/${CCLEAN}/s/,//g" $WK_FILE # Remove comma from instance line to correctly format json
+          # Remove comma from instance line to correctly format json
+          sed -i "/${CCLEAN}/s/,//g" $WK_FILE
         done
       else
         # No windows in workspace -> no need to save it
@@ -74,41 +76,46 @@ if [ "$LOAD_WK" == "y" ] && [ ! -z "$(ls -A $WK_DIR)" ]; then
     WD_NAMES=($(grep '"name"' $f | sed 's#\\##g; s#"name": "##g; s#",##g; s/ \+/ /g; s/^ //g'))
     WD_CLASSES=($(grep '"class"' $f | sed 's#\\##g; s#"class": "^##g; s#$",##g; s/ \+/ /g; s/^ //g'))
     WD_INSTANCES=($(grep '"instance"' $f | sed 's#\\##g; s#"instance": "^##g; s#$",\?##g; s/ \+/ /g; s/^ //g'))
-    WD_TITLES=($(grep '"title"' $f | sed 's#.*"title": "^\(.*\)$"#\1#g; s#\\##g'))
+    WD_TITLES=($(grep '"title"' $f | sed 's#.*"title": "^\(.*\)$",\?#\1#g; s#\\##g'))
     # Set IFS back to normal
     IFS=${IFS_BAK}
     # Change to workspace and apply layout
     i3-msg "workspace number ${WK_NAMES[${WK_NB}]}; append_layout $WK_DIR/wk${WK_NB}.json"
     i=0
+    j=0
     while [ $i -lt $NB_WD ]
     do
       case "${WD_CLASSES[$i]}" in
-        # If this is xterm, execute either :
-        # - a single program running in xterm
-        # - xterm with last path
+        # If this is a terminal, execute either :
+        # - a single program running in the term
+        # - term with last path
         UXTerm) XPATH=$(echo "${WD_NAMES[$i]}" | sed 's/ ->.*//')
                 XAPP=$(echo "${WD_NAMES[$i]}" | sed 's/.*-> //')
                 if [ "$XPATH" == "$XAPP" ]
-                then # Single xterm instance with program inside
+                then # Single term instance with program inside
                   i3-msg "exec --no-startup-id ${TERMINAL} -title '${XAPP}' -e '${XAPP}'"
-                else # Normal xterm
-                  i3-msg "exec --no-startup-id ${TERMINAL} -title '${WD_TITLES[$i]}' -e 'cd ${XPATH} && /bin/bash'"
-                fi;;
+                else # Normal term
+                  # "title" only present for term windows -> j can be different from i
+                  i3-msg "exec --no-startup-id ${TERMINAL} -title '${WD_TITLES[$j]}' -e 'cd ${XPATH} && /bin/bash'"
+                fi
+                ((j++));;
         # If this is a jetbrains IDE, execute corresponding name
         jetbrains-*) IDE=$(echo "${WD_CLASSES[$i]}" | sed 's/.*-//')
         	         case "${IDE}" in
                        idea) i3-msg "exec --no-startup-id intellijidea";;
-        	           phpstorm) i3-msg "exec --no-startup-id phpstorm2018.2";;
+        	           phpstorm) i3-msg "exec --no-startup-id phpstorm";;
         	           studio) i3-msg "exec --no-startup-id android-studio'";;
-        	         esac
-        	         sleep 5;;
+        	         esac;;
         # VS Code
         Code) i3-msg "exec --no-startup-id vscode";;
         # Need to launch Tor Browser from its home
         Tor\ Browser) i3-msg "exec --no-startup-id ${TERMINAL} -e 'cd $HOME/app/tor-browser_en-US && ./start-tor-browser.desktop'";;
+        #Microsoft Teams
+        Microsoft\ Teams\ -\ Preview) i3-msg "exec --no-startup-id teams";;
+        # Firefox
+        Firefox) i3-msg "exec --no-startup-id firefox-bin";;
         # Vivaldi
-        Vivaldi-stable) i3-msg "exec --no-startup-id launch-vivaldi.sh"
-                        sleep 5;;
+        Vivaldi-stable) i3-msg "exec --no-startup-id launch-vivaldi.sh";;
         # Else execute instance
         *) i3-msg "exec --no-startup-id '${WD_INSTANCES[$i]}'";;
       esac

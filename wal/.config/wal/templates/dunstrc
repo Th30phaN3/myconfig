@@ -1,4 +1,5 @@
 [global]
+    # ONLY EDIT THIS FILE AND NOT THE FILE "dunstrc" IN THE "dunst" CONFIG DIRECTORY
     ### Display ###
 
     # Which monitor should the notifications be displayed on.
@@ -159,10 +160,10 @@
 
     ### Misc/Advanced ###
 
-    # dmenu path.
-    dmenu = /home/wegeee/app/dmenu-4.9/dmenu_run
+    # dmenu path
+    dmenu = /usr/bin/dmenu
 
-    # Browser for opening urls in context menu.
+    # Browser for opening urls in context menu
     browser = /usr/bin/vivaldi -new-tab
 
     # Always run rule-defined scripts, even if the notification is suppressed
@@ -185,15 +186,17 @@
     # "mod3" and "mod4" (windows-key).
     # Xev might be helpful to find names for keys.
 
-    # Close notification.
-    #close = ctrl+space
+    # Close notification
     close = mod1+space
 
-    # Close all notifications.
+    # Close all notifications
     close_all = mod1+shift+space
 
-    # Context menu.
-    context = ctrl+shift+period
+    # Redisplay last message(s)
+    history = mod1+shift+h
+
+    # Context menu
+    context = mod1+shift+c
 
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.

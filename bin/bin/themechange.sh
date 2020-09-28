@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Change wallpaper, xresources colors, gtk theme and web browser homepage
+# -[a]utumn / -[w]inter / -s[p]ring / -[s]ummer
 
 # JSON for wal theme
 AU_JSON=$HOME/.themes/autumn16.json
@@ -81,5 +82,5 @@ feh --bg-scale --randomize --no-fehbg "$HOME/pics/wallpapers/desktop/$WP_FOLDER/
 sed -i '2s/.*/gtk-theme-name='"$THEME"'/' "$GTK3_SETTINGS"
 sed -i '3s/.*/gtk-icon-theme-name='"$ICONS"'/' "$GTK3_SETTINGS"
 # Replace bakground and script in homepage
-sed -i '9s#.*#  <script src="'"$SCRIPT"'.js"></script>#' "$HOMEPAGE"
-sed -i '16s#.*#  background-image: url("'"$WHP"'");#' "$CSS_HOMEPAGE"
+#sed -i '9s#.*#  <script src="'"$SCRIPT"'.js"></script>#' "$HOMEPAGE"
+#sed -i '16s#.*#  background-image: url("'"$WHP"'");#' "$CSS_HOMEPAGE"

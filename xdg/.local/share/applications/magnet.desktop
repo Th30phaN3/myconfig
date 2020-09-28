@@ -1,9 +1,14 @@
 [Desktop Entry]
-Name=Magnet
 Type=Application
+Version=1.1
+Name=Magnet
+GenericName=Magnet opener
+NoDisplay=true
 Comment=Open a magnet link in transmission
-Exec=mytrdaemonadd.sh %U
+TryExec=trdaemonadd.sh
+Exec=trdaemonadd.sh %U
 Icon=transmission
 Terminal=true
-Categories=Network;FileTransfer;P2P
 MimeType=application/x-bittorrent;x-scheme-handler/magnet;
+Categories=Network;FileTransfer;P2P
+Keywords=magnet;file;opener;

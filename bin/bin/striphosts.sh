@@ -4,6 +4,7 @@
 # Allows to access that site
 
 HOSTS="/etc/hosts"
+WHITELIST="/etc/hosty/whitelist"
 SUDO=''
 if (( EUID != 0 )); then
   SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
@@ -19,5 +20,7 @@ else
 fi
 
 "$SUDO" sed -i 's/\(^0.0.0.0 '"${SELECT}"'$\)/#\1/; s/\(^0.0.0.0 '"${WWWSELECT}"'$\)/#\1/' "$HOSTS"
+"$SUDO" echo "$WWWSELECT" >> "$WHITELIST"
+"$SUDO" echo "$SELECT" >> "$WHITELIST"
 
-notify.sh "/etc/hosts:" "Commented ${SELECT} and ${WWWSELECT}"
+notify.sh "Whitelisted ${SELECT} and ${WWWSELECT}"

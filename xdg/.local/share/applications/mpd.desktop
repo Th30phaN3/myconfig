@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=MPD
+GenericName=Music Player Daemon
+Comment=Start the music daemon
+TryExec=/usr/bin/mpd
+Exec=/usr/bin/mpd
+Keywords=music;server;

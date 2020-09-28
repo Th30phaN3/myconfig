@@ -1,0 +1,25 @@
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=My desktop Example
+GenericName=Example
+NoDisplay=true
+Comment=Shows example desktop file with all keys
+#Icon=/usr/share/icons/gnome/48x48/apps/libreoffice-impress.png
+Hidden=true
+OnlyShowIn=i3
+NotShowIn=gnome
+DBusActivatable=false
+TryExec=/bin/bash
+Exec=/bin/bash -c 'echo example;$SHELL'
+#Path=
+Terminal=true
+#Actions=
+MimeType=application/x-bittorrent;x-scheme-handler/magnet;
+Categories=Application;
+#Implements=
+Keywords=example;test;
+#StartupNotify=false
+#StartupWMClass=
+#URL=
+PrefersNonDefaultGPU=false

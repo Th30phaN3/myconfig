@@ -67,6 +67,7 @@ alias esync='sudo eix-sync'
 alias elogs='tail -f /var/log/emerge-fetch.log' # Show fetch logs when emerging
 alias emerge='sudo emerge'						# Install/upgrade packages
 alias erm='emerge --depclean --verbose'			# Delete packages (select all not used without arguments)
+alias esearch='eix -R'                          # Search for package in main portage tree + all public overlays
 # System upgrade (ignore use flags changes)
 alias epgrade_quick='emerge --update --tree --unordered-display --keep-going --verbose-conflicts @world'
 # System upgrade (full use flags rebuild)
@@ -76,7 +77,7 @@ alias epgrade_perl='emerge -utND --unordered-display --verbose-conflicts --with-
 alias eclean='erm && sudo eclean-dist -d -t1m -s40M'    # Remove unnecessary packages/dependencies & ebuilds files too big
 alias econf_up='sudo find /etc -name "._cfg????_*"'		# Check for new config files
 alias esecure='glsa-check -lv'							# Check packages vulnerabilities
-alias uppack='eix -u -x --nonvirtual --deps-installed --world-file --compact'		# Show available updates for packages
+alias uppack='eix -u -x --nonvirtual --deps-installed --world-file --compact'   #Show available updates for packages
 
 # Peripherics
 alias toshiba='sudo mount ~/media/toshiba; cd ~/media/toshiba; ll'
@@ -102,13 +103,14 @@ alias dkc='docker system prune -a'				# Remove all containers
 alias lamp='sudo rc-service apache2 start && sudo rc-service mysql start'
 alias klamp='sudo rc-service apache2 stop && sudo rc-service mysql stop'
 alias debug='set -o nounset; set -o xtrace' # These two options are useful for debugging
+alias nuget='mono /usr/local/bin/nuget.exe'
 
 # Network
 alias eth-up="sudo /etc/init.d/net.enp0s25 start"
 alias eth-down="sudo /etc/init.d/net.enp0s25 stop"
 alias wpa-up="sudo ifconfig wlo1 up"
 alias wpa-down="sudo ifconfig wlo1 down"
-alias websiteget='wget --random-wait -r -p -e robots=off -U mozilla' # Download entire website
+alias websiteget='wget --random-wait -r -p -e robots=off -U mozilla' # Download entire website (take URL as parameter)
 alias listen='lsof -P -i -n' # Show all processes listening on networks
 alias pg='ping -c 5 www.gentoo.org'
 
@@ -120,3 +122,4 @@ alias text2ascii='figlet'
 alias wifi='wpa_cli'
 alias loonix='man hier'
 alias coof='curl https://corona-stats.online/FR'
+alias snoop='less /var/log/auth.log'

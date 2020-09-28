@@ -22,7 +22,8 @@ color background          color7  color0
 color article             color7  color0
 
 auto-reload yes
-browser "/usr/bin/vivaldi %u"
+browser "vivaldi %u"
+#browser "w3m %u"
 download-full-page yes
 error-log "~/.config/newsboat/error.log"
 feed-sort-order lastupdated
@@ -44,7 +45,10 @@ bind-key q hard-quit
 bind-key o open-in-browser-and-mark-read
 bind-key o open-in-browser
 
-macro t set browser "tsp youtube-dl --add-metadata -ic %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
-macro a set browser "tsp youtube-dl --add-metadata -xic -f bestaudio/best %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
-macro v set browser "setsid nohup mpv %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
-macro w set browser "w3m %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
+#macro t set browser "tsp youtube-dl --add-metadata -ic %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
+#macro a set browser "tsp youtube-dl --add-metadata -xic -f bestaudio/best %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
+macro v set browser "setsid nohup mpv %u"; open-in-browser ; set browser "vivaldi %u"
+#macro w set browser "w3m %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
+
+macro m set browser "mpv %u"; open-in-browser ; set browser "vivaldi %u"
+#macro v set browser "/usr/bin/vivaldi %u"; open-in-browser ; set browser "/usr/bin/w3m %u"

@@ -1,4 +1,10 @@
 [Desktop Entry]
 Type=Application
+Version=1.1
 Name=Zathura
+Genericname=Zathura document viewer
+NoDisplay=true
+Comment=Open files with Zathura
+TryExec=/usr/bin/zathura
 Exec=/usr/bin/zathura %U
+Keywords=files;viewer;

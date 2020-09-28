@@ -13,7 +13,6 @@ html, body, canvas
 html
 {
   background-color: #292F33;
-  background-image: url("summer.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

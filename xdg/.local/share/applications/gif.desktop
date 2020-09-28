@@ -1,4 +1,12 @@
 [Desktop Entry]
 Type=Application
-Name=Animated gif handler
+Version=1.1
+Name=GIF handler
+GenericName=Animated GIF Handler
+NoDisplay=true
+Comment=Open GIF files with mpv and loop them
+TryExec=/usr/bin/mpv
 Exec=/usr/bin/mpv --loop %U
+MimeType=image/gif;
+Keywords=gif;viewer;
+MimeType=image/gif;

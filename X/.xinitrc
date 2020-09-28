@@ -47,15 +47,15 @@ feh --bg-scale --randomize --no-fehbg /home/wegeee/pics/wallpapers/desktop/*
 wal -Rnq -o "${HOME}/.config/wal/done.sh"
 # Init compton
 compton -b --config "${HOME}/.config/compton/compton.conf"
-# Enable Razor macros
-bwidow -s
+# Enable Razer macros
+bwidow -s #TODO: call only when keyboard plugged
 # Init xbindkeys
 xbindkeys
 # Enable numlock on X
 numlockx
 # Init Bash at X startup
-source ~/.bashrc
+#source ~/.bashrc
 # Source dmenu configuration
 #source ~/.config/dmenu/dmenurc
-# Launch i3
-exec i3
+# Launch i3 with dbus (export $DBUS_SESSION_BUS_ADDRESS and $DBUS_SESSION_BUS)
+exec dbus-launch --exit-with-session i3
