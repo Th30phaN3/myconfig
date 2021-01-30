@@ -2,11 +2,15 @@
 #
 # Display torrents information and opens transmission web interface with left click.
 
+#TODO: exit if no transmission daemon running
+
 # The first sed command is to ensure a desirable order with sort
 REPLACE="s/.*Stopped.*/A/g;s/.*Seeding.*/Z/g;s/.*100%.*/N/g;s/.*Idle.*/B/g;s/.*%.*/M/g;s/.*Uploading.*/L/g"
 # Then we replace the standin letters with icons.
 ICONS="s/A//g;s/B//g;s/M//g;s/N//g;s/Z//g;s/L//g"
-transmission-remote -l | grep % | sed $REPLACE | sort -h | uniq -c | sed $ICONS | awk '{print $2, $1}' | tr '\n' ' ' | sed -e "s/ $//g"
+TORR=$(transmission-remote -l | grep % | sed $REPLACE | sort -h | uniq -c | sed $ICONS | awk '{print $2, $1}' | tr '\n' ' ' | sed -e "s/ $//g")
+
+echo "$TORR"
 
 case $BLOCK_BUTTON in
   1) xdg-open "http://localhost:9091/transmission/web/" &>/dev/null;;

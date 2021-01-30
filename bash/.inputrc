@@ -5,7 +5,7 @@
 
 $include /etc/inputrc
 
-# readline never rings the bell
+# Never rings the bell
 set bell-style none
 # Number of possible completions
 set completion-query-items 50
@@ -25,6 +25,6 @@ set menu-complete-display-prefix On
 set completion-prefix-display-length 5
 
 # Bind keys
-#"\e[A": history-search-backward # Up arrow: list only past commands that match the current input
-#"\e[B": history-search-forward  # Down arrow: list only past commands that match the current input
+"\e[A": history-search-backward # Up arrow: list only past commands that match the current input
+"\e[B": history-search-forward  # Down arrow: list only past commands that match the current input
 #"\es": "\C-asudo \C-e"          # Alt+S: prefixes the line with sudo

@@ -1,0 +1,35 @@
+// This file is used as reference for base16 themes.
+// It is based on the traditional colors used in xterm:
+// http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+// It is not valid json !
+{
+	"special":
+	{
+		"background":"usually black/dark",
+		"foreground":"usually white/light",
+		"cursor":"same as foreground"
+	},
+	"colors":
+	{
+		// Used as background
+		"color0":"same as background",
+		//7 first colors are darker
+		"color1":"dark red-like",
+		"color2":"dark green-like",
+		"color3":"dark yellow-like",
+		"color4":"very dark blue-like",
+		"color5":"dark purple-like",
+		"color6":"dark blue-like",
+		"color7":"dark pale/white",
+		// Used as foreground
+		"color8":"same as foreground",
+		//7 next are lighter
+		"color9":"light red-like",
+		"color10":"light green-like",
+		"color11":"light yellow-like",
+		"color12":"light blue-like",
+		"color13":"light purple-like",
+		"color14":"very light blue-like",
+		"color15":"light pale/white"
+	}
+}

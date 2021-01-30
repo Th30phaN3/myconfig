@@ -3,7 +3,7 @@
 # Shows/mute/amplify/diminish volume.
 
 case $BLOCK_BUTTON in
-	1) setsid "$TERMINAL" -e pulsemixer & ;; # Left click opens pulsemixer
+	1) i3-msg -q exec "${TERMINAL} -title flt_pulsemixer -e pulsemixer" ;;  # Left click opens pulsemixer
 	3) pulsemixer --toggle-mute ;;           # Right click mutes volume
 	4) pulsemixer --change-volume +5 ;;      # Scroll up amplify volume
 	5) pulsemixer --change-volume -5 ;;      # Scroll down diminish volume

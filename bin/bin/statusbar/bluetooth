@@ -3,6 +3,8 @@
 # Shows current bluetooth device connected.
 # Shows additional info with right click.
 
+ps -C bluetoothd &> /dev/null || exit
+
 DEVICE=$(bluetoothctl info | grep "Name" | sed -e 's/.*Name: \(.*\)/\1/')
 [ -z "${DEVICE// }" ] && exit
 echo " $DEVICE"

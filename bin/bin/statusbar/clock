@@ -4,7 +4,7 @@
 # Display calendar for current month when right clicked.
 # Display calendar for next 3 months when left clicked.
 
-date '+%A %d %b %H:%M '
+echo " $(date '+%A %d %b %H:%M')"
 
 case "${BLOCK_BUTTON}" in
   1) notify.sh "Calendrier:" "$(cal -n 3 --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" ;;

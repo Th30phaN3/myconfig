@@ -78,7 +78,8 @@ bar {
 	tray_output none
 	separator_symbol "|"
 	font pango:Anonymice Nerd Font, Awesome 14
-	#verbose yes # To write detailed errors
+    # To write detailed errors
+	#verbose yes
 	colors
 	{
 	  background	$bar-bg
@@ -108,22 +109,30 @@ gaps outer 7
 for_window [class="^.*"] border pixel 5
 
 # Modify behavior and sizes for some windows
+# 52px from the top (bar/gaps/border) | 22px from the left -> increase to right
 # See https://i3wm.org/docs/userguide.html#command_criteria for matching criteria
 for_window [class="feh"] floating enable
 for_window [class="mupdf"] floating enable
 for_window [class="xsane"] floating enable
 for_window [class="^lxappearance$"] floating enable
 for_window [title="Android Emulator.*"] floating enable
+for_window [class="UXTerm" title="flt_term"] floating enable
+for_window [title="flt_htop"] floating enable, resize set 1408 664, move position 500 px 404 px
+for_window [title="flt_ncmpcpp"] floating enable, resize set 1000 445, move position 908 px 52 px
+for_window [title="flt_pulsemixer"] floating enable, resize set 900 350, move position 1015 px 41 px
 for_window [title="Gestionnaire de tâches - Vivaldi"] floating enable
-for_window [title="Mode PIP (Picture-in-Picture)"] floating enable, resize set 860 340, move position 1599 px 829 px
-for_window [window_role="GtkFileChooserDialog"] resize set 1000 600, move position center
-for_window [window_role="tr-info"] resize set 740 570, move position center
-for_window [title="Libreoffice" window_type="splash"] resize set 800 600, move position center
-for_window [class="pgadmin4" window_type="normal"] move scratchpad, move position 1599 px 829 px
-for_window [title="pulsemixer"] floating enable, resize set 860 340, move position 1053 px 41 px
+for_window [title="Sign in - Google Accounts - Vivaldi"] floating enable
+#for_window [title="Mode PIP (Picture-in-Picture)"] floating enable, resize set 860 340, move position 1599 px 829 px
+for_window [title="Picture in picture"] resize set 810 455, move position 1110 px 624 px
 for_window [class="xsane" title="Erreur"] floating enable, resize set 500 300
 for_window [window_role="dupe" class="^geeqie$"] floating enable, resize set 1000 800
 for_window [class="Microsoft Teams - Preview" title="Notification Microsoft Teams"] floating enable, resize set 50 20
+for_window [class="UXTerm" title="scr_term"] move scratchpad, scratchpad show, move position 960 px 270 px
+for_window [window_role="GtkFileChooserDialog"] resize set 1000 600, move position center
+for_window [window_role="tr-info"] resize set 740 570, move position center
+for_window [title="Libreoffice" window_type="splash"] resize set 800 600, move position center
+for_window [title="win0" class="jetbrains-studio"] floating enable, resize set 800 600, move position center
+for_window [class="pgadmin4" window_type="normal"] move scratchpad, move position 1599 px 829 px
 
 # Enable automatic back and forth between workspaces
 workspace_auto_back_and_forth yes
@@ -141,14 +150,6 @@ workspace $WS4 output eDP1
 # Start programs
 # =============================================================================
 
-# Unclutter makes the mouse invisible after a brief period
-exec --no-startup-id unclutter
-# Starts redshift
-exec --no-startup-id redshift
-# Starts dunst for notifications
-exec --no-startup-id dunst
-# Exec autolock with custom lock
-exec --no-startup-id xautolock -time 5 -corners ---- -locker i3lock-color.sh
 # Run the script to open windows in fibonacci style (h -> v -> h -> v...)
 #exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
 
@@ -159,9 +160,12 @@ exec --no-startup-id i3reloadworkspaces.sh -l
 # Keybinds
 # =============================================================================
 
-# Start a terminal (either with path from focused window or $HOME)
-bindsym $mod+Shift+Return exec i3-sensible-terminal -e "cd $(xcwd) && $SHELL"
+# Start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+# Start a terminal with path from currently focused window
+bindsym $mod+Shift+Return exec i3-sensible-terminal -e "cd $(xcwd) && $SHELL"
+# Start a terminal and move it to scratchpad
+bindsym $mod+Ctrl+Return exec i3-sensible-terminal -title "scr_term"
 
 # Kill focused window
 bindsym $mod+q kill
@@ -195,16 +199,23 @@ bindsym $mod+Ctrl+Down resize shrink height 5 px or 5 ppt
 # Pressing left will grow the window’s width.
 bindsym $mod+Ctrl+Left resize grow width 5 px or 5 ppt
 
-# Increase inner gaps
-bindsym $mod+i		    gaps inner current plus 5
-# Reduces inner gaps
-bindsym $mod+Shift+i	gaps inner current minus 5
-# Increase outer gaps
-bindsym $mod+y		    gaps outer current plus 5
-# Reduces outer gaps
-bindsym $mod+Shift+y	gaps outer current minus 5
-# No gaps
-bindsym $mod+Shift+d	gaps inner current set 0; gaps outer current set 0
+# Gaps options
+set $gapsmenu "increase [i]nner / [o]uter ; decrease i[n]ner / o[u]ter ; no [g]aps"
+mode $gapsmenu {
+    # Increase inner gaps
+    bindsym i gaps inner current plus 5
+    # Increase outer gaps
+    bindsym o gaps outer current plus 5
+    # Reduces inner gaps
+    bindsym n gaps inner current minus 5
+    # Reduces outer gaps
+    bindsym u gaps outer current minus 5
+    # No gaps
+    bindsym g gaps inner current set 0; gaps outer current set 0
+	bindsym Return	mode "default"
+    bindsym Escape	mode "default"
+}
+bindsym $mod+Ctrl+g	mode $gapsmenu
 
 # Split in horizontal orientation
 bindsym $mod+h split h
@@ -243,8 +254,8 @@ bindsym $mod+Shift+Menu move scratchpad
 # Show scratchpads
 bindsym $mod+Menu scratchpad show
 
-# Switch to next workspace
-bindsym $mod+Tab workspace --no-auto-back-and-forth next_on_output
+# Switch back to the previously focused workspace
+bindsym $mod+Tab workspace back_and_forth
 # Switch to previous workspace
 bindsym $mod+Shift+Tab workspace --no-auto-back-and-forth prev_on_output
 # Swap workspaces
@@ -274,16 +285,16 @@ bindsym $mod+Shift+8 move container to workspace $WS8
 bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS10
 
-# Custom shortcuts
-bindsym $mod+Shift+a exec "i3-sensible-terminal -title pulsemixer -e pulsemixer"
-bindsym $mod+Shift+b exec "i3-sensible-terminal -title newsboat -e newsboat"
-bindsym $mod+Shift+h exec "i3-sensible-terminal -title htop -e htop"
+# Custom shortcuts ([a]udio / [f]iles / [i]nternet / [l]ock / [m]usic / [n]ews / [o]ffice / [r]essources / [t]orrents)
+bindsym $mod+Shift+a exec "i3-sensible-terminal -title flt_pulsemixer -e pulsemixer"
+bindsym $mod+Shift+f exec "i3-sensible-terminal -title ranger -e ranger"
+bindsym $mod+Shift+i exec "launch-vivaldi.sh"
 bindsym $mod+Shift+l exec "i3lock-color.sh"
-bindsym $mod+Shift+n exec "i3-sensible-terminal -title ncmpcpp -e ncmpcpp"
+bindsym $mod+Shift+m exec "i3-sensible-terminal -title ncmpcpp -e ncmpcpp"
+bindsym $mod+Shift+n exec "i3-sensible-terminal -title newsboat -e newsboat"
 bindsym $mod+Shift+o exec "libreoffice"
-bindsym $mod+Shift+r exec "i3-sensible-terminal -title ranger -e ranger"
+bindsym $mod+Shift+r exec "i3-sensible-terminal -title flt_htop -e htop"
 bindsym $mod+Shift+t exec "transmission-gtk"
-bindsym $mod+Shift+v exec "launch-vivaldi.sh"
 
 # Power options
 set $sysmenu "re[l]oad [r]estart e[x]it [s]uspend [h]ibernate re[b]oot [p]oweroff"
@@ -305,4 +316,4 @@ mode $sysmenu {
 	bindsym Return	mode "default"
 	bindsym Escape	mode "default"
 }
-bindsym $mod+Shift+m	mode $sysmenu
+bindsym $mod+Ctrl+m	mode $sysmenu

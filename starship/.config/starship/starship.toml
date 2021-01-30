@@ -1,0 +1,152 @@
+# ____ _____  _    ____  ____  _   _ ___ ____
+#/ ___|_   _|/ \  |  _ \/ ___|| | | |_ _|  _ \
+#\___ \ | | / _ \ | |_) \___ \| |_| || || |_) |
+# ___) || |/ ___ \|  _ < ___) |  _  || ||  __/
+#|____/ |_/_/   \_\_| \_\____/|_| |_|___|_|
+
+# Use <format = "$all"> to display all modules
+# $cmd_duration break bash DEBUG trap !
+format = """
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$docker_context\
+$package\
+$dotnet\
+$golang\
+$nim\
+$nodejs\
+$perl\
+$python\
+$rust\
+$memory_usage\
+$env_var\
+$custom\
+$line_break\
+$jobs\
+$status\
+$character"""
+
+# Wait 10 milliseconds for starship to check files under the current directory
+#scan_timeout = 10
+
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# MODULES
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[➜](bold red) "
+disabled = false
+
+[cmd_duration]
+min_time = 5_000
+show_milliseconds = true
+show_notifications = false
+min_time_to_notify = 120_000
+disabled = true
+
+[directory]
+truncation_length = 2
+format = "[$path]($style)[ $read_only]($read_only_style) "
+style = "fg:bright-yellow"
+fish_style_pwd_dir_length = 2
+use_logical_path = true
+disabled = false
+
+[docker_context]
+only_with_files = true
+disabled = false
+
+[dotnet]
+disabled = true
+
+[env_var]
+disabled = false
+
+[git_branch]
+disabled = false
+
+[git_commit]
+disabled = false
+
+[git_state]
+disabled = false
+
+[git_status]
+disabled = false
+
+[golang]
+disabled = true
+
+[hostname]
+disabled = false
+
+[java]
+disabled = true
+
+[jobs]
+disabled = false
+
+[kubernetes]
+disabled = true
+
+[line_break]
+disabled = true
+
+[lua]
+disabled = true
+
+[memory_usage]
+threshold = 60
+disabled = true
+
+[nim]
+disabled = true
+
+[nodejs]
+disabled = false
+
+[package]
+display_private = true
+disabled = true
+
+[perl]
+disabled = true
+
+[python]
+disabled = false
+
+[rust]
+disabled = false
+
+[shlvl]
+disabled = true
+
+[status]
+disabled = false
+
+[time]
+disabled = true
+
+[username]
+disabled = false
+
+[custom]
+#command =
+#when =
+#shell =
+#description =
+#files =
+#directories =
+#extensions =
+#symbol =
+#style =
+#format =
+disabled = true

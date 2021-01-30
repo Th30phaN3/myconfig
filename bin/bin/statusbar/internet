@@ -29,7 +29,20 @@ if [ ! -n "$WIFIICON" ]; then
         COLOR="$color2"
       fi
     fi
+  elif [[ $SSIDNAME == *"HEP"* ]]; then
+    if PORTAL=$(ping -c 1 n39.network-auth.com); then
+      COLOR="$color2"
+    else
+      RES=$(echo $PORTAL | grep -oP '\d+(?=% packet loss)')
+      if [ "$RES" -eq 100 ]; then
+        COLOR="$color9"
+      else
+        COLOR="$color2"
+      fi
+    fi
   fi
 fi
 
-printf "%s<span color='%s'>%s</span> %s" "$WIFIICON" "$COLOR" "$SSIDNAME" "$(cat /sys/class/net/e*/operstate | sed 's/down//;s/unknown//;s/up//')"
+ETHICON="$(cat /sys/class/net/e*/operstate | sed 's/down//;s/unknown//;s/up//')"
+
+printf "%s<span color='%s'>%s</span> %s\n" "$WIFIICON" "$COLOR" "$SSIDNAME" "$ETHICON"

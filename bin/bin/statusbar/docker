@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Show the number of running Docker containers and latest created container IP address.
+
+COUNTC=$(docker ps -q | wc -l | sed -r 's/^0$//g')
+[[ -z "${COUNTC}" ]] && exit
+RECENTIP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $(docker ps -ql))
+
+echo " ${COUNTC}: ${RECENTIP}"

@@ -1,0 +1,15 @@
+{
+    "colorscheme": "cmc-16",
+    "fastdirty": true,
+    "hidehelp": false,
+    "matchbraceleft": false,
+    "pluginchannels": [
+        "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
+    ],
+    "pluginrepos": [],
+    "rmtrailingws": true,
+    "savecursor": true,
+    "saveundo": true,
+    "tabstospaces": true,
+    "termtitle": false
+}

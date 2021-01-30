@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Search https://gpo.zugaina.org for packages
-# Official Gentoo tree + overlays are included
-# DEPRECATED - Use "eix -R" instead !
+# Search https://gpo.zugaina.org for packages.
+# Official Gentoo tree + overlays are included.
+# DEPRECATED : Use "eix -R" instead !
 
 # Clean up search term
 STERM=$(echo "$1" | tr -s " ")

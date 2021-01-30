@@ -2,7 +2,7 @@
 Type=Application
 Version=1.1
 Name=Zathura
-Genericname=Zathura document viewer
+Genericname=Document viewer
 NoDisplay=true
 Comment=Open files with Zathura
 TryExec=/usr/bin/zathura

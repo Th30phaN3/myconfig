@@ -23,14 +23,9 @@ color article             color7  color0
 
 auto-reload yes
 browser "vivaldi %u"
-#browser "w3m %u"
 download-full-page yes
 error-log "~/.config/newsboat/error.log"
 feed-sort-order lastupdated
-ignore-article "*" "title =~ \"Agile\" or title =~ \"Windows\" or title =~ \"Transexual\" or title =~ \"Diversity\""
-ignore-article "https://packages.gentoo.org/packages/stable.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\""
-ignore-article "https://packages.gentoo.org/packages/added.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\"
-ignore-article "https://packages.gentoo.org/packages/updated.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\"
 keep-articles-days 20
 max-items 100
 openbrowser-and-mark-jumps-to-next-unread yes
@@ -39,16 +34,20 @@ reload-time 300
 reload-threads 10
 save-path "~/.config/newsboat"
 
+ignore-article "*" "title =~ \"Agile\" or title =~ \"Windows\" or title =~ \"Transexual\" or title =~ \"Diversity\""
+ignore-article "https://packages.gentoo.org/packages/stable.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\" or title =~ \"dev-haskell\" or title =~ \"dev-ml\""
+ignore-article "https://packages.gentoo.org/packages/added.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\" or title =~ \"dev-haskell\" or title =~ \"dev-ml\""
+ignore-article "https://packages.gentoo.org/packages/updated.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\" or title =~ \"dev-haskell\" or title =~ \"dev-ml\""
+ignore-article "https://www.phoronix.com/rss.php" "title =~ \"Ubuntu\""
+ignore-article "https://www.francetvinfo.fr/france.rss" "title =~ \"20h30\" or title =~ \"13h15\""
+
 bind-key "LEFT" quit
 bind-key "RIGHT" open
 bind-key q hard-quit
 bind-key o open-in-browser-and-mark-read
-bind-key o open-in-browser
+#bind-key o open-in-browser
 
 #macro t set browser "tsp youtube-dl --add-metadata -ic %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
 #macro a set browser "tsp youtube-dl --add-metadata -xic -f bestaudio/best %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
 macro v set browser "setsid nohup mpv %u"; open-in-browser ; set browser "vivaldi %u"
-#macro w set browser "w3m %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
-
 macro m set browser "mpv %u"; open-in-browser ; set browser "vivaldi %u"
-#macro v set browser "/usr/bin/vivaldi %u"; open-in-browser ; set browser "/usr/bin/w3m %u"

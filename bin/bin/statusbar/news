@@ -4,7 +4,8 @@
 # When left clicked, brings up newsboat.
 
 case $BLOCK_BUTTON in
-        1) setsid "$TERMINAL" -e newsboat ;;
+        #1) setsid "$TERMINAL" -e newsboat ;;
+        1) i3-msg -q exec "${TERMINAL} -e newsboat" ;;
 esac
 
 echo "$(newsboat -x print-unread | awk '{ print $1}' | sed 's/^0$//g')"

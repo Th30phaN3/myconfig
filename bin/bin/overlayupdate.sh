@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Re-fetch every overlays (layman sync bug)
+# Re-fetch every overlays (layman sync bug).
 
 # Ugly trick to run as root (requires sudo rights)
 SUDO=''

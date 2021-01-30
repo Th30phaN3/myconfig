@@ -1,0 +1,8 @@
+auto-version-check yes
+locale en_US
+player mpv
+title "{author} -- {title}"
+default-stream "480p,720p,720p60,best"
+ringbuffer-size 20M
+twitch-disable-hosting
+twitch-disable-ads

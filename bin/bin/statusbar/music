@@ -6,13 +6,13 @@ filter()
 {
   INFO="s/\\&/&amp;/g;s/\\[paused\\].*/<span color=\"gray\" font_style=\"italic\">/g;s/\\[playing\\].*/<span>/g"
   # First for full text
-  sed "/^volume:/d" | tac | sed -e "$INFO" | sed "s/.*[\\/]\+\(.*\)/\1/g" | tr -d '\n' | sed -e "s/$/<\\/span>/g"
+  sed "/^volume:/d" | tac | sed -e "$INFO" | sed "s/.*[\\/]\+\(.*\)/\1/g" | tr -d '\n' | sed -e "s/$/<\\/span>\\n/g;s/^/ /g"
   # Second for short text
-  sed "/^volume:/d" | tac | sed -e "$INFO" | sed "s/.*[\\/]\+\(.*\)/\1/g" | tr -d '\n' | sed -e "s/$/<\\/span>/g"
+  sed "/^volume:/d" | tac | sed -e "$INFO" | sed "s/.*[\\/]\+\(.*\)/\1/g" | tr -d '\n' | sed -e "s/$/<\\/span>\\n/g;s/^/ /g"
 }
 
 case $BLOCK_BUTTON in
-  1) mpc status | filter && setsid "$TERMINAL" -e ncmpcpp & ;; # left click, opens ncmpcpp
+  1) mpc status | filter && i3-msg -q exec "${TERMINAL} -title flt_ncmpcpp -e ncmpcpp" ;; # left click, opens ncmpcpp
   3) mpc toggle | filter ;;  # right click, pause/unpause
   4) mpc prev   | filter ;;  # scroll up, previous
   5) mpc next   | filter ;;  # scroll down, next

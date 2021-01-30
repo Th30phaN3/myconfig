@@ -34,24 +34,24 @@
 --add-metadata
 # Add thumbnail (use AtomicParsley)
 --embed-thumbnail
-# Use cookies extracted from youtube to bypass authentification
+# Use cookies extracted from sites to bypass authentification
 --cookies ~/.config/youtube-dl/cookies.txt
 
 # MUSIC
 # Always extract audio
-#-x
+-x
 # Specify ffmpeg/avconv audio quality, insert a value between 0 (better) and 9 (worse) for VBR or a specific bitrate like 128K (default 5)
 --audio-quality 0
 # Specify audio format: "best", "aac", "flac", "mp3", "m4a", "opus", "vorbis",  or  "wav"; "best" by default; No effect without -x
-#--audio-format mp3
+--audio-format mp3
 # Format for music playlists (no playlist -> "NA")
-#-o '~/music/ytdl/%(playlist_title)s/%(title)s.%(ext)s'
+-o '~/music/ytdl/%(playlist_title)s/%(title)s.%(ext)s'
 # Start downloading from specific video index
 #--playlist-start 1
 
 # VIDEO
 # Encode  the  video  to another format if necessary (currently supported: mp4|flv|ogg|webm|mkv|avi)
---recode-video mp4
+#--recode-video mp4
 # Video format code, use -F on a video to list available formats (140 for m4a)
 #-f 140
 # Format for video playlists (no playlist -> "NA")

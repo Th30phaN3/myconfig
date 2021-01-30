@@ -1,0 +1,7 @@
+/dev/*
+/lost\+found/*
+/proc/*
+/run/*
+/swapfile
+/sys/*
+/tmp/*

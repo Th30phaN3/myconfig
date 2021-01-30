@@ -1,6 +1,8 @@
 #!/bin/bash
 #
-# Replace directory and file names with clean, user defined names
+# Replace directory and file names with clean, user defined names.
+# Usage: filenameclean.sh -[b]racket -[c]amelcase -[d]irectories -[e]nglish -[f]rench
+# -[l]owercase -[p]arenthesis -[q]uality -[s]afe -[u]ppercase -posi[x] -[h]elp
 
 while getopts ":bcdeflpqsuxh" option; do
  case "${option}" in

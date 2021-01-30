@@ -1,8 +1,9 @@
 #!/bin/bash
 #
 # Update /etc/hosts with up-to-date hosts files
+# DEPRECATED: use hosty instead !
 
-# Ugly trick to run as root (requires sudo rights)
+# Ugly trick to run as root (requires global sudo rights)
 SUDO=''
 if (( EUID != 0 )); then
     SUDO='sudo'

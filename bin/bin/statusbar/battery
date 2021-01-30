@@ -4,10 +4,12 @@
 # Take a battery name (e.g. BAT0) as an argument.
 
 # Get xresources colors
-for x in "$(xrdb -query | grep "*.color" | sed "s/.*\./export /g;s/:\s*/=\"/g;s/$/\"/g")"; do eval "$x"; done
+#for x in "$(xrdb -query | grep "*.color" | sed "s/.*\./export /g;s/:\s*/=\"/g;s/$/\"/g")"; do eval "$x"; done
+
+. "${XDG_CACHE_HOME-$HOME/.cache}/wal/colors.sh"
 
 case $BLOCK_BUTTON in
-    3) notify.sh "Help:" ": discharging<br>: stagnant charge<br>: charging<br>: charged" ;;
+    3) notify.sh "Help:" ": discharging<br>: stagnant charge<br>: charged<br>: charging" ;;
 esac
 
 CAPACITY=$(cat /sys/class/power_supply/"$1"/capacity) || exit
@@ -26,6 +28,6 @@ fi
 
 [ "$STATUS" = "Charging" ] && COLOR="$color7"
 
-ICONSTATUS=$(echo "$STATUS" | sed -e 's/,//g;s/Discharging//;s/Charging//;s/Unknown//;s/Full//;s/ 0*/ /g;s/ :/ /g')
+ICONSTATUS=$(echo "$STATUS" | sed -e 's/,//g;s/Discharging//;s/Full//;s/Unknown//;s/Charging//;s/ 0*/ /g;s/ :/ /g')
 
-printf "<span color='%s'>%s %s</span>" "$COLOR" "$ICONSTATUS" "$CAPACITY%"
+printf "<span color='%s'>%s %s</span>\n" "$COLOR" "$ICONSTATUS" "$CAPACITY%"

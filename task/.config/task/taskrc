@@ -24,6 +24,18 @@ abbreviation.minimum=4
 # Tasks can be tracked for 3 years
 urgency.age.max=1095
 
+# Format for dates
+dateformat=D/M/Y
+dateformat.report=D/M/Y (a)
+dateformat.holiday=D/M/Y
+dateformat.edit=D/M/Y H:N:S
+dateformat.info=D/M/Y H:N:S
+dateformat.annotation=D/M/Y H:N:S
+report.X.dateformat=D/M/Y (a)
+
+# Number of days into the future that define when a task is considered due
+due=10
+
 # Default project name
 default.project=perso
 
@@ -39,7 +51,7 @@ data.location=~/.local/share/task
 # Include french holidays
 include ~/.config/task/holidays.fr-FR.rc
 
-# Color theme
+# Custom color theme
 include ~/.config/task/mydark16.theme
 
 # Simple Custom Report

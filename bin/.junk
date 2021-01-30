@@ -1,0 +1,102 @@
+/home/wegeee/.android/cache/*
+/home/wegeee/.cache/ccache/*
+/home/wegeee/.cache/composer/*
+/home/wegeee/.cache/easytag/easytag.log
+/home/wegeee/.cache/electron/*
+/home/wegeee/.cache/electron-builder/*
+/home/wegeee/.cache/filezilla/*
+/home/wegeee/.cache/fontconfig/*
+/home/wegeee/.cache/geeqie/thumbnails/*
+/home/wegeee/.cache/go-build/*
+/home/wegeee/.cache/heroku/*.log
+/home/wegeee/.cache/icedtea-web/*
+/home/wegeee/.cache/intellijidea/*
+/home/wegeee/.cache/mesa_shader_cache/*
+/home/wegeee/.cache/mozilla/*
+/home/wegeee/.cache/phpstorm/*
+/home/wegeee/.cache/pip/http/*
+/home/wegeee/.cache/ranger/*
+/home/wegeee/.cache/sxiv/*
+/home/wegeee/.cache/thumbnails/*
+/home/wegeee/.cache/vivaldi/*
+/home/wegeee/.cache/vpn.ac/qmlcache/*
+/home/wegeee/.cache/wal/schemes/*
+/home/wegeee/.cache/yarn/*
+/home/wegeee/.cache/youtube-dl/youtube-sigfuncs/*
+/home/wegeee/.cache/.bluetoothctl_history
+/home/wegeee/.cache/.qt_compose_cache*
+/home/wegeee/.config/csharp.history
+/home/wegeee/.config/Code/Cache/*
+/home/wegeee/.config/Code/CachedData/*
+/home/wegeee/.config/Code/CachedExtensions/*
+/home/wegeee/.config/Code/Code\ Cache/*
+/home/wegeee/.config/Code/GPUCache/*
+/home/wegeee/.config/Code/logs/*
+/home/wegeee/.config/easytag/*.history
+/home/wegeee/.config/geeqie/history
+/home/wegeee/.config/intellijidea/terminal/history/*
+/home/wegeee/.config/micro/buffers/*
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/Application\ Cache/Cache/*
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/Cache/*
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/GPUCache/*
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/logs/*
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/Service\ Worker/CacheStorage/*
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/Service\ Worker/ScriptCache/*
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/logs.txt
+/home/wegeee/.config/Microsoft/Microsoft\ Teams/old_logs*
+/home/wegeee/.config/ncmpcpp/error.log
+/home/wegeee/.config/newsboat/error.log
+/home/wegeee/.config/VirtualBox/*.log*
+/home/wegeee/.config/vivaldi/Crash\ Reports/*
+/home/wegeee/.config/weechat/logs/*
+/home/wegeee/.config/weechat/weechat.log
+/home/wegeee/.dbshell
+/home/wegeee/.dotnet/TelemetryStorageService/*
+/home/wegeee/.gnome
+/home/wegeee/.gradle/caches/*
+/home/wegeee/.hplip/hp-doctor.log
+/home/wegeee/.ionic/helper.log
+/home/wegeee/.ipython/profile_default/log/*
+/home/wegeee/.ipython/profile_default/history.sqlite
+/home/wegeee/.jupyter/migrated
+/home/wegeee/.lesshst
+/home/wegeee/.local/bin/__pycache__/*
+/home/wegeee/.local/share/elastic/logs/*
+/home/wegeee/.local/share/mfbot.de/*
+/home/wegeee/.local/share/mongo/diagnostic.data/*
+/home/wegeee/.local/share/mongo/journal/*
+/home/wegeee/.local/share/nano_backup/*
+/home/wegeee/.local/share/newsboat/history*
+/home/wegeee/.local/share/ranger/history
+/home/wegeee/.local/share/recently-used.xbel
+/home/wegeee/.local/share/Ripcord/webcache/*
+/home/wegeee/.local/share/NuGet/v3-cache/*
+/home/wegeee/.local/share/Trash/files/*
+/home/wegeee/.local/share/Trash/info/*
+/home/wegeee/.local/share/.vivaldi_reporting_data
+/home/wegeee/.local/share/.vivaldi_user_id
+/home/wegeee/.local/share/vpn.ac/locations.old
+/home/wegeee/.local/share/vpn.ac/vpnac.log
+/home/wegeee/.local/share/xorg/*log*
+/home/wegeee/.local/share/zathura/history
+/home/wegeee/.local/share/zathura/input-history
+/home/wegeee/.lyrics
+/home/wegeee/.mozilla/firefox/Crash\ Reports/*
+/home/wegeee/.nano/*_history
+/home/wegeee/.ncmpcpp
+/home/wegeee/.npm/_cacache/*
+/home/wegeee/.npm/_logs/*
+/home/wegeee/.npm/anonymous-cli-metrics.json
+/home/wegeee/.pgadmin/sessions/*
+/home/wegeee/.pgadmin/*.log
+/home/wegeee/.pgAdmin4.startup.log
+/home/wegeee/.serverauth*
+/home/wegeee/.sonar/cache/*
+/home/wegeee/.sonar/_tmp/*
+/home/wegeee/.trash/*
+/home/wegeee/.viminfo
+/home/wegeee/.w3m
+/home/wegeee/.weatherreport
+/home/wegeee/.wget-hsts
+/home/wegeee/.yarnrc
+/home/wegeee/.*_history

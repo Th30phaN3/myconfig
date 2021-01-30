@@ -4,7 +4,7 @@
 # It can also load those layouts and call each command attributed to a window.
 # It behave as a "session restore" feature for i3.
 # It is usually called with -[s]ave when quitting i3 and -[l]oad when starting i3.
-# ! BE AWARE THAT IT IS LIMITED AND CAN BE EASILY BROKEN !
+# ! THIS SCRIPT IS A WORKAROUND, IT IS LIMITED AND CAN BE EASILY BROKEN !
 
 # Directory where temporary workspaces are stored
 WK_DIR="$HOME/.cache/i3/wk"

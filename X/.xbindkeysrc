@@ -35,26 +35,27 @@
 #keystate_capslock = enable
 #keystate_scrolllock= enable
 
-#Blackwidow macros
-#m1 increase volume
-"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+; mpc -q volume +5"
-    m:0x10 + c:191
-#m2 decrease volume
-"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-; mpc -q volume -5"
-    m:0x10 + c:192
-#m3 change random background
+# Razer Blackwidow macros
+#m1
+#""
+#    m:0x10 + c:191
+#m2
+#""
+#    m:0x10 + c:192
+#m3 Change random background
 "feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*"
     m:0x10 + c:193
-#m4 screenshot
-"scrot -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
-    m:0x10 + c:194
-#m5 pause mpd
-"mpc -q toggle"
-    m:0x10 + c:195
+#m4 ???
+#""
+#    m:0x10 + c:194
+#m5 ???
+#""
+#    m:0x10 + c:195
 
-#Laptop F keys
+# HP EliteBook F keys
+# TODO: how to control all volumes at once ? Sound control with playerctl doesn't work with some media players (chromium, mpv...)
 #AltGr + F3 (turn off screen)
-"sleep 1; xset dpms force off"
+"xset dpms force off"
     m:0x90 + c:69
 #AltGr + F6 (decrease volume)
 "pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-; mpc -q volume -5"
@@ -74,7 +75,26 @@
 #AltGr + F4 (change wallpaper)
 "feh --bg-scale --randomize --no-fehbg ~/pics/wallpapers/desktop/*"
     m:0x90 + c:70
-#AltGr + ImpEcr (screenshot)
-#"scrot -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
+#AltGr + ImpEcr (select area + screenshot)
 "scrot -s -q 80 ~/pics/screenshots/%Y-%m-%d_%H:%M:%S.png -z"
     m:0x90 + c:118
+
+# Media keys
+#Mod2 + XF86AudioPlay (play/pause from most recent media player)
+"mpris2controller PlayPause"
+    m:0x10 + c:172
+#Mod2 + XF86AudioPrev (previous track)
+"mpris2controller Previous"
+    m:0x10 + c:173
+#Mod2 + XF86AudioNext (next track)
+"mpris2controller Next"
+    m:0x10 + c:171
+#Mod2 + XF86AudioMute (mute volume)
+"pactl set-source-mute 0 toggle; amixer -q sset Master toggle; mpc -q volume 0"
+    m:0x10 + c:121
+#Mod2 + XF86AudioLowerVolume (decrease volume)
+"pactl set-sink-volume 0 -5%; amixer -q sset Master 5%-; mpc -q volume -5"
+    m:0x10 + c:122
+#Mod2 + XF86AudioRaiseVolume (increase volume)
+"pactl set-sink-volume 0 +5%; amixer -q sset Master 5%+; mpc -q volume +5"
+    m:0x10 + c:123

@@ -6,13 +6,14 @@
 HOSTS="/etc/hosts"
 WHITELIST="/etc/hosty/whitelist"
 SUDO=''
+# Ugly trick to run as root (requires global sudo rights)
 if (( EUID != 0 )); then
-  SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
+  SUDO='sudo'
 fi
 
 # Get primary selection and strip spaces
 SELECT="$(xclip -o | tr -d '[:space:]')"
-# Get site name with or without www.
+# Get site name with and without www.
 if [[ "$SELECT" =~ ^www\..* ]]; then
   WWWSELECT="${SELECT#www.}"
 else

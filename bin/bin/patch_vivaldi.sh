@@ -1,60 +1,67 @@
 #!/bin/bash
 #
-# Author: GwenDragon
+# Author: GwenDragon (Vivaldi forum)
+# License: GPL
 # Patch the browser.html and copy custom.js and custom.css in a selected Vivaldi installation
 
 if [ $UID != 0 ] ; then
-  echo "This script requires root permission."
-  exit 255
+    echo "Please use 'sudo' or log in as root."
+    exit 255
 fi
 
 # Default directory for custom files
-MOD_DIR=$HOME/VivaldiPatch
+mod_dir=$HOME/.themes/vivaldi/custom
 if [ ! "$1" = "" ] ; then
-  MOD_DIR=$1
+    mod_dir=$1
 fi
-INSTALL_PATH=$(dirname $(find /opt -name "vivaldi-bin" )) ;
-INSTALL_DIRS=( $INSTALL_PATH ) ;
+
+vivaldi_installs=$(dirname $(find /opt -name "vivaldi-bin" )) ;
+vivaldi_install_dirs=( $vivaldi_installs ) ;
+
 echo "---------------------"
-COUNT=1
-SELECTED=0
-echo "Found installations:"
-for DIR in $INSTALL_PATH ; do
-  echo "$DIR: $COUNT"
-  ((COUNT++)) ;
+count=1
+selected=0
+echo "Installations found:"
+for dir in $vivaldi_installs ; do
+ echo "$dir: $count" ;
+ ((count++)) ;
 done
 read -p "
-Which installation patch?
-Please enter the number and press Enter or X for abort.
-Enter selection: " SELECTED ;
-if [ "$SELECTED" = "X" ] ; then
-  exit
+Select installation to patch.
+Input number and press [Enter] or [X] to cancel.
+Input selection: " selected ;
+if [ "$selected" = "X" ] ; then
+ exit ;
 fi
-((SELECTED--)) ;
-if [ $SELECTED -ge ${#INSTALL_DIRS[@]} ] ; then
-  echo "Invalid choice."
+((selected--)) ;
+if [ $selected -ge ${#vivaldi_install_dirs[@]} ] ; then
+    echo "Selection too large!"
 fi
-DIR=${INSTALL_DIRS[$SELECTED]} ;
+dir=${vivaldi_install_dirs[$selected]} ;
 echo "---------------------"
-echo "Patch of "${MOD_DIR}" for "${INSTALL_DIRS[$SELECTED]} ;
-cp "$DIR/resources/vivaldi/browser.html" "$DIR/resources/vivaldi/browser.html-$(date +%Y-%m-%dT%H-%M-%S)"
-ALREADY_PATCHED=$(grep '<link rel="stylesheet" href="style/custom.css" />' $DIR/resources/vivaldi/browser.html);
-if [ "$ALREADY_PATCHED" = "" ] ; then
+echo "Patch originating from "${mod_dir}" targeting "${vivaldi_install_dirs[$selected]} ;
+
+cp "$dir/resources/vivaldi/browser.html" "$dir/resources/vivaldi/browser.html-$(date +%Y-%m-%dT%H-%M-%S)"
+
+alreadypatched=$(grep '<link rel="stylesheet" href="style/custom.css" />' $dir/resources/vivaldi/browser.html);
+if [ "$alreadypatched" = "" ] ; then
   echo "Patching browser.html..."
-  sed -i -e 's/<\/head>/<link rel="stylesheet" href="style\/custom.css" \/> <\/head>/' "$DIR/resources/vivaldi/browser.html"
-  sed -i -e 's/<\/body>/<script src="custom.js"><\/script> <\/body>/' "$DIR/resources/vivaldi/browser.html"
+  sed -i -e 's/<\/head>/<link rel="stylesheet" href="style\/custom.css" \/> <\/head>/' "$dir/resources/vivaldi/browser.html"
+  sed -i -e 's/<\/body>/<script src="custom.js"><\/script> <\/body>/' "$dir/resources/vivaldi/browser.html"
 else
-  echo "browser.html is already patched."
+  echo "browser.html has already been patched!"
 fi
-if [ -f "$MOD_DIR/custom.css" ] ; then
-  echo "Copying custom.css..."
-  cp -f "$MOD_DIR/custom.css" "$DIR/resources/vivaldi/style/custom.css"
+
+if [ -f "$mod_dir/custom.css" ] ; then
+    echo "Copying custom.css..."
+    cp -f "$mod_dir/custom.css" "$dir/resources/vivaldi/style/custom.css"
 else
-  echo "custom.css copied in $MOD_DIR"
+    echo "custom.css missing in $mod_dir"
 fi
-if [ -f "$MOD_DIR/custom.js" ] ; then
-  echo "Copying custom.js..."
-  cp -f "$MOD_DIR/custom.js" "$DIR/resources/vivaldi/custom.js"
+
+if [ -f "$mod_dir/custom.js" ] ; then
+    echo copying custom.js
+    cp -f "$mod_dir/custom.js" "$dir/resources/vivaldi/custom.js"
 else
-  echo "custom.js copied in $MOD_DIR"
+    echo "custom.js missing in $mod_dir"
 fi

@@ -8,7 +8,7 @@
 # These functions depends on aliases described in .bash_aliases
 # ##<function name>: <description>
 
-# ranger: Override "ranger", allows to run same instance of ranger from shell inside ranger
+# Override "ranger", allows to run same instance of ranger from shell inside ranger
 ranger()
 {
   if [ -z "$RANGER_LEVEL" ]; then
@@ -18,8 +18,17 @@ ranger()
   fi
 }
 
+# Special function used to update term title before every command
+set_term_title()
+{
+  # Display title with this format: "$PWD -> TERM"
+  echo -ne "\033]0;$(echo $PWD) -> TERM\007"
+  # Display title using history ((strip command number and dates) with this format: "$PWD -> <command executed>"
+  #echo -ne "\033]2;$(xcwd) -> $(history 1 | sed "s/^[ ]*[0-9]*[ ]*[0-9\-]*[ ]*[0-9:]*[ ]*//g")\007"
+}
+
 ## func_help: Display help for $1 (custom bash function)
-func_help() { grep "## .*$1.*" "$HOME"/.bash_functions | grep -v "## $1" | sort ; }
+func_help() { grep "## .*$1.*" "$HOME"/.bash_functions | sort ; } # | grep -v "## $1" | sort ; }
 
 ## mcd: Create $1 directory and move into it
 mcd() { mkdir -p "$1"; cd "$1" || return; }
@@ -33,16 +42,16 @@ fdup() { sort "$1" | uniq -cd | sort -nr ; }
 ## pack: Search for $1 as ebuild, python package, npm package, rust package and nuget package
 pack() { echo -e "-----\nEBUILDS:" && eix -R "$1"; echo -e "\n-----\nPYTHON PACKAGES:" && pip search "$1"; echo -e "\n-----\nJS PACKAGES:" && npm search "$1"; echo -e "\n-----\nCRATES:" && cargo search --color always -v "$1"; echo -e "\n-----\nNUGET PACKAGES:" && mono /usr/local/bin/nuget.exe list "$1" -ForceEnglishOutput -NonInteractive; }
 
-## cleanhome: Remove junk, cache data, history files, etc...
+## cleanhome: Remove junk, cache data, history files, etc... (! WARNING ! CAN RESET PROGRAMS STATES !)
 cleanhome()
 {
   local JUNKLIST="$HOME/.junk"
-  local LOGFILE="/var/log/cleanhome.log"
+  local LOGFILE="$HOME/.cleanhome.log"
   history -cw
   echo "Clean effectued on $(date +%c)" 1>> "$LOGFILE" 2> /dev/null
   while IFS= read -r LINE
   do
-    \rm -rv "$LINE" 1>> "$LOGFILE" 2> /dev/null
+    \rm -rv $LINE 1>> "$LOGFILE" 2> /dev/null
   done < "$JUNKLIST"
 }
 
@@ -241,7 +250,7 @@ extract()
       *)           echo "'$1' cannot be extracted via >extract<" ;;
     esac
   else
-    echo "'$1' is not a valid file!"
+    echo "'$1' is not a valid file. Your trial has expired. Please purchase a valid copy of WinRar."
   fi
 }
 
@@ -290,13 +299,13 @@ stripurls()
     touch "$FILETOWRITE"
   fi
   while read -r l; do
-    # keep only domain name
+    # Keep only domain name
     DN=$(echo "$l" | sed -e 's|^[^/]*//||' -e 's|/.*$||')
     echo "0.0.0.0 $DN" >> "$FILETOWRITE"
   done < "$FILETOREAD"
-  # delete similar lines
+  # Delete similar lines
   awk '!seen[$0]++' "$FILETOWRITE" > "$FINALFILE"
-  # display similar lines deleted
+  # Display similar lines deleted
   diff --suppress-common-lines --color=always "$FILETOWRITE" "$FINALFILE"
 }
 
@@ -335,13 +344,13 @@ gifwal()
 {
   local FILE DIR_GIF CMD
   DIR_GIF=$HOME/pics/wallpapers/gif
-  #Get 1 random file from directory
+  # Get 1 random file from directory
   FILE=$(find "$DIR_GIF" -type f | shuf -n 1)
-  #Kill all xwinwrap process (alternative: pidof xwinwrap | kill)
+  # Kill all xwinwrap process (alternative: pidof xwinwrap | kill)
   killall -q xwinwrap
   CMD="xwinwrap -g 1920x1080 -ov -- mpv --no-terminal --loop-file=inf --no-stop-screensaver --no-input-default-bindings --no-osc --osd-level=0 -wid WID $FILE"
-  #Detach cmd from terminal
-  nohup "$CMD" > /dev/null 2>&1 &
+  # Detach cmd from terminal
+  nohup $CMD > /dev/null 2>&1 &
 }
 
 ## pserv: Start a local phph test server with random port
@@ -364,7 +373,7 @@ typethis()
   fi
 }
 
-## atmp3: Add ID3 Artist and Title tags to mp3 files based on filename ("Artist - MusicName.mp3") and clean up unnecessary tags, force UTF8 encoding and 2.4 version
+## atmp3: Add ID3 Artist and Title tags to mp3 files based on filename ("Artist - MusicName.mp3") and clean up unnecessary tags (lyrics, comments...), force UTF8 encoding and 2.4 version
 atmp3()
 {
   local SONG ARTIST TITLE
@@ -373,6 +382,27 @@ atmp3()
     ARTIST=$(echo "$SONG" | awk -F " - " '{print $1}')
     TITLE=$(echo "$SONG" | awk -F " - " '{print $2}')
     eyeD3 -Q --encoding utf8 --to-v2.4 --remove-all-lyrics --remove-all-comments --remove-all-objects --user-text-frame='major_brand:' --user-text-frame='minor_version:' --user-text-frame='compatible_brands:' --user-text-frame='description:' --user-text-frame='comment:' --user-text-frame='purl:' --user-text-frame='Software:' --user-text-frame='Tagging time:' --user-text-frame='coding_history:' --user-text-frame='time_reference:' --user-text-frame='umid:' -c "" --tagging-date "" --encoding-date "" -a "$ARTIST" -t "$TITLE" "$SONG.mp3"
+  done
+}
+
+## muexif: complete EXIF metadata for mp3 files based on ID3 tags
+muexif()
+{
+  local SONG TITLE ARTIS ALBUM GENRE NBTRACK TOTRACK YEAR
+  for i in *.mp3; do
+    SONG=$(eyeD3 "$i")
+    TITLE=$(echo "$SONG" | awk -F "title: " '{print $2}' | grep -v '^$')
+    ARTIS=$(echo "$SONG" | awk -F "artist: " '{print $2}' | grep -v '^$')
+    ALBUM=$(echo "$SONG" | awk -F "album: " '{print $2}' | grep -v '^$')
+    GENRE=$(echo "$SONG" | awk -F "genre: " '{print $2}' | grep -v '^$' | sed 's/ ([^)]*)//g')
+    #NBTRACK=$(echo "$SONG" | awk -F "track: " '{print $2}' | grep -v '^$' | sed 's#genre:.*##g; s#/.*##g' | tr -d '[:space:]')
+    # Write {track number}/{total tracks} in the same tag
+    NBTRACK=$(echo "$SONG" | awk -F "track: " '{print $2}' | grep -v '^$' | sed 's#genre:.*##g' | tr -d '[:space:]')
+    #TOTRACK=$(echo "$SONG" | awk -F "track: " '{print $2}' | grep -v '^$' | sed 's#genre:.*##g; s#.*/\([0-9]*\).*#\1#g' | tr -d '[:space:]')
+    YEAR=$(echo "$SONG" | awk -F "release date: " '{print $2}' | grep -v '^$')
+    echo "|_${TITLE}_|_${ARTIS}_|_${ALBUM}_|_${GENRE}_|_${NBTRACK}_|_${TOTRACK}_|_${YEAR}_|"
+    # USELESS => MP3 tags in read-only !
+    #exiftool -Title="$TITLE" -Artist="$ARTIS" -Album="$ALBUM" -Genre="$GENRE" -Track="$NBTRACK" -Year="$YEAR" "$i"
   done
 }
 
@@ -441,13 +471,13 @@ cleanvids()
   done
 }
 
-## mkthumb: Create mosaic-like image to preview video content with $1(columns x rows)(opt.) thumbnails
+## mkthumb: Create mosaic-like image to preview video content with $1(columns x rows)(3x5 by default) thumbnails
 mkthumb()
 {
   NBIMG="${1:-3x5}" # Default to 15 images
   local THUMBDIR FONT
   THUMBDIR="Thumbnails"
-  FONT="/usr/share/fonts/dejavu/DejaVuSansMono.ttf"
+  FONT="/home/wegeee/.local/share/fonts/segoe-ui-light.ttf"
   mkdir -pv "$THUMBDIR"
   for f in *.*; do
     if [ ! -f "${THUMBDIR}/${f}.png" ]; then
@@ -466,16 +496,13 @@ sm()
   else
     DMENU='dmenu'
   fi
-  #set -x
-  #echo $DMENU
-  #echo "$DMENU"
-  man -k . | $DMENU -l 30 #| awk '{print $1}' | xargs -r "man" -Tpdf #| zathura -
-  #set +x
+  man -k . | $DMENU -l 30 | awk '{print $1}' | xargs -r "man" -Tpdf | zathura -
 }
 
 ## man: Override "man", display pages with colors
 man()
 {
+  #LESS_TERMCAP_mb=$'\e[01;31m' \
   LESS_TERMCAP_md=$'\e[01;31m' \
   LESS_TERMCAP_me=$'\e[0m' \
   LESS_TERMCAP_se=$'\e[0m' \
@@ -504,3 +531,22 @@ rnmfileindir()
     fi
   done
 }
+
+## dnslookup: Use HackerTarget API to see DNS records for $1 (domain), simple alternative to whois
+dnslookup() { curl "https://api.hackertarget.com/dnslookup/?q=$1" ; }
+
+## addov: Add overlay $1 using Layman and mask every packages in it
+addov()
+{
+  if (( EUID != 0 )); then
+    SUDO='sudo'
+  fi
+  "$SUDO" layman -a "$1" && "$SUDO" sh -c "echo '*/*::$1' > '/etc/portage/package.mask/ov_$1'"
+}
+
+
+op() { setsid ${OPENER:-xdg-open} "$@" & disown ; }
+
+opp() { setsid ${OPENER:-xdg-open} "$@" & disown ; exit ; }
+
+xevi() { xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] }NR in a { printf "%-3s %s\n", $5, $8 }' ; }
