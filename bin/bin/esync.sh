@@ -48,7 +48,7 @@ else
   #"$SUDO" echo "-- EIX REMOTE --" >> "$SYNCLOG"
   #"$SUDO" eix-remote -X -H -q add &>> "$SYNCLOG"
   "$SUDO" echo "-- EIX DIFF --" >> "$SYNCLOG"
-  eix-diff -n -- /var/cache/eix/previous.eix /var/cache/eix/remote.eix &>> "$SYNCLOG"
+  eix-diff --nocolor -- /var/cache/eix/previous.eix /var/cache/eix/remote.eix &>> "$SYNCLOG"
 fi
 
 "$SUDO" echo -e "-----------------\n\n\n" >> "$SYNCLOG"

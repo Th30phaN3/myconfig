@@ -1,7 +1,6 @@
 #!/bin/bash
 #
-# THIS IS NOT A SCRIPT !
-# It's just an example to show use of aliases in bash scripts.
+# This script does nothing, it's just an example to show use of aliases in bash scripts.
 
 shopt -s expand_aliases
 source "${HOME}"/.bash_aliases

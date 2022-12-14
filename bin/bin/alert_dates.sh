@@ -3,6 +3,7 @@
 # Notify important events. Used with fcrontab.
 
 export DISPLAY=:0
+export XAUTHORITY="$HOME/.Xauthority"
 
 TODAY=$(/usr/bin/birthday -M 1 -f "$HOME/.config/birthday/dates")
 

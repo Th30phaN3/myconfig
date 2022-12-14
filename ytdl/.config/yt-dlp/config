@@ -1,0 +1,65 @@
+#__   _______     ____  _     ____
+#\ \ / /_   _|   |  _ \| |   |  _ \
+# \ V /  | |_____| | | | |   | |_) |
+#  | |   | |_____| |_| | |___|  __/
+#  |_|   |_|     |____/|_____|_|
+#
+
+# GENERAL
+# Do not download unavailable videos
+--compat-options no-youtube-unavailable-videos
+# Use AtomicParsley (youtube-dl behavior)
+--compat-options embed-thumbnail-atomicparsley
+# Show progress bar, even if in quiet mode
+--progress
+# Bypass geographic restriction via faking X-Forwarded-For HTTP header
+--geo-bypass
+# Number of retries (default is 10), or "infinite"
+--retries 4
+# Abort downloading when some fragment is not available
+--abort-on-unavailable-fragment
+# Use ffmpeg instead of the native HLS downloader
+--downloader "m3u8:ffmpeg"
+# Restrict filenames to only ASCII characters, and avoid "&" and spaces in filenames
+#--restrict-filenames
+# Do not overwrite any files
+--no-overwrites
+# Ignore download and postprocessing errors. The download will be considered successful even if the postprocessing fails
+--ignore-errors
+# Do NOT contact the youtube-dl server for debugging
+--no-call-home
+# Suppress HTTPS certificate validation
+--no-check-certificate
+# Embed thumbnail in the video as cover art
+--embed-thumbnail
+# Embed metadata to the video file. Also adds chapters to file unless --no-add-chapters is used
+--embed-metadata
+# Load cookies from a user profile of the given web browser
+--cookies-from-browser vivaldi
+# Use cookies extracted from sites to bypass authentification
+#--cookies ~/.config/yt-dlp/cookies.txt
+# File containing URLs to download, one URL per line. Lines starting with '#', ';' or ']' are considered as comments and ignored.
+#-a path/to/file
+# Start downloading from specific video index
+#--playlist-start 1
+
+# MUSIC
+# Always extract audio (comment to download videos)
+-x
+# Specify ffmpeg/avconv audio quality, insert a value between 0 (better) and 9 (worse) for VBR or a specific bitrate like 128K (default 5)
+--audio-quality 0
+# Specify audio format: "best", "aac", "flac", "mp3", "m4a", "opus", "vorbis",  or  "wav"; "best" by default; No effect without -x
+--audio-format mp3
+# Format for music playlists (no playlist -> "NA")
+-o '~/music/ytdl/%(playlist_title)s/%(title)s.%(ext)s'
+
+# VIDEO
+# Encode  the  video  to another format if necessary (currently supported: mp4|flv|ogg|webm|mkv|avi)
+#--recode-video mp4
+# Video format code, use -F on a video to list available formats (140 for m4a)
+#-f 140
+# SponsorBlock categories to be removed from the video file
+#--sponsorblock-remove sponsor,selfpromo,interaction,preview,music_offtopic
+#--sponsorblock-remove all
+# Format for video playlists (no playlist -> "NA")
+#-o '~/videos/ytdl/%(playlist_title)s/%(title)s.%(ext)s'

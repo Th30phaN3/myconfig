@@ -1,0 +1,58 @@
+#------------------------------------------------------------------------------
+#
+# Description:  User configuration file for Image::ExifTool
+#
+# Notes:        This example file shows how to define your own shortcuts and
+#               add new EXIF, IPTC, XMP, PNG, MIE and Composite tags, as well
+#               as how to specify preferred lenses for the LensID tag, and
+#               define new file types and default ExifTool option values.
+#
+#               Note that unknown tags may be extracted even if they aren't
+#               defined, but tags must be defined to be written.  Also note
+#               that it is possible to override an existing tag definition
+#               with a user-defined tag.
+#
+#               To activate this file, rename it to ".ExifTool_config" and
+#               place it in your home directory or the exiftool application
+#               directory. This causes ExifTool to automatically load the
+#               file when run.  Your home directory is determined by the first
+#               defined of the following environment variables:
+#
+#                   1.  EXIFTOOL_HOME
+#                   2.  HOME
+#                   3.  HOMEDRIVE + HOMEPATH
+#                   4.  (the current directory)
+#
+#               Alternatively, the -config option of the exiftool application
+#               may be used to load a specific configuration file (note that
+#               this must be the first option on the command line):
+#
+#                   exiftool -config example.config ...
+#
+# More Infos: https://exiftool.org/ExifTool.html | https://exiftool.org/config.html
+#------------------------------------------------------------------------------
+
+# Shortcut tags are used when extracting information to simplify
+# commonly used commands.  They can be used to represent groups
+# of tags, or to provide an alias for a tag name.
+#%Image::ExifTool::UserDefined::Shortcuts = (
+#    MyShortcut => ['exif:createdate','exposuretime','aperture'],
+#    MyAlias => 'FocalLengthIn35mmFormat',
+#);
+
+# Specify default ExifTool option values
+# (see the Options function documentation for available options)
+%Image::ExifTool::UserDefined::Options = (
+    Binary => 0,            # Tag values representing large binary data blocks (eg. ThumbnailImage)
+    FastScan => 2,          # Avoid extracting unnecessary flags
+    GeoMaxHDOP => 4,        # Ignore GPS fixes with HDOP > 4
+    IgnoreMinorErrors => 1, # Causes minor errors to be downgraded to warnings, and minor warnings to be ignored
+    LargeFileSupport => 1,  # Indicate that 64-bit file offsets are supported on this system
+    RequestAll => 3,        # Request additional tags not normally generated
+    Validate => 1,          # Perform extra metadata validation checks when reading, causing extra warnings
+);
+# Duplicates => 1,        # Make -a default for the exiftool app
+# MDItemTags => 0,        # OS X metadata item tags
+
+#------------------------------------------------------------------------------
+1;  #end

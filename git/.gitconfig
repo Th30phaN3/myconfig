@@ -16,7 +16,7 @@
 [github]
   user=Th30phaN3
 [user]
-  email=theophane.pro@tuta.io
+  email=theoch.pro@tuta.io
   name=Th30phaN3
 [core]
   #Commands such as commit and tag that lets you edit messages by launching an editor uses the value of this variable when it is set, and the environment variable GIT_EDITOR is not set.

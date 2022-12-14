@@ -8,8 +8,6 @@
 
 alias grep='grep --color=auto'
 alias gr='grep -ir '
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
 alias diff='diff --color=auto'
 alias spc='spc --config-dir=~/.config/spc -n -R'
 alias ls='ls -h --color=auto --group-directories-first'
@@ -24,7 +22,7 @@ alias lc='ls -ogtcr'     	# Sort by change time,most recent last
 alias lu='ls -ogtur'		# Sort by access time,most recent last
 alias fn='ls . | wc -l'
 alias hs='history'
-alias hg="history | sed -r '/[0-9]+ hg/d' | grep" # Search a term in terminal history
+alias hg="history | sed -r '/[0-9]+ hg/d' | grep" # Search a word in terminal history
 alias perm='stat -c "%A %a %n" *'
 alias ka='killall'
 alias cp='cp -iv'
@@ -41,40 +39,40 @@ alias ed='editassudo '
 alias mkdir='mkdir -pv'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias su='su --preserve-environment'
 alias df='df -Tha --total'
 alias du='du -ach | sort -h'
 alias lsblk='lsblk -po NAME,FSTYPE,SIZE,FSAVAIL,FSUSE%,MODE,LABEL,MOUNTPOINT,HOTPLUG,STATE'
 alias jo='jobs -l'
 alias fr='find -L -readable -regextype posix-extended -regex'
 alias qt='quotes.sh'
+alias chrom='go-chromecast'
+alias audit_sys='sudo lynis audit system --auditor wegeee --profile /etc/lynis/custom.prf'
 alias fishtank='nohup xfishtank -b 50 -f 15 -i 0.3 -r 0.3 > /dev/null 2>&1 &'
 alias birthday='birthday -W 30 -f /home/wegeee/.config/birthday/dates'  # Use XDG directory
 alias gpalldirs='find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && git pull" \;'     # Git Pull all sub-directories
 #alias gpalldirs='find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -I{} git -C pull'          # Git Pull all sub-directories
 #alias update_media_vivaldi='sudo /opt/vivaldi/update-widevine --system && sudo /opt/vivaldi/update-ffmpeg'
-alias medinfo='exiftool -s -FileName -Directory -ImageSize -FileSize -MIMEType -Duration -XResolution -YResolution -VideoFrameRate -BitDepth -AudioFormat -AudioChannels -AudioBitsPerSample -AudioSampleRate -Encoder -AvgBitrate -Artist -Title -Album -Genre'
-alias stripinfo='exiftool -ProjectRefType= -WindowsAtomUncProjectPath= -IngredientsFilePath= -IngredientsMaskMarkers= -IngredientsInstanceID= -IngredientsDocumentID= -IngredientsFromPart= -HistorySoftwareAgent= -HistoryChanged= -HistoryWhen= -Format= -CreatorTool= -XMPToolkit= -Title= -Comment= -Software= -HDVideo= -TVEpisode= -TVSeason= -TrackNumber='
-alias dh='date --help | sed -n "/^ *%%/,/^ *%Z/p" | while read l;do F=${l/% */}; date +%$F:"|'"'"'${F//%n/ }'"'"'|${l#* }";done | sed "s/\ *|\ */|/g" | column -s "|" -t'
+alias medexinfo='exiftool -s -FileName -Directory -ImageSize -FileSize -MIMEType -Duration -XResolution -YResolution -VideoFrameRate -BitDepth -AudioFormat -AudioChannels -AudioBitsPerSample -AudioSampleRate -Encoder -AvgBitrate -Artist -Title -Album -Genre'
+alias stripexinfo='exiftool -ProjectRefType= -WindowsAtomUncProjectPath= -IngredientsFilePath= -IngredientsMaskMarkers= -IngredientsInstanceID= -IngredientsDocumentID= -IngredientsFromPart= -HistorySoftwareAgent= -HistoryChanged= -HistoryWhen= -Format= -CreatorTool= -XMPToolkit= -Title= -Comment= -Software= -HDVideo= -TVEpisode= -TVSeason= -TrackNumber='
+alias dth='date --help | sed -n "/^ *%%/,/^ *%Z/p" | while read l;do F=${l/% */}; date +%$F:"|'"'"'${F//%n/ }'"'"'|${l#* }";done | sed "s/\ *|\ */|/g" | column -s "|" -t'
 alias xx='xrandr > /dev/null 2>&1; xrandr --output DP2 --left-of eDP1'	        # Add second screen
 alias diapo='feh -q -p -Y -Z --on-last-slide quit --auto-rotate -F -r'		    # Show a slideshow of all images in directory and sub-directories
-#alias sc='scrot -s -q 80 ~/pics/screenshots/$(whoami)_%Y-%m-%d_%H:%M:%S.png -z'	# Capture part of the screen
 alias matrix='cmatrix -b -u 5 -C blue'					                        # Enter the matrix
-alias mupdf='mupdf -r 75'
+#alias mupdf='mupdf -r 75'
 alias post='curl --request POST -H "Content-Type: application/json" --data '    # Post JSON. Use "@dt" to pass data in file named "dt"
-alias wal='wal -q -t -n -o /home/wegeee/.config/wal/done.sh -f '                # Call wall with custom arguments to change themes on-the-fly
+alias wal='wal -t -n -o /home/wegeee/.config/wal/done.sh --theme '           # Call wall with custom arguments to change themes on-the-fly
 alias getxgeom='xdotool selectwindow getwindowgeometry'                         # Get the x/y position + geometry from the selected x window
 alias timer='echo "Timer started. Stop with Ctrl-D." && date "+%a, %d %b %H:%M:%S" && time cat && date "+%a, %d %b %H:%M:%S"'
 alias weather='curl -s "https://wttr.in/Nantes?2" | sed -n "1,27p"'		# Display weather (large terminal width recommended)
 alias path='echo -e ${PATH//:/\\n}'						# Print binaries path
-#alias unigrep='grep -P "[^\x00-\x7F]"'					# Grep special unicode characters
 alias bcolor='for code in {0..15}; do echo -e "\e[38;05;${code}m $code: Color"; done'
 # Use this alias after a command (ex: <command> ; alert) to send a notification when the command finished
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Devour
-alias mupdf='devour mupdf'
+alias mupdf='devour mupdf -r 75'
 alias zathura='devour zathura'
-alias feh='devour feh'
 
 # Kernel / Packages manipulation
 alias kernel_rebuild='sudo make -j5 && sudo make modules_install && sudo mount /boot/efi/ && sudo make install && sudo grub-mkconfig -o /boot/efi/grub/grub.cfg'
@@ -91,7 +89,7 @@ alias epgrade_quick='emerge --update --tree --unordered-display --keep-going --v
 alias epgrade='emerge -ut --unordered-display --keep-going --verbose-conflicts --with-bdeps=y --newuse --deep @world'
 # System upgrade (used when upgrading Perl)
 alias epgrade_perl='emerge -utND --unordered-display --verbose-conflicts --with-bdeps=y --backtrack=100 --autounmask-keep-masks @world'
-alias eclean='erm && sudo eclean-dist -d -t1m -s40M'    # Remove unnecessary packages/dependencies & ebuilds files too big
+alias eclean='erm && sudo eclean-dist --deep --size-limit=50M'    # Remove unnecessary packages/dependencies & ebuilds files too big
 alias econf_up='sudo find /etc -name "._cfg????_*"'		# Check for new config files
 alias esecure='glsa-check -lv'							# Check packages vulnerabilities
 alias eppack='eix -u -x --nonvirtual --deps-installed --world-file --compact'   #Show available updates for packages
@@ -101,14 +99,15 @@ alias toshiba='sudo mount ~/media/toshiba; cd ~/media/toshiba; ll'
 alias maxtor='sudo mount ~/media/maxtor; cd ~/media/maxtor; ll'
 alias seagate='sudo mount ~/media/seagate; cd ~/media/seagate; ll'
 alias co_android='simple-mtpfs ~/media/android'
-alias disco_android='fusermount -u ~/media/android'
-alias unmount='umount'
+alias deco_android='fusermount -u ~/media/android'
+alias umount='sudo umount'
+alias unmount='sudo umount'
 
 # Bookmarks
 alias dl='cd ~/downloads && ll'
 alias dc='cd ~/docs && ll'
 alias pc='cd ~/pics && ll'
-alias mu='cd ~/music && ls -R'
+alias mu='cd ~/music && ll'
 alias conf='cd ~/myconfig && ll'
 alias pr='cd ~/projs && ll'
 
@@ -136,10 +135,11 @@ alias pig='ping -c 5 www.gentoo.org'
 alias coof='curl https://corona-stats.online/FR'
 alias fish='asciiquarium'
 alias help='man'
+alias fh='func_help'
 alias loonix='man hier'
 alias please='sudo $(fc -ln -1)'
 alias quit='exit'
 alias snoop='less /var/log/auth.log'
 alias text2ascii='figlet'
 alias wifi='wpa_cli'
-alias ytdl='youtube-dl'
+alias ytdl='yt-dlp'

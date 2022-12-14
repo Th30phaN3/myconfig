@@ -25,7 +25,10 @@ fi
 
 # Start some applications
 # Init compton
-compton -b --config "${HOME}/.config/compton/compton.conf"
+#compton -b --config "${HOME}/.config/compton/compton.conf"
+#TODO: replace with picom !
+picom --daemon
+
 # Add random wallpaper
 feh --bg-scale --randomize --no-fehbg /home/wegeee/pics/wallpapers/desktop/*
 # Call wal to set X colors (-R restores the last colorscheme, -n skip setting the wallpaper, -q quiet mode, -o restore config files)
@@ -51,6 +54,3 @@ numlockx
 #exec dbus-launch --exit-with-session i3
 # Launch i3 (dbus already started by distribution patch in xinitrc.d)
 exec i3
-
-# TODO: test xsm loading
-#exec xsm

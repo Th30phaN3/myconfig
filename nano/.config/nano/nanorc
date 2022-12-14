@@ -23,7 +23,7 @@ set positionlog
 #set selectedcolor fgcolor,bgcolor
 set smarthome
 set softwrap
-set suspendable
+#set suspendable
 set tabsize 4
 set tabstospaces
 set titlecolor green,black
@@ -43,7 +43,6 @@ bind ^X cut main
 bind ^C copy main
 bind ^V paste main
 bind ^U cutrestoffile main
-#bind ^J justify main
 bind ^W wordcount main
 bind ^K comment main
 bind ^B firstline main

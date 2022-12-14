@@ -6,7 +6,7 @@
 # |_|    \___/|_| \_|\____| |_| |___\___/|_| \_|____/
 #
 # These functions depends on aliases described in .bash_aliases
-# ##<function name>: <description>
+# ## <function name>: <description>
 
 # Override "ranger", allows to run same instance of ranger from shell inside ranger
 ranger()
@@ -28,7 +28,7 @@ set_term_title()
 }
 
 ## func_help: Display help for $1 (custom bash function)
-func_help() { grep "## .*$1.*" "$HOME"/.bash_functions | sort ; } # | grep -v "## $1" | sort ; }
+func_help() { grep "## .*$1.*" "$HOME"/.bash_functions | sort ; }
 
 ## mcd: Create $1 directory and move into it
 mcd() { mkdir -p "$1"; cd "$1" || return; }
@@ -40,7 +40,14 @@ cls() { cd "$1" || return; ll; }
 fdup() { sort "$1" | uniq -cd | sort -nr ; }
 
 ## pack: Search for $1 as ebuild, python package, npm package, rust package and nuget package
-pack() { echo -e "-----\nEBUILDS:" && eix -R "$1"; echo -e "\n-----\nPYTHON PACKAGES:" && pip search "$1"; echo -e "\n-----\nJS PACKAGES:" && npm search "$1"; echo -e "\n-----\nCRATES:" && cargo search --color always -v "$1"; echo -e "\n-----\nNUGET PACKAGES:" && mono /usr/local/bin/nuget.exe list "$1" -ForceEnglishOutput -NonInteractive; }
+pack()
+{
+  echo -e "-----\nEBUILDS:" && eix -R "$1";
+  echo -e "\n-----\nPYTHON PACKAGES:" && pip search "$1";
+  echo -e "\n-----\nJS PACKAGES:" && npm search "$1";
+  echo -e "\n-----\nCRATES:" && cargo search --color always -v "$1";
+  echo -e "\n-----\nNUGET PACKAGES:" && mono /usr/local/bin/nuget.exe list "$1" -ForceEnglishOutput -NonInteractive;
+}
 
 ## cleanhome: Remove junk, cache data, history files, etc... (! WARNING ! CAN RESET PROGRAMS STATES !)
 cleanhome()
@@ -155,22 +162,6 @@ ubackup()
     SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
   fi
   "$SUDO" tar --exclude-from="$HOME/backup/data_exclude" -cJpvf "$TARFILE" "$HOME"
-}
-
-## safe_rm: Instead of deleting files, move them into trash directory
-safe_rm()
-{
-  local d t f s
-  [ -z "$PS1" ] && (/bin/rm "$@"; return)
-  d="${TRASH_DIR:=$HOME/.trash}/$(date +%W)"
-  t=$(date +%F_%H-%M-%S)
-  [ -e "$d" ] || mkdir -p "$d" || return
-  for f do
-    [ -e "$f" ] || continue
-    s=$(basename "$f")
-    /bin/mv "$f" "$d/${t}_$s" || break
-  done
-  echo -e "[$? $t $(pwd)]$*\n" >> "$d/log_rm.txt"
 }
 
 ## tpt: Put the file $1 in the Trash with its associated image-preview
@@ -313,16 +304,6 @@ stripurls()
 livelog()
 {
   multitail --config "$HOME/.config/multitail/multitail.conf" -ts -M 0 -D -Cs -E "[Ee]rror" --no-repeat --mergeall \
-  /var/log/Xorg.0.log \
-  /var/log/Xorg.1.log \
-  /var/log/Xorg.2.log \
-  /var/log/Xorg.3.log \
-  /var/log/Xorg.4.log \
-  /var/log/Xorg.5.log \
-  /var/log/Xorg.6.log \
-  /var/log/Xorg.7.log \
-  /var/log/Xorg.8.log \
-  /var/log/Xorg.9.log \
   /var/log/auth.log \
   /var/log/daemon.log \
   /var/log/debug \
@@ -381,11 +362,11 @@ atmp3()
     SONG=$(basename "$i" .mp3)
     ARTIST=$(echo "$SONG" | awk -F " - " '{print $1}')
     TITLE=$(echo "$SONG" | awk -F " - " '{print $2}')
-    eyeD3 -Q --encoding utf8 --to-v2.4 --remove-all-lyrics --remove-all-comments --remove-all-objects --user-text-frame='major_brand:' --user-text-frame='minor_version:' --user-text-frame='compatible_brands:' --user-text-frame='description:' --user-text-frame='comment:' --user-text-frame='purl:' --user-text-frame='Software:' --user-text-frame='Tagging time:' --user-text-frame='coding_history:' --user-text-frame='time_reference:' --user-text-frame='umid:' -c "" --tagging-date "" --encoding-date "" -a "$ARTIST" -t "$TITLE" "$SONG.mp3"
+    eyeD3 -Q --encoding utf8 --to-v2.4 --remove-all-lyrics --remove-all-comments --remove-all-objects --user-text-frame='major_brand:' --user-text-frame='minor_version:' --user-text-frame='compatible_brands:' --user-text-frame='description:' --user-text-frame='comment:' --user-text-frame='purl:' --user-text-frame='Software:' --user-text-frame='Tagging time:' --user-text-frame='coding_history:' --user-text-frame='time_reference:' --user-text-frame='umid:' --user-text-frame='synopsis:' -c "" --tagging-date "" --encoding-date "" -a "$ARTIST" -t "$TITLE" "$SONG.mp3"
   done
 }
 
-## muexif: complete EXIF metadata for mp3 files based on ID3 tags
+## muexif: complete EXIF metadata for mp3 files based on ID3 tags (USELESS: MP3 tags are read-only !)
 muexif()
 {
   local SONG TITLE ARTIS ALBUM GENRE NBTRACK TOTRACK YEAR
@@ -395,13 +376,10 @@ muexif()
     ARTIS=$(echo "$SONG" | awk -F "artist: " '{print $2}' | grep -v '^$')
     ALBUM=$(echo "$SONG" | awk -F "album: " '{print $2}' | grep -v '^$')
     GENRE=$(echo "$SONG" | awk -F "genre: " '{print $2}' | grep -v '^$' | sed 's/ ([^)]*)//g')
-    #NBTRACK=$(echo "$SONG" | awk -F "track: " '{print $2}' | grep -v '^$' | sed 's#genre:.*##g; s#/.*##g' | tr -d '[:space:]')
     # Write {track number}/{total tracks} in the same tag
     NBTRACK=$(echo "$SONG" | awk -F "track: " '{print $2}' | grep -v '^$' | sed 's#genre:.*##g' | tr -d '[:space:]')
-    #TOTRACK=$(echo "$SONG" | awk -F "track: " '{print $2}' | grep -v '^$' | sed 's#genre:.*##g; s#.*/\([0-9]*\).*#\1#g' | tr -d '[:space:]')
     YEAR=$(echo "$SONG" | awk -F "release date: " '{print $2}' | grep -v '^$')
     echo "|_${TITLE}_|_${ARTIS}_|_${ALBUM}_|_${GENRE}_|_${NBTRACK}_|_${TOTRACK}_|_${YEAR}_|"
-    # USELESS => MP3 tags in read-only !
     #exiftool -Title="$TITLE" -Artist="$ARTIS" -Album="$ALBUM" -Genre="$GENRE" -Track="$NBTRACK" -Year="$YEAR" "$i"
   done
 }
@@ -450,22 +428,24 @@ mergvid() { ffmpeg -hide_banner -f concat -safe 0 -i <(printf "file '$PWD/%s'\n"
 ## nicevid: Reencode video $1 using 1920x1080 resolution and H264
 nicevid() { ffmpeg -hide_banner -i "$1" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${1%.*}.mp4" ; }
 
-## cleanvids: Reencode all large mp4 videos (size superior to 1.8G) using 1920x1080 resolution and H264 (CPU-intensive function !)
+## cleanvids: Reencode all large mp4 videos (size superior to 1.5G) using 1920x1080 resolution and H264 (CPU-intensive function !)
 cleanvids()
 {
   local SUDO MAXSIZE ACTUALSIZE FRES
-  MAXSIZE=1801000000 #1.801G
+  MAXSIZE=1501000000 #1.501G
   SUDO=''
   if (( EUID != 0 )); then
     SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
   fi
   for f in *.mp4; do
-    if [[ "$f" != nice_*.mp4 ]]; then
+    if [[ "$f" != Nice_*.mp4 ]]; then
       ACTUALSIZE=$(wc -c < "$f")
       FRES=$(exiftool -ImageSize "$f" | tr -d '[:space:]' | sed 's/ImageSize\://g;s/x.*//g')
       FRES=$((FRES+0)) # Transform a string to an int
       if [[ "$ACTUALSIZE" -ge "$MAXSIZE" ]] && [[ $FRES -ge 1920 ]]; then
-        "$SUDO" nice --10 ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${f}"
+        #"$SUDO" nice --10 ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${f}"
+        ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${f}"
+        sleep 5m
       fi
     fi
   done
@@ -480,7 +460,14 @@ mkthumb()
   FONT="/home/wegeee/.local/share/fonts/segoe-ui-light.ttf"
   mkdir -pv "$THUMBDIR"
   for f in *.*; do
-    if [ ! -f "${THUMBDIR}/${f}.png" ]; then
+    # Filename without path
+    COMPLETE=$(basename "$f")
+    # Filename without path and extension
+    FILENAME=$([[ "$COMPLETE" = *.* ]] && echo "${COMPLETE%.*}" || echo "$COMPLETE")
+    # Extension
+    EXT=$([[ "$COMPLETE" = *.* ]] && echo "${COMPLETE##*.}" || echo '')
+    EXT=$(echo "$EXT" | tr '[:upper:]' '[:lower:]' | sed "s/^./\U&/g; s/_./\U&/g")
+    if [[ ! -f "${THUMBDIR}/${f}.png" && ! -f "${THUMBDIR}/${FILENAME}_${EXT}.png" ]]; then
       # 1000 pixels width, ${NBIMG} thumbnails, PNG format
       vcsi "$f" --timestamp-font $FONT --metadata-font $FONT -t -w 1000 -g "${NBIMG}" -f png -o "${THUMBDIR}/${f}.png"
     fi
@@ -532,6 +519,18 @@ rnmfileindir()
   done
 }
 
+## mkthumbindir: Call mkthumb in all subdirectories
+mkthumbindir()
+{
+  for i in *; do
+    if [[ -d "$i" && "$i" != "Thumbnails" ]]; then
+      cd "$i" || return
+      mkthumb
+      cd ..
+    fi
+  done
+}
+
 ## dnslookup: Use HackerTarget API to see DNS records for $1 (domain), simple alternative to whois
 dnslookup() { curl "https://api.hackertarget.com/dnslookup/?q=$1" ; }
 
@@ -544,9 +543,5 @@ addov()
   "$SUDO" layman -a "$1" && "$SUDO" sh -c "echo '*/*::$1' > '/etc/portage/package.mask/ov_$1'"
 }
 
-
-op() { setsid ${OPENER:-xdg-open} "$@" & disown ; }
-
-opp() { setsid ${OPENER:-xdg-open} "$@" & disown ; exit ; }
-
+## xevi: cleaner xev output
 xevi() { xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] }NR in a { printf "%-3s %s\n", $5, $8 }' ; }

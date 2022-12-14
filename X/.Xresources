@@ -7,8 +7,13 @@
 
 UXTerm*termName: xterm-256color
 UXTerm*locale: true
+UXTerm*bellIsUrgent: true
 UXTerm*saveLines: 4096
 UXTerm*selectToClipboard: true
+UXTerm*scrollTtyOutput: false
+!UXTerm*ScrollKey: true
+
+! Font config
 UXTerm*renderFont: true
 UXTerm*forcePackedFont: true
 UXTerm*faceName: Anonymice Nerd Font
@@ -24,11 +29,17 @@ UXTerm*faceSize4: 17
 ! VT font menu: Huge
 UXTerm*faceSize5: 22
 
-UXTerm*VT100*translations: #override \n\
+! Double-click to select whole URL
+UXTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+! Select links with triple click (filesystem paths and URL)
+UXTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]!#+,./=?@_~-]|(%[[:xdigit:]][[:xdigit:]]))+
+
+UXTerm*VT100*translations: #override \
 	Ctrl <Key> minus:		smaller-vt-font() \n\
 	Ctrl <Key> plus:		larger-vt-font() \n\
 	Ctrl <Key> 0:			set-vt-font(d) \n\
 	Shift <KeyPress> Insert:	insert-selection(CLIPBOARD) \n\
-	Ctrl Shift <Key>V:              insert-selection(CLIPBOARD) \n\
-	Ctrl Shift <Key>C:              copy-selection(CLIPBOARD) \n\
-	Ctrl <Btn1Up>:                  exec-formatted("xdg-open '%t'", PRIMARY)
+	Ctrl Shift <Key>V:          insert-selection(CLIPBOARD) \n\
+	Ctrl Shift <Key>C:          copy-selection(CLIPBOARD) \n\
+	Ctrl <Btn1Up>:              exec-formatted("xdg-open '%t'", CLIPBOARD) \n\
+	Shift <Btn1Up>:             exec-formatted("xdg-open '%t'", PRIMARY)  select-start() select-end()

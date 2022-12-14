@@ -1,8 +1,19 @@
 auto-version-check yes
+#default-stream 480p,720p,720p60,best
+#default-stream=720p,480p
+stream-sorting-excludes=>720p
+ffmpeg-verbose
+#hds-segment-threads 2
+#hls-segment-threads 2
 locale en_US
-player mpv
-title "{author} -- {title}"
-default-stream "480p,720p,720p60,best"
+#Before: 8192k
+player=mpv --cache=yes --demuxer-max-bytes=2048KiB
+#player-args "--cache=yes --demuxer-max-bytes=2048KiB"
+retry-streams 120
+retry-max 5
 ringbuffer-size 20M
-twitch-disable-hosting
+#stream-segment-threads 2
+title "{author} -- {title}"
 twitch-disable-ads
+twitch-disable-hosting
+twitch-disable-reruns

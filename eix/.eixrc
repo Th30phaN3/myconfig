@@ -10,9 +10,9 @@ EIX_LIMIT=0
 # Limit to packages displayed (compact mode)
 EIX_LIMIT_COMPACT=0
 # Do not read the slots of installed versions which cannot be guessed
-#QUICKMODE=true
+QUICKMODE=true
 # Slots of installed version are always read
-CAREMODE=true
+#CAREMODE=true
 # If true, eix and eix-diff will use --quiet by default
 #QUIETMODE=true
 # Defines  whether  --compact or --verbose is on by default

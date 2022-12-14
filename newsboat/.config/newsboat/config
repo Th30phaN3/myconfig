@@ -22,32 +22,38 @@ color background          color7  color0
 color article             color7  color0
 
 auto-reload yes
-browser "vivaldi %u"
-download-full-page yes
+browser vivaldi
+#download-full-page yes
+download-retries 2
 error-log "~/.config/newsboat/error.log"
 feed-sort-order lastupdated
-keep-articles-days 20
+keep-articles-days 14
 max-items 100
 openbrowser-and-mark-jumps-to-next-unread yes
 refresh-on-startup yes
 reload-time 300
-reload-threads 10
+reload-threads 4
 save-path "~/.config/newsboat"
+wrap-scroll yes
 
-ignore-article "*" "title =~ \"Agile\" or title =~ \"Windows\" or title =~ \"Transexual\" or title =~ \"Diversity\""
-ignore-article "https://packages.gentoo.org/packages/stable.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\" or title =~ \"dev-haskell\" or title =~ \"dev-ml\""
-ignore-article "https://packages.gentoo.org/packages/added.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\" or title =~ \"dev-haskell\" or title =~ \"dev-ml\""
-ignore-article "https://packages.gentoo.org/packages/updated.atom" "title =~ \"Gnome\" or title =~ \"KDE\" or title =~ \"XFCE\" or title =~ \"Tex\" or title =~ \"dev-haskell\" or title =~ \"dev-ml\""
-ignore-article "https://www.phoronix.com/rss.php" "title =~ \"Ubuntu\""
-ignore-article "https://www.francetvinfo.fr/france.rss" "title =~ \"20h30\" or title =~ \"13h15\""
+highlight articlelist "gentoo"  color1
+highlight articlelist "covid"   color2
+highlight articlelist "corona"  color2
+
+ignore-article "*" "title =~ \"agile\" or title =~ \"Windows\" or title =~ \"SEO\" or title =~ \"transexual\" or title =~ \"transgender\" or title =~ \"diversity\" or title =~ \"women in tech\""
+ignore-article "https://feed.infoq.com/" "title =~ \"Podcast\""
+ignore-article "https://packages.gentoo.org/packages/stable.atom"  "title =~ \"Gnome\" or title =~ \"Tex\" or title =~ \"dev-haskell\""
+ignore-article "https://packages.gentoo.org/packages/added.atom"   "title =~ \"Gnome\" or title =~ \"Tex\" or title =~ \"dev-haskell\""
+ignore-article "https://packages.gentoo.org/packages/updated.atom" "title =~ \"Gnome\" or title =~ \"Tex\" or title =~ \"dev-haskell\""
+ignore-article "https://www.phoronix.com/rss.php" "title =~ \"Ubuntu\" or title =~ \"NVIDIA\""
+ignore-article "https://www.francetvinfo.fr/france.rss" "title =~ \"20h30\" or title =~ \"13h15\" or title =~ \"PODCAST\" or title =~ \"VIDEO\""
+ignore-article "https://www.francetvinfo.fr/monde.rss" "title =~ \"PODCAST\" or title =~ \"VIDEO\""
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA" "title =~ \"Research\" or title =~ \"WaniKani\""
 
 bind-key "LEFT" quit
 bind-key "RIGHT" open
 bind-key q hard-quit
 bind-key o open-in-browser-and-mark-read
-#bind-key o open-in-browser
 
-#macro t set browser "tsp youtube-dl --add-metadata -ic %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
-#macro a set browser "tsp youtube-dl --add-metadata -xic -f bestaudio/best %u"; open-in-browser ; set browser "/usr/bin/vivaldi %u"
 macro v set browser "setsid nohup mpv %u"; open-in-browser ; set browser "vivaldi %u"
 macro m set browser "mpv %u"; open-in-browser ; set browser "vivaldi %u"

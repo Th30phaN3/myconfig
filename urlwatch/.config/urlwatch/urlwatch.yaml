@@ -3,18 +3,21 @@ display:
   new: true
   unchanged: false
 job_defaults:
-  all: {}
-  browser: {}
-  shell: {}
-  url: {}
+  url:
+    max_tries: 2
+    ignore_connection_errors: true
+    ignore_timeout_errors: true
+    diff_filter:
+      - grep: '^[@+]'
 report:
   email:
     enabled: false
     from: ''
-    html: false
-    method: smtp
+    to: ''
+    html: true
+    method: sendmail
     sendmail:
-      path: sendmail
+      path: /usr/sbin/sendmail
     smtp:
       host: localhost
       keyring: true
@@ -22,7 +25,6 @@ report:
       starttls: true
       user: ''
     subject: '{count} changes: {jobs}'
-    to: ''
   html:
     diff: unified
   mailgun:

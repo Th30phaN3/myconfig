@@ -58,33 +58,6 @@ PROMPT_COMMAND="history -a"
 # Change ls colors
 eval $(dircolors ~/.dircolors)
 
-# Env variables for Git prompt
-#GIT_PS1_SHOWDIRTYSTATE=true
-#GIT_PS1_SHOWSTASHSTATE=true
-#GIT_PS1_SHOWUNTRACKEDFILES=true
-#GIT_PS1_SHOWCOLORHINTS=true
-#GIT_PS1_SHOWUPSTREAM="auto verbose git"
-#GIT_PS1_STATESEPARATOR="|"
-
-# Prompt (commented because Starship is used)
-#if [ -h ~/.local/bin/gitprompt.sh ]; then
-#  . ~/.local/bin/gitprompt.sh
-#fi
-#NOCOLOR="\[\e[m\]"
-#BOLD="\[\e[1m\]"
-#NOBOLD="\[\e[0m\]"
-#INVERSE="\[\e[7m\]"
-#BLA="\[\e[30m\]"
-#RED="\[\e[31m\]"
-#GRE="\[\e[32m\]"
-#BRO="\[\e[33m\]"
-#BLU="\[\e[34m\]"
-#PUR="\[\e[35m\]"
-#CYA="\[\e[36m\]"
-#GRA="\[\e[37m\]"
-#njobs() { n=$(jobs | wc -l) && [ "$n" -gt 0 ] && echo " $n"; }
-#PS1="${BOLD}${BRO}\w${NOBOLD}${PUR}\$(__git_ps1 ' [%s]')${BOLD}${RED}\$(njobs)${CYA}\$${NOCOLOR}${NOBOLD} "
-
 # Source Git flow bash completion
 if [ -f ~/app/git-flow-completion/git-flow-completion.sh ]; then
   . ~/app/git-flow-completion/git-flow-completion.sh

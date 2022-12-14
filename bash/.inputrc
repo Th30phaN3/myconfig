@@ -9,22 +9,34 @@ $include /etc/inputrc
 set bell-style none
 # Number of possible completions
 set completion-query-items 50
+# Make Tab autocomplete regardless of filename case
+#set completion-ignore-case on
 # Single tab: partially complete the word and show all possible completions if it is still ambiguous
 set show-all-if-ambiguous on
 # Color files by types
-set colored-stats On
+set colored-stats on
 # Append char to indicate type
-set visible-stats On
+set visible-stats on
 # Mark symlinked directories
-set mark-symlinked-directories On
+set mark-symlinked-directories on
 # Color the common prefix
-set colored-completion-prefix On
+set colored-completion-prefix on
 # Color the common prefix in menu-complete
-set menu-complete-display-prefix On
+set menu-complete-display-prefix on
 # Maximum number of characters to be the common prefix
 set completion-prefix-display-length 5
+# Be more intelligent when autocompleting by also looking at the text after
+# the cursor. For example, when the current line is "cd ~/src/mozil", and
+# the cursor is on the "z", pressing Tab will not autocomplete it to "cd
+# ~/src/mozillail", but to "cd ~/src/mozilla".
+set skip-completed-text on
 
 # Bind keys
 "\e[A": history-search-backward # Up arrow: list only past commands that match the current input
 "\e[B": history-search-forward  # Down arrow: list only past commands that match the current input
 #"\es": "\C-asudo \C-e"          # Alt+S: prefixes the line with sudo
+# Use Alt/Meta + Delete to delete the preceding word
+"\e[3;3~": kill-word
+## enable Alt-arrows
+"\e[1;5D": backward-word ### Alt left
+"\e[1;5C": forward-word ### Alt right

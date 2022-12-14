@@ -38,7 +38,8 @@ mpd_crossfade_time = 5
 ## has to be set to 44100:16:1 for mono visualization
 ## or 44100:16:2 for stereo visualization.
 ##
-visualizer_fifo_path = "/tmp/mpd.fifo"
+#visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_data_source = "/tmp/mpd.fifo"
 
 ##
 ## Note: Below parameter is needed for ncmpcpp
@@ -67,7 +68,7 @@ visualizer_in_stereo = yes
 ## synchronization problems, set it to lower value.
 ## Keep in mind that sane values start with >= 10.
 ##
-visualizer_sync_interval = 30
+#visualizer_sync_interval = 30
 
 ##
 ## Note: To enable spectrum frequency visualization

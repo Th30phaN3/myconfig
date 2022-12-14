@@ -1,5 +1,6 @@
+# ONLY EDIT THIS FILE AND NOT THE FILE "dunstrc" IN THE "dunst" CONFIG DIRECTORY
+
 [global]
-    # ONLY EDIT THIS FILE AND NOT THE FILE "dunstrc" IN THE "dunst" CONFIG DIRECTORY
     ### Display ###
 
     # Which monitor should the notifications be displayed on.
@@ -13,6 +14,9 @@
     # will be ignored.
     follow = mouse
 
+    # When set to true, you can use POSIX regular expressions for filtering rules
+    #enable_posix_regex = true
+
     # The geometry of the message window.
     # The height is measured in number of notifications everything else
     # in pixels.  If the width is omitted but the height is given
@@ -23,7 +27,13 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "0x5-11+41"
+    #geometry = "0x5-11+41"
+
+    width = (0,1000)
+    height = (0,500)
+    origin = top-right
+    notification_limit = 5
+    offset = 11x41
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -35,7 +45,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 2
+    transparency = 3
 
     # The height of the entire notification.  If the height is smaller
     # than the font height and padding combined, it will be raised
@@ -120,6 +130,10 @@
     # Markup is allowed
     format = "<b>%s</b>\n%b\n%n"
 
+    # Vertical alignment of message text and icon.
+    # Possible values are "top", "center" and "bottom".
+    vertical_alignment = center
+
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
     alignment = left
@@ -131,7 +145,7 @@
 
     # Split notifications into multiple lines if they don't fit into
     # geometry.
-    word_wrap = yes
+    word_wrap = false
 
     # When word_wrap is set to no, specify where to ellipsize long lines.
     # Possible values are "start", "middle" and "end".
@@ -161,7 +175,8 @@
     ### Misc/Advanced ###
 
     # dmenu path
-    dmenu = /usr/bin/dmenu
+    #dmenu = /usr/bin/dmenu
+    dmenu = "/usr/bin/dmenu -i -h 30 -nf '{color11}' -nb '{color0}' -sf '{color0}' -sb '{color14}' -fn 'Anonymice Nerd Font-14' -p dmenu"
 
     # Browser for opening urls in context menu
     browser = /usr/bin/vivaldi -new-tab
@@ -179,6 +194,8 @@
     # This is mainly for error detection, since dbus (re-)starts dunst
     # automatically after a crash.
     startup_notification = false
+
+    #corner_radius = 0
 
 [shortcuts]
     # Shortcuts are specified as [modifier+][modifier+]...key
@@ -200,6 +217,7 @@
 
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
+
 [urgency_low]
     background = "{background}"
     foreground = "{color14}"

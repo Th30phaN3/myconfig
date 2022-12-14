@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Change wallpaper, xresources colors, gtk theme and web browser homepage
+# Change wallpaper, xresources colors, gtk theme and web browser homepage.
 # -[a]utumn / -[w]inter / -s[p]ring / -[s]ummer
 
 # JSON for wal theme
@@ -75,12 +75,12 @@ while getopts ":awps" option; do
 done
 
 # Change color scheme
-wal -nq -f "$JSON" -o "$HOME/.config/wal/done.sh"
+/usr/bin/wal -nq -f "$JSON" -o "$HOME/.config/wal/done.sh"
 # Change wallpapers
-feh --bg-scale --randomize --no-fehbg "$HOME/pics/wallpapers/desktop/$WP_FOLDER/"
+/usr/bin/feh --bg-scale --randomize --no-fehbg "$HOME/pics/wallpapers/desktop/$WP_FOLDER/"
 # Change gtk settings to reflect new theme
-sed -i '2s/.*/gtk-theme-name='"$THEME"'/' "$GTK3_SETTINGS"
-sed -i '3s/.*/gtk-icon-theme-name='"$ICONS"'/' "$GTK3_SETTINGS"
+/bin/sed -i '2s/.*/gtk-theme-name='"$THEME"'/' "$GTK3_SETTINGS"
+/bin/sed -i '3s/.*/gtk-icon-theme-name='"$ICONS"'/' "$GTK3_SETTINGS"
 # Replace bakground and script in homepage
 #sed -i '9s#.*#  <script src="'"$SCRIPT"'.js"></script>#' "$HOMEPAGE"
 #sed -i '16s#.*#  background-image: url("'"$WHP"'");#' "$CSS_HOMEPAGE"

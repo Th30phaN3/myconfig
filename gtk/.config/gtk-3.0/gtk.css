@@ -56,7 +56,7 @@ filechooser box paned placessidebar viewport list *:focus {
   outline: none;
 }
 filechooser placessidebar viewport separator {
-  border-top: 1;
+  border-top: 1px;
 }
 
 /* GNOME Disk utility */

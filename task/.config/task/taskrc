@@ -60,3 +60,4 @@ report.simple.columns=id,project,description.count,status.short,entry.age,start,
 report.simple.labels=ID,Project,Description,Status,Age,Start,Until,Due,End,Depends,Tags
 report.simple.sort=project+\/,due+
 report.simple.filter=status:pending
+news.version=2.6.0

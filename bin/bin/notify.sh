@@ -7,6 +7,7 @@
 # $4 should be the level of importance: low, normal, critical
 
 export DISPLAY=:0
+export XAUTHORITY="$HOME/.Xauthority"
 
 [ -z "$3" ] || APP="-a $3"
 [ -z "$4" ] || URG="-u $4"

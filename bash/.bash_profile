@@ -32,10 +32,16 @@ if shopt -q login_shell; then
   # Disable accessibility technology
   export NO_AT_BRIDGE=1
 
+  # Force vdpau driver selection (more info: grep -i vdpau <Xorg.log>)
+  export VDPAU_DRIVER=va_gl
+  # Override the automatic VAAPI driver selection for Intel GPU (more info: sudo vainfo)
+  export LIBVA_DRIVER_NAME=i965
+
   # Specific softwares variables
   export EXIFTOOL_HOME=~/.config/exiftool
   export DIFF_ONLY_INSTALLED=true
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
   export GNUPGHOME=~/.config/gnupg
   export GREP_COLORS="sl=:cx=:mt=07:35:ms=01;31:mc=01;33:fn=35:ln=32:bn=32:se=36"
   export NODE_PENDING_DEPRECATION=1
@@ -48,7 +54,8 @@ if shopt -q login_shell; then
   export WWW_HOME=~/.config/w3m
 
   export GOPATH=~/.go
-  export PATH=${DOTNET_ROOT}:~/.dotnet/tools:$(go env GOPATH)/bin:~/.cargo/bin:~/bin:~/.local/bin:$PATH
+  export PATH=$(go env GOPATH)/bin:~/.cargo/bin:~/bin:~/.local/bin:$PATH
+  #export PATH=${DOTNET_ROOT}:~/.dotnet/tools:$(go env GOPATH)/bin:~/.cargo/bin:~/.android/platform-tools:~/bin:~/.local/bin:$PATH
 
   # Start X server
   [[ -t 0 && !$DISPLAY ]] && exec startx

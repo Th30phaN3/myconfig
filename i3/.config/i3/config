@@ -109,7 +109,7 @@ gaps outer 7
 for_window [class="^.*"] border pixel 5
 
 # Modify behavior and sizes for some windows
-# 52px from the top (bar/gaps/border) | 22px from the left -> increase to right
+# 41px from the top (bar/gaps/border) | 12px from the left -> increase to right
 # See https://i3wm.org/docs/userguide.html#command_criteria for matching criteria
 for_window [class="feh"] floating enable
 for_window [class="mupdf"] floating enable
@@ -117,16 +117,15 @@ for_window [class="xsane"] floating enable
 for_window [class="^lxappearance$"] floating enable
 for_window [title="Android Emulator.*"] floating enable
 for_window [class="UXTerm" title="flt_term"] floating enable
-for_window [title="flt_htop"] floating enable, resize set 1408 664, move position 500 px 404 px
-for_window [title="flt_ncmpcpp"] floating enable, resize set 1000 445, move position 908 px 52 px
-for_window [title="flt_pulsemixer"] floating enable, resize set 900 350, move position 1015 px 41 px
-for_window [title="Gestionnaire de tâches - Vivaldi"] floating enable
-for_window [title="Sign in - Google Accounts - Vivaldi"] floating enable
-#for_window [title="Mode PIP (Picture-in-Picture)"] floating enable, resize set 860 340, move position 1599 px 829 px
+for_window [title="flt_htop"] floating enable, resize set 1408 664, move position 502 px 403 px
+for_window [title="flt_ncmpcpp"] floating enable, resize set 1250 520, move position 670 px 41 px
+for_window [title="flt_pulsemixer"] floating enable, resize set 900 350, move position 1018 px 41 px
+for_window [title="Gestionnaire de tâches.*"] floating enable
+for_window [title="Sign in.*Account.*"] floating enable
 for_window [title="Picture in picture"] resize set 810 455, move position 1110 px 624 px
 for_window [class="xsane" title="Erreur"] floating enable, resize set 500 300
 for_window [window_role="dupe" class="^geeqie$"] floating enable, resize set 1000 800
-for_window [class="Microsoft Teams - Preview" title="Notification Microsoft Teams"] floating enable, resize set 50 20
+for_window [class="Microsoft Team.*" title="Notification Microsoft Teams"] floating enable, resize set 50 20
 for_window [class="UXTerm" title="scr_term"] move scratchpad, scratchpad show, move position 960 px 270 px
 for_window [window_role="GtkFileChooserDialog"] resize set 1000 600, move position center
 for_window [window_role="tr-info"] resize set 740 570, move position center
@@ -151,7 +150,7 @@ workspace $WS4 output eDP1
 # =============================================================================
 
 # Run the script to open windows in fibonacci style (h -> v -> h -> v...)
-#exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
+exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
 
 # Load saved layouts from previous x session on startup
 exec --no-startup-id i3reloadworkspaces.sh -l
@@ -170,9 +169,7 @@ bindsym $mod+Ctrl+Return exec i3-sensible-terminal -title "scr_term"
 # Kill focused window
 bindsym $mod+q kill
 
-# Start patched dmenu (fuzzy match, mouse support, line height)
-#bindsym $mod+d exec "dmenu_run -i -h 30 -nf '$dm-text' -nb '$dm-bg' -sf '$dm-text-focus' -sb '$dm-bg-focus' -fn 'Anonymice Nerd Font-14' -p 'dmenu'"
-# Start j4-dmenu-desktop with custom dmenu
+# Start j4-dmenu-desktop with custom patched dmenu (fuzzy match, mouse support, line height)
 bindsym $mod+d exec "j4-dmenu-desktop --dmenu='dmenu -i -h 30 -nf \$dm-text -nb \$dm-bg -sf \$dm-text-focus -sb \$dm-bg-focus -fn 'Anonymice Nerd Font-14' -p dmenu' --term='i3-sensible-terminal' --no-generic --usage-log='/home/wegeee/.cache/j4-dmenu-desktop/usage.log'"
 
 # Move the current workspace to the next output (effectively toggles when you only have two outputs)
@@ -306,9 +303,9 @@ mode $sysmenu {
 	# Exit i3 (logs user out of X session)
 	bindsym x	exec "i3reloadworkspaces.sh -s; i3-msg exit"
     # Suspend the system
-	bindsym s	exec "loginctl suspend"
+	#bindsym s	exec "loginctl suspend", mode "default"
 	# Hibernate the system
-	bindsym h	exec "loginctl hibernate"
+	#bindsym h	exec "loginctl hibernate", mode "default"
 	# Reboot the system (before elogind: <sudo reboot>)
 	bindsym b	exec "i3reloadworkspaces.sh -s; loginctl reboot"
 	# Shutdown the system (before elogind: <sudo shutdown -h now>)

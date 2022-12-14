@@ -4,6 +4,9 @@
 # ___) || |/ ___ \|  _ < ___) |  _  || ||  __/
 #|____/ |_/_/   \_\_| \_\____/|_| |_|___|_|
 
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
 # Use <format = "$all"> to display all modules
 # $cmd_duration break bash DEBUG trap !
 format = """
@@ -33,23 +36,54 @@ $jobs\
 $status\
 $character"""
 
-# Wait 10 milliseconds for starship to check files under the current directory
-#scan_timeout = 10
+# Timeout for starship to scan files (in milliseconds)
+scan_timeout = 10
+
+# Timeout for commands executed by starship (in milliseconds)
+command_timeout = 250
 
 # Don't print a new line at the start of the prompt
 add_newline = false
 
 # MODULES
+
+[aws]
+disabled = true
+
+[battery]
+disabled = true
+
+[buf]
+disabled = true
+
+[bun]
+disabled = true
+
 [character]
 success_symbol = "[➜](bold green) "
 error_symbol = "[➜](bold red) "
 disabled = false
+
+[cobol]
+disabled = true
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
 
 [cmd_duration]
 min_time = 5_000
 show_milliseconds = true
 show_notifications = false
 min_time_to_notify = 120_000
+disabled = true
+
+[daml]
+disabled = true
+
+[deno]
 disabled = true
 
 [directory]
@@ -66,6 +100,7 @@ disabled = false
 
 [dotnet]
 disabled = true
+heuristic = false
 
 [env_var]
 disabled = false
@@ -82,7 +117,13 @@ disabled = false
 [git_status]
 disabled = false
 
+[gcloud]
+disabled = true
+
 [golang]
+disabled = true
+
+[helm]
 disabled = true
 
 [hostname]
@@ -93,6 +134,9 @@ disabled = true
 
 [jobs]
 disabled = false
+
+[julia]
+disabled = true
 
 [kubernetes]
 disabled = true
@@ -108,16 +152,22 @@ threshold = 60
 disabled = true
 
 [nim]
-disabled = true
+disabled = false
 
 [nodejs]
 disabled = false
+
+[ocaml]
+disabled = true
 
 [package]
 display_private = true
 disabled = true
 
 [perl]
+disabled = true
+
+[php]
 disabled = true
 
 [python]
@@ -137,16 +187,3 @@ disabled = true
 
 [username]
 disabled = false
-
-[custom]
-#command =
-#when =
-#shell =
-#description =
-#files =
-#directories =
-#extensions =
-#symbol =
-#style =
-#format =
-disabled = true
