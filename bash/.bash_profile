@@ -52,6 +52,10 @@ if shopt -q login_shell; then
   export TRANSMISSION_HOME=~/.config/transmission
   export WEECHAT_HOME=~/.config/weechat
   export WWW_HOME=~/.config/w3m
+  export NNN_COLORS='2346'
+  #export NNN_MCLICK='^R'
+  export NNN_OPTS="HU"
+  export NNN_TRASH=1
 
   export GOPATH=~/.go
   export PATH=$(go env GOPATH)/bin:~/.cargo/bin:~/bin:~/.local/bin:$PATH

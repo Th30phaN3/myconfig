@@ -49,6 +49,7 @@ add_newline = false
 
 [aws]
 disabled = true
+symbol = "  "
 
 [battery]
 disabled = true
@@ -59,10 +60,13 @@ disabled = true
 [bun]
 disabled = true
 
+[c]
+symbol = " "
+
 [character]
-success_symbol = "[➜](bold green) "
-error_symbol = "[➜](bold red) "
+error_symbol = "[](bold red) "
 disabled = false
+#success_symbol = "[](bold green) "
 
 [cobol]
 disabled = true
@@ -93,10 +97,12 @@ style = "fg:bright-yellow"
 fish_style_pwd_dir_length = 2
 use_logical_path = true
 disabled = false
+read_only = " "
 
 [docker_context]
 only_with_files = true
 disabled = false
+symbol = " "
 
 [dotnet]
 disabled = true
@@ -105,8 +111,12 @@ heuristic = false
 [env_var]
 disabled = false
 
+[fossil_branch]
+symbol = " "
+
 [git_branch]
 disabled = false
+symbol = " "
 
 [git_commit]
 disabled = false
@@ -122,15 +132,23 @@ disabled = true
 
 [golang]
 disabled = true
+symbol = " "
+
+[haskell]
+symbol = " "
 
 [helm]
 disabled = true
+
+[hg_branch]
+symbol = " "
 
 [hostname]
 disabled = false
 
 [java]
 disabled = true
+symbol = " "
 
 [jobs]
 disabled = false
@@ -146,23 +164,69 @@ disabled = true
 
 [lua]
 disabled = true
+symbol = " "
 
 [memory_usage]
 threshold = 60
 disabled = true
+symbol = " "
+
+[meson]
+symbol = "喝 "
 
 [nim]
 disabled = false
+symbol = " "
+
+[nix_shell]
+symbol = " "
 
 [nodejs]
 disabled = false
+symbol = " "
 
 [ocaml]
 disabled = true
 
+[os.symbols]
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "﯑ "
+Gentoo = " "
+Illumos = " "
+Linux = " "
+Macos = " "
+Manjaro = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = " "
+openSUSE = " "
+OracleLinux = " "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = " "
+Solus = "ﴱ "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+
 [package]
 display_private = true
 disabled = true
+symbol = " "
 
 [perl]
 disabled = true
@@ -172,9 +236,17 @@ disabled = true
 
 [python]
 disabled = false
+symbol = " "
+
+[ruby]
+symbol = " "
 
 [rust]
 disabled = false
+symbol = " "
+
+[scala]
+symbol = " "
 
 [shlvl]
 disabled = true

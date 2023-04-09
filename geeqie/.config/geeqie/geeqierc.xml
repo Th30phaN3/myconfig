@@ -24,7 +24,7 @@
 
             progressive_key_scrolling = "true" 
             keyboard_scroll_step = "1" 
-            duplicates_similarity_threshold = "91" 
+            duplicates_similarity_threshold = "90" 
             duplicates_match = "512" 
             duplicates_select_type = "0" 
             duplicates_thumbnails = "true" 

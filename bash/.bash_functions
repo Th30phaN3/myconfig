@@ -354,19 +354,35 @@ typethis()
   fi
 }
 
-## atmp3: Add ID3 Artist and Title tags to mp3 files based on filename ("Artist - MusicName.mp3") and clean up unnecessary tags (lyrics, comments...), force UTF8 encoding and 2.4 version
+## atmp3: Add ID3 Artist and Title tags to mp3 files based on filename ("Artist - MusicName.mp3") and clean up unnecessary tags (lyrics, comments...), force UTF8 encoding and 2.4 version, add numerical 'Genre' $1 if provided (see 'eyeD3 --plugin=genres', default : 98)
 atmp3()
 {
-  local SONG ARTIST TITLE
+  local SONG ARTIST TITLE GENRE
   for i in *.mp3; do
     SONG=$(basename "$i" .mp3)
     ARTIST=$(echo "$SONG" | awk -F " - " '{print $1}')
     TITLE=$(echo "$SONG" | awk -F " - " '{print $2}')
-    eyeD3 -Q --encoding utf8 --to-v2.4 --remove-all-lyrics --remove-all-comments --remove-all-objects --user-text-frame='major_brand:' --user-text-frame='minor_version:' --user-text-frame='compatible_brands:' --user-text-frame='description:' --user-text-frame='comment:' --user-text-frame='purl:' --user-text-frame='Software:' --user-text-frame='Tagging time:' --user-text-frame='coding_history:' --user-text-frame='time_reference:' --user-text-frame='umid:' --user-text-frame='synopsis:' -c "" --tagging-date "" --encoding-date "" -a "$ARTIST" -t "$TITLE" "$SONG.mp3"
+    GENRE=${1:-98}
+    #/usr/bin/id3tag --artist="$ARTIST" --song="$TITLE" --genre="$GENRE" "$SONG.mp3"
+    /usr/bin/eyeD3 --quiet --encoding utf8 --to-v2.4 --remove-all-lyrics --remove-all-comments --user-text-frame='major_brand:' --user-text-frame='minor_version:' --user-text-frame='compatible_brands:' --user-text-frame='description:' --user-text-frame='comment:' --user-text-frame='purl:' --user-text-frame='Software:' --user-text-frame='Tagging time:' --user-text-frame='coding_history:' --user-text-frame='time_reference:' --user-text-frame='umid:' --user-text-frame='synopsis:' -c "" --tagging-date "" --encoding-date "" --artist "$ARTIST" --title "$TITLE" --genre "$GENRE" "$SONG.mp3"
   done
 }
 
-## muexif: complete EXIF metadata for mp3 files based on ID3 tags (USELESS: MP3 tags are read-only !)
+## add_album_mp3: Add 'Album' metadata with value $1 to $2 mp3 file
+add_album_mp3()
+{
+  #/usr/bin/id3tag --album="$1" "$2"
+  /usr/bin/eyeD3 --quiet --encoding utf8 --to-v2.4 --album "$1" "$2"
+}
+
+## add_genre_mp3: Add 'Genre' metadata with numerical value $1 (see 'eyeD3 --plugin=genres') to $2 mp3 file
+add_genre_mp3()
+{
+  #/usr/bin/id3tag --genre="$1" "$2"
+  /usr/bin/eyeD3 --quiet --encoding utf8 --to-v2.4 --genre "$1" "$2"
+}
+
+## muexif: Complete EXIF metadata for mp3 files based on ID3 tags (USELESS: MP3 tags are read-only !)
 muexif()
 {
   local SONG TITLE ARTIS ALBUM GENRE NBTRACK TOTRACK YEAR
@@ -425,28 +441,28 @@ kutvid()
 ## mergvid: Concatenate multiple videos together (should be listed in order) with format $1 into new video
 mergvid() { ffmpeg -hide_banner -f concat -safe 0 -i <(printf "file '$PWD/%s'\n" ./*."$1") -c copy "$RANDOM.$1" ; }
 
-## nicevid: Reencode video $1 using 1920x1080 resolution and H264
-nicevid() { ffmpeg -hide_banner -i "$1" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${1%.*}.mp4" ; }
-
-## cleanvids: Reencode all large mp4 videos (size superior to 1.5G) using 1920x1080 resolution and H264 (CPU-intensive function !)
+## cleanvids: Reencode all large mp4 videos (size superior to 1.2G) using 1080p or 720p resolution and H264 (CPU-intensive function !)
 cleanvids()
 {
-  local SUDO MAXSIZE ACTUALSIZE FRES
-  MAXSIZE=1501000000 #1.501G
-  SUDO=''
-  if (( EUID != 0 )); then
-    SUDO='sudo' # Ugly trick to run as root (requires sudo rights)
-  fi
+  local MAXSIZE RESOLUTION ACTUALSIZE FRES
+  MAXSIZE=1201000000 #1.201G
   for f in *.mp4; do
-    if [[ "$f" != Nice_*.mp4 ]]; then
+    if [[ "$f" != 01nice720_*.mp4 && "$f" != 01nice1080_*.mp4 ]]; then
+      #ENCODER=$(exiftool -Encoder "$f" | tr -d '[:space:]' | sed 's/Encoder\://g')
+      #if [[ "$ENCODER" != "Lavf58.76.100" ]]; then
       ACTUALSIZE=$(wc -c < "$f")
       FRES=$(exiftool -ImageSize "$f" | tr -d '[:space:]' | sed 's/ImageSize\://g;s/x.*//g')
       FRES=$((FRES+0)) # Transform a string to an int
-      if [[ "$ACTUALSIZE" -ge "$MAXSIZE" ]] && [[ $FRES -ge 1920 ]]; then
-        #"$SUDO" nice --10 ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${f}"
-        ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale=1920:1080 -c:v libx264 -crf 25 "nice_${f}"
-        sleep 5m
+      if [[ "$ACTUALSIZE" -ge "$MAXSIZE" && $FRES -ge 1920 && ! -f "01nice1080_${f}" ]]; then
+        RESOLUTION='1920:1080'
+        ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale="$RESOLUTION" -c:v libx264 -crf 25 "01nice1080_${f}"
+        sleep 2m
+      elif [[ "$ACTUALSIZE" -ge "$MAXSIZE" && $FRES -ge 1280 && ! -f "01nice720_${f}" ]]; then
+        RESOLUTION='1280:720'
+        ffmpeg -hide_banner -i "$f" -max_muxing_queue_size 4096 -vf scale="$RESOLUTION" -c:v libx264 -crf 25 "01nice720_${f}"
+        sleep 2m # Cooldown for CPUs
       fi
+      #fi
     fi
   done
 }
@@ -534,7 +550,7 @@ mkthumbindir()
 ## dnslookup: Use HackerTarget API to see DNS records for $1 (domain), simple alternative to whois
 dnslookup() { curl "https://api.hackertarget.com/dnslookup/?q=$1" ; }
 
-## addov: Add overlay $1 using Layman and mask every packages in it
+## addov: Add overlay $1 using Layman and mask every packages in it by default
 addov()
 {
   if (( EUID != 0 )); then

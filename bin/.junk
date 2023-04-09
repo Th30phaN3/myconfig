@@ -1,4 +1,5 @@
 /home/wegeee/.android/cache/*
+/home/wegeee/.android/build-cache/*
 /home/wegeee/.cache/ccache/*
 /home/wegeee/.cache/composer/*
 /home/wegeee/.cache/easytag/easytag.log
@@ -13,6 +14,7 @@
 /home/wegeee/.cache/intellijidea/*
 /home/wegeee/.cache/mesa_shader_cache/*
 /home/wegeee/.cache/mozilla/*
+/home/wegeee/.cache/MusicBrainz/Picard/network/data8/*
 /home/wegeee/.cache/phpstorm/*
 /home/wegeee/.cache/pip/http/*
 /home/wegeee/.cache/ranger/*
@@ -22,9 +24,11 @@
 /home/wegeee/.cache/vpn.ac/qmlcache/*
 /home/wegeee/.cache/wal/schemes/*
 /home/wegeee/.cache/yarn/*
-/home/wegeee/.cache/youtube-dl/youtube-sigfuncs/*
+/home/wegeee/.cache/youtube-dl/*
+/home/wegeee/.cache/yt-dlp/*
 /home/wegeee/.cache/.bluetoothctl_history
 /home/wegeee/.cache/.qt_compose_cache*
+/home/wegeee/.cargo/registry/cache/*
 /home/wegeee/.config/csharp.history
 /home/wegeee/.config/Code/Cache/*
 /home/wegeee/.config/Code/CachedData/*
@@ -48,11 +52,16 @@
 /home/wegeee/.config/newsboat/error.log
 /home/wegeee/.config/VirtualBox/*.log*
 /home/wegeee/.config/vivaldi/Crash\ Reports/*
+/home/wegeee/.config/vivaldi/Default/Service\ Worker/CacheStorage/*
+/home/wegeee/.config/vivaldi/Default/Service\ Worker/ScriptCache/*
+/home/wegeee/.config/vivaldi/GrShaderCache/*
+/home/wegeee/.config/vivaldi/ShaderCache/*
 /home/wegeee/.config/weechat/logs/*
 /home/wegeee/.config/weechat/weechat.log
 /home/wegeee/.dbshell
 /home/wegeee/.dotnet/TelemetryStorageService/*
 /home/wegeee/.gnome
+/home/wegeee/.go/pkg/mod/cache/*
 /home/wegeee/.gradle/caches/*
 /home/wegeee/.hplip/hp-doctor.log
 /home/wegeee/.ionic/helper.log
@@ -70,7 +79,7 @@
 /home/wegeee/.local/share/ranger/history
 /home/wegeee/.local/share/recently-used.xbel
 /home/wegeee/.local/share/Ripcord/webcache/*
-/home/wegeee/.local/share/NuGet/v3-cache/*
+/home/wegeee/.local/share/NuGet/http-cache/*
 /home/wegeee/.local/share/Trash/files/*
 /home/wegeee/.local/share/Trash/info/*
 /home/wegeee/.local/share/.vivaldi_reporting_data
@@ -81,6 +90,7 @@
 /home/wegeee/.local/share/zathura/history
 /home/wegeee/.local/share/zathura/input-history
 /home/wegeee/.lyrics
+/home/wegeee/.lyx/cache/*
 /home/wegeee/.mozilla/firefox/Crash\ Reports/*
 /home/wegeee/.nano/*_history
 /home/wegeee/.ncmpcpp

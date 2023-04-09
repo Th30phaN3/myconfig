@@ -150,7 +150,7 @@ workspace $WS4 output eDP1
 # =============================================================================
 
 # Run the script to open windows in fibonacci style (h -> v -> h -> v...)
-exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
+#exec_always --no-startup-id ~/.config/i3/alternating_layouts.py
 
 # Load saved layouts from previous x session on startup
 exec --no-startup-id i3reloadworkspaces.sh -l

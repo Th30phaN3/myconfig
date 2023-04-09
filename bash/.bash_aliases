@@ -48,7 +48,6 @@ alias fr='find -L -readable -regextype posix-extended -regex'
 alias qt='quotes.sh'
 alias chrom='go-chromecast'
 alias audit_sys='sudo lynis audit system --auditor wegeee --profile /etc/lynis/custom.prf'
-alias fishtank='nohup xfishtank -b 50 -f 15 -i 0.3 -r 0.3 > /dev/null 2>&1 &'
 alias birthday='birthday -W 30 -f /home/wegeee/.config/birthday/dates'  # Use XDG directory
 alias gpalldirs='find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && git pull" \;'     # Git Pull all sub-directories
 #alias gpalldirs='find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -I{} git -C pull'          # Git Pull all sub-directories
@@ -65,6 +64,7 @@ alias wal='wal -t -n -o /home/wegeee/.config/wal/done.sh --theme '           # C
 alias getxgeom='xdotool selectwindow getwindowgeometry'                         # Get the x/y position + geometry from the selected x window
 alias timer='echo "Timer started. Stop with Ctrl-D." && date "+%a, %d %b %H:%M:%S" && time cat && date "+%a, %d %b %H:%M:%S"'
 alias weather='curl -s "https://wttr.in/Nantes?2" | sed -n "1,27p"'		# Display weather (large terminal width recommended)
+alias temps='ansiweather -l Nantes,FR -u metric -F -a true -s true -i false -w false -h true -H true -p false -d true'
 alias path='echo -e ${PATH//:/\\n}'						# Print binaries path
 alias bcolor='for code in {0..15}; do echo -e "\e[38;05;${code}m $code: Color"; done'
 # Use this alias after a command (ex: <command> ; alert) to send a notification when the command finished
@@ -102,6 +102,7 @@ alias co_android='simple-mtpfs ~/media/android'
 alias deco_android='fusermount -u ~/media/android'
 alias umount='sudo umount'
 alias unmount='sudo umount'
+alias print_start='sudo rc-service cupsd start && sudo rc-service saned start'
 
 # Bookmarks
 alias dl='cd ~/downloads && ll'
@@ -132,8 +133,6 @@ alias listen='lsof -P -i -n' # Show all processes listening on networks
 alias pig='ping -c 5 www.gentoo.org'
 
 # Braindead
-alias coof='curl https://corona-stats.online/FR'
-alias fish='asciiquarium'
 alias help='man'
 alias fh='func_help'
 alias loonix='man hier'

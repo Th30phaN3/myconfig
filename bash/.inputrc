@@ -11,14 +11,18 @@ set bell-style none
 set completion-query-items 50
 # Make Tab autocomplete regardless of filename case
 #set completion-ignore-case on
-# Single tab: partially complete the word and show all possible completions if it is still ambiguous
+# Single Tab: partially complete the word and show all possible completions if it is still ambiguous
 set show-all-if-ambiguous on
 # Color files by types
 set colored-stats on
+# Try to enable the application keypad
+set enable-keypad on
 # Append char to indicate type
 set visible-stats on
 # Mark symlinked directories
 set mark-symlinked-directories on
+# Completed directory names have a slash appended
+set mark-directories on
 # Color the common prefix
 set colored-completion-prefix on
 # Color the common prefix in menu-complete
@@ -31,12 +35,11 @@ set completion-prefix-display-length 5
 # ~/src/mozillail", but to "cd ~/src/mozilla".
 set skip-completed-text on
 
-# Bind keys
+# Bind keys (\e = Esc Key, \C / Control = Ctrl Key, \M / Meta = Alt Key)
+"\C-r": "ranger\n" # Shortcut to launch ranger in current directory
+"\eh": "\C-afunc_help \n" # Esc+h: show Bash function help
 "\e[A": history-search-backward # Up arrow: list only past commands that match the current input
 "\e[B": history-search-forward  # Down arrow: list only past commands that match the current input
-#"\es": "\C-asudo \C-e"          # Alt+S: prefixes the line with sudo
-# Use Alt/Meta + Delete to delete the preceding word
-"\e[3;3~": kill-word
 ## enable Alt-arrows
 "\e[1;5D": backward-word ### Alt left
 "\e[1;5C": forward-word ### Alt right
