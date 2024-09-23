@@ -59,14 +59,17 @@ PROMPT_COMMAND="history -a"
 eval $(dircolors ~/.dircolors)
 
 # Source Git flow bash completion
-if [ -f ~/app/git-flow-completion/git-flow-completion.sh ]; then
-  . ~/app/git-flow-completion/git-flow-completion.sh
-fi
+#if [ -f ~/app/git-flow-completion/git-flow-completion.sh ]; then
+#  . ~/app/git-flow-completion/git-flow-completion.sh
+#fi
 
 # Source Nerd Font icons
-if [ -f ~/.local/share/fonts/i_all.sh ]; then
-  . ~/.local/share/fonts/i_all.sh
-fi
+#if [ -f ~/.local/share/fonts/i_all.sh ]; then
+#  . ~/.local/share/fonts/i_all.sh
+#fi
+
+# Exit to current directory with mc
+# . /usr/libexec/mc/mc.sh
 
 # Source aliases
 if [ -f ~/.bash_aliases ]; then
@@ -77,8 +80,6 @@ fi
 if [ -f ~/.bash_functions ]; then
   . ~/.bash_functions
 fi
-
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 # Trap DEBUG to run a custom function right before a command runs
 # IMPORTANT: trap DEBUG *before* running Starship !

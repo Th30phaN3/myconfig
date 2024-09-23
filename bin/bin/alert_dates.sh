@@ -5,6 +5,10 @@
 export DISPLAY=:0
 export XAUTHORITY="$HOME/.Xauthority"
 
+if [ -r "$HOME/.dbus/Xdbus" ]; then
+  . "$HOME/.dbus/Xdbus"
+fi
+
 TODAY=$(/usr/bin/birthday -M 1 -f "$HOME/.config/birthday/dates")
 
 if [[ -n "${TODAY}" ]]; then

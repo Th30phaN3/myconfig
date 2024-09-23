@@ -64,9 +64,9 @@ disabled = true
 symbol = " "
 
 [character]
-error_symbol = "[](bold red) "
+success_symbol = "[➜](bold green) "
+error_symbol = "[➜](bold red) "
 disabled = false
-#success_symbol = "[](bold green) "
 
 [cobol]
 disabled = true

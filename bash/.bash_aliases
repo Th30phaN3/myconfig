@@ -7,9 +7,9 @@
 #
 
 alias grep='grep --color=auto'
-alias gr='grep -ir '
+alias gr='grep -ir'
 alias diff='diff --color=auto'
-alias spc='spc --config-dir=~/.config/spc -n -R'
+alias spc='spc --config-dir=$HOME/.config/spc -n -R'
 alias ls='ls -h --color=auto --group-directories-first'
 alias ll='ls -ogv'		    # Long format, order by numbers
 alias la='ls -ogvA'		    # Show hidden files
@@ -31,11 +31,11 @@ alias ln='ln -iv'
 alias chownr='chown -R'
 alias chmodr='chmod -R'
 alias chgrpr='chgrp -R'
-alias rm='echo "Use trash-put (alias tp)."; false'
+alias rm='echo "In the Trash it goes !"; trash-put'
 alias tp='trash-put'
 alias bc='bc -lq'
 alias more='less'
-alias ed='editassudo '
+alias ed='editassudo'
 alias mkdir='mkdir -pv'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -46,27 +46,26 @@ alias lsblk='lsblk -po NAME,FSTYPE,SIZE,FSAVAIL,FSUSE%,MODE,LABEL,MOUNTPOINT,HOT
 alias jo='jobs -l'
 alias fr='find -L -readable -regextype posix-extended -regex'
 alias qt='quotes.sh'
+alias trmd='prlimit --verbose --as=4294967296 transmission-daemon'
+alias myvlc='vlc --fullscreen --stereo-mode 1 --disable-screensaver 1 --mouse-hide-timeout 1500 --preferred-resolution -1 --play-and-exit'
 alias chrom='go-chromecast'
-alias audit_sys='sudo lynis audit system --auditor wegeee --profile /etc/lynis/custom.prf'
-alias birthday='birthday -W 30 -f /home/wegeee/.config/birthday/dates'  # Use XDG directory
+alias audit_sys='sudo lynis audit system --auditor $USER --profile /etc/lynis/custom.prf'
+alias birthday='birthday -W 30 -f $HOME/.config/birthday/dates'  # Use XDG directory
 alias gpalldirs='find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && git pull" \;'     # Git Pull all sub-directories
-#alias gpalldirs='find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -I{} git -C pull'          # Git Pull all sub-directories
-#alias update_media_vivaldi='sudo /opt/vivaldi/update-widevine --system && sudo /opt/vivaldi/update-ffmpeg'
 alias medexinfo='exiftool -s -FileName -Directory -ImageSize -FileSize -MIMEType -Duration -XResolution -YResolution -VideoFrameRate -BitDepth -AudioFormat -AudioChannels -AudioBitsPerSample -AudioSampleRate -Encoder -AvgBitrate -Artist -Title -Album -Genre'
 alias stripexinfo='exiftool -ProjectRefType= -WindowsAtomUncProjectPath= -IngredientsFilePath= -IngredientsMaskMarkers= -IngredientsInstanceID= -IngredientsDocumentID= -IngredientsFromPart= -HistorySoftwareAgent= -HistoryChanged= -HistoryWhen= -Format= -CreatorTool= -XMPToolkit= -Title= -Comment= -Software= -HDVideo= -TVEpisode= -TVSeason= -TrackNumber='
 alias dth='date --help | sed -n "/^ *%%/,/^ *%Z/p" | while read l;do F=${l/% */}; date +%$F:"|'"'"'${F//%n/ }'"'"'|${l#* }";done | sed "s/\ *|\ */|/g" | column -s "|" -t'
 alias xx='xrandr > /dev/null 2>&1; xrandr --output DP2 --left-of eDP1'	        # Add second screen
 alias diapo='feh -q -p -Y -Z --on-last-slide quit --auto-rotate -F -r'		    # Show a slideshow of all images in directory and sub-directories
 alias matrix='cmatrix -b -u 5 -C blue'					                        # Enter the matrix
-#alias mupdf='mupdf -r 75'
 alias post='curl --request POST -H "Content-Type: application/json" --data '    # Post JSON. Use "@dt" to pass data in file named "dt"
-alias wal='wal -t -n -o /home/wegeee/.config/wal/done.sh --theme '           # Call wall with custom arguments to change themes on-the-fly
+alias wal='wal -t -n -o $HOME/.config/wal/done.sh --theme '           # Call wall with custom arguments to change themes on-the-fly
 alias getxgeom='xdotool selectwindow getwindowgeometry'                         # Get the x/y position + geometry from the selected x window
 alias timer='echo "Timer started. Stop with Ctrl-D." && date "+%a, %d %b %H:%M:%S" && time cat && date "+%a, %d %b %H:%M:%S"'
 alias weather='curl -s "https://wttr.in/Nantes?2" | sed -n "1,27p"'		# Display weather (large terminal width recommended)
 alias temps='ansiweather -l Nantes,FR -u metric -F -a true -s true -i false -w false -h true -H true -p false -d true'
 alias path='echo -e ${PATH//:/\\n}'						# Print binaries path
-alias bcolor='for code in {0..15}; do echo -e "\e[38;05;${code}m $code: Color"; done'
+alias bcolor='for code in {0..15}; do echo -e "\e[38;05;${code}m $code: Color"; done' # Print the first 16 colors
 # Use this alias after a command (ex: <command> ; alert) to send a notification when the command finished
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history | tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
@@ -77,20 +76,21 @@ alias zathura='devour zathura'
 # Kernel / Packages manipulation
 alias kernel_rebuild='sudo make -j5 && sudo make modules_install && sudo mount /boot/efi/ && sudo make install && sudo grub-mkconfig -o /boot/efi/grub/grub.cfg'
 alias ehelp='apropos -e portage layman qcheck eselect equery euse emaint genlop'
-#alias esync='sudo eix-sync'
 alias elogs='tail -f /var/log/emerge-fetch.log' # Show fetch logs when emerging
 alias etime='qlop -Hav'                         # Show average merge time for a package
 alias emerge='sudo emerge'						# Install/upgrade packages
 alias erm='emerge --depclean --verbose'			# Delete packages (without arguments: select all packages not used)
 alias esearch='eix -R'                          # Search for package in main portage tree + all public overlays
+alias esync='sudo emaint sync --auto --yes'     # Sync all 'auto' repositories (gentoo tree + overlays)
 # System upgrade (ignore use flags changes)
 alias epgrade_quick='emerge --update --tree --unordered-display --keep-going --verbose-conflicts @world'
 # System upgrade (full use flags rebuild)
-alias epgrade='emerge -ut --unordered-display --keep-going --verbose-conflicts --with-bdeps=y --newuse --deep @world'
+alias epgrade='emerge --update --tree --unordered-display --keep-going --verbose-conflicts --with-bdeps=y --newuse --deep @world'
 # System upgrade (used when upgrading Perl)
 alias epgrade_perl='emerge -utND --unordered-display --verbose-conflicts --with-bdeps=y --backtrack=100 --autounmask-keep-masks @world'
 alias eclean='erm && sudo eclean-dist --deep --size-limit=50M'    # Remove unnecessary packages/dependencies & ebuilds files too big
 alias econf_up='sudo find /etc -name "._cfg????_*"'		# Check for new config files
+alias disconf='sudo dispatch-conf'
 alias esecure='glsa-check -lv'							# Check packages vulnerabilities
 alias eppack='eix -u -x --nonvirtual --deps-installed --world-file --compact'   #Show available updates for packages
 
@@ -98,7 +98,7 @@ alias eppack='eix -u -x --nonvirtual --deps-installed --world-file --compact'   
 alias toshiba='sudo mount ~/media/toshiba; cd ~/media/toshiba; ll'
 alias maxtor='sudo mount ~/media/maxtor; cd ~/media/maxtor; ll'
 alias seagate='sudo mount ~/media/seagate; cd ~/media/seagate; ll'
-alias co_android='simple-mtpfs ~/media/android'
+alias co_android='simple-mtpfs ~/media/android' # TODO: OR aft-mtp-mount + aft-mtp-cli to interact with MTP OR adb push/pull ?
 alias deco_android='fusermount -u ~/media/android'
 alias umount='sudo umount'
 alias unmount='sudo umount'
@@ -113,13 +113,8 @@ alias conf='cd ~/myconfig && ll'
 alias pr='cd ~/projs && ll'
 
 # Development
-alias art='php artisan'
-alias mql='mysql -u root -p -h localhost'
-alias pp='git add --all && git commit -m "$(w3m whatthecommit.com | head -n 1)" && git push' # Dirty push
 alias dks='docker stop $(docker ps -aq)'        # Stop all containers
 alias dkc='docker system prune -a'				# Remove all containers
-alias lamp='sudo rc-service apache2 start && sudo rc-service mysql start'
-alias klamp='sudo rc-service apache2 stop && sudo rc-service mysql stop'
 alias debug='set -o nounset; set -o xtrace' # These two options are useful for debugging
 alias nuget='mono /usr/local/bin/nuget.exe'
 
@@ -133,8 +128,6 @@ alias listen='lsof -P -i -n' # Show all processes listening on networks
 alias pig='ping -c 5 www.gentoo.org'
 
 # Braindead
-alias help='man'
-alias fh='func_help'
 alias loonix='man hier'
 alias please='sudo $(fc -ln -1)'
 alias quit='exit'

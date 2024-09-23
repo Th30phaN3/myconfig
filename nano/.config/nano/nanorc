@@ -32,7 +32,7 @@ set unix
 set zap
 
 # Bind functions to keys (Control = ^ and Alt/Meta = M- )
-bind ^H help main
+#bind ^H help main
 bind ^Q exit main
 bind ^S savefile main
 bind ^F whereis main

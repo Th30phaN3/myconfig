@@ -22,13 +22,17 @@ color background          color7  color0
 color article             color7  color0
 
 auto-reload yes
-browser vivaldi
+browser "/usr/bin/vivaldi"
+#browser "link_handler.sh"
 #download-full-page yes
 download-retries 2
 error-log "~/.config/newsboat/error.log"
+#external-url-viewer "/usr/bin/urlview"
+#external-url-viewer "urlscan -dc -r 'link_handler.sh {}'"
 feed-sort-order lastupdated
 keep-articles-days 14
 max-items 100
+notify-program notify-send
 openbrowser-and-mark-jumps-to-next-unread yes
 refresh-on-startup yes
 reload-time 300
@@ -37,23 +41,27 @@ save-path "~/.config/newsboat"
 wrap-scroll yes
 
 highlight articlelist "gentoo"  color1
-highlight articlelist "covid"   color2
-highlight articlelist "corona"  color2
+highlight article "(^Fil:.*|^Titre:.*|^Auteur:.*)" cyan default bold
+highlight article "(^Lien:.*|^Date:.*)" default default
+highlight article "https?://[^ ]+" green default
+highlight article "^(Titre):.*$" blue default
+highlight article "\\[[0-9][0-9]*\\]" magenta default bold
+highlight article "\\[image\\ [0-9]+\\]" green default bold
+highlight article ":.*\\(lien\\)$" cyan default
+highlight article ":.*\\(image\\)$" blue default
 
-ignore-article "*" "title =~ \"agile\" or title =~ \"Windows\" or title =~ \"SEO\" or title =~ \"transexual\" or title =~ \"transgender\" or title =~ \"diversity\" or title =~ \"women in tech\""
-ignore-article "https://feed.infoq.com/" "title =~ \"Podcast\""
-ignore-article "https://packages.gentoo.org/packages/stable.atom"  "title =~ \"Gnome\" or title =~ \"Tex\" or title =~ \"dev-haskell\""
-ignore-article "https://packages.gentoo.org/packages/added.atom"   "title =~ \"Gnome\" or title =~ \"Tex\" or title =~ \"dev-haskell\""
-ignore-article "https://packages.gentoo.org/packages/updated.atom" "title =~ \"Gnome\" or title =~ \"Tex\" or title =~ \"dev-haskell\""
-ignore-article "https://www.phoronix.com/rss.php" "title =~ \"Ubuntu\" or title =~ \"NVIDIA\""
-ignore-article "https://www.francetvinfo.fr/france.rss" "title =~ \"20h30\" or title =~ \"13h15\" or title =~ \"PODCAST\" or title =~ \"VIDEO\""
-ignore-article "https://www.francetvinfo.fr/monde.rss" "title =~ \"PODCAST\" or title =~ \"VIDEO\""
-ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA" "title =~ \"Research\" or title =~ \"WaniKani\""
+ignore-article "*" "title =~ \"agile|Windows|SEO|trans(exual|gender)?|diversity|Gnome|Ubuntu|NVIDIA|PODCAST|VID(E|É)O|Sponsor|Advertisement\""
 
 bind-key "LEFT" quit
 bind-key "RIGHT" open
 bind-key q hard-quit
 bind-key o open-in-browser-and-mark-read
 
-macro v set browser "setsid nohup mpv %u"; open-in-browser ; set browser "vivaldi %u"
-macro m set browser "mpv %u"; open-in-browser ; set browser "vivaldi %u"
+#macro , open-in-browser
+#macro a set browser "tsp yt-dlp --embed-metadata -xic -f bestaudio/best --restrict-filenames" ; open-in-browser ; set browser "link_handler.sh"
+#macro v set browser "setsid -f mpv" ; open-in-browser ; set browser "link_handler.sh"
+#macro d set browser "dmenuhandler" ; open-in-browser ; set browser "link_handler.sh"
+#macro c set browser "echo %u | xclip -r -sel c" ; open-in-browser ; set browser "link_handler.sh"
+
+macro v set browser "setsid nohup mpv %u"; open-in-browser ; set browser "/usr/bin/vivaldi"
+macro m set browser "mpv %u"; open-in-browser ; set browser "/usr/bin/vivaldi"

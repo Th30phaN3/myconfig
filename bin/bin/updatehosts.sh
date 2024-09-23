@@ -3,6 +3,8 @@
 # Update /etc/hosts with up-to-date hosts files
 # DEPRECATED: use hosty instead !
 
+exit 1
+
 # Ugly trick to run as root (requires global sudo rights)
 SUDO=''
 if (( EUID != 0 )); then

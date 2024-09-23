@@ -75,7 +75,7 @@ while getopts ":awps" option; do
 done
 
 # Change color scheme
-/usr/bin/wal -nq -f "$JSON" -o "$HOME/.config/wal/done.sh"
+/home/wegeee/.local/bin/wal -nq --theme "$JSON" -o "$HOME/.config/wal/done.sh"
 # Change wallpapers
 /usr/bin/feh --bg-scale --randomize --no-fehbg "$HOME/pics/wallpapers/desktop/$WP_FOLDER/"
 # Change gtk settings to reflect new theme

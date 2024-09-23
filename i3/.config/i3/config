@@ -155,6 +155,9 @@ workspace $WS4 output eDP1
 # Load saved layouts from previous x session on startup
 exec --no-startup-id i3reloadworkspaces.sh -l
 
+# Export DBUS session for cron
+exec_always ~/bin/gen_dbus_session.sh
+
 # =============================================================================
 # Keybinds
 # =============================================================================

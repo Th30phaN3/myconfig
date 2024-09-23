@@ -1,7 +1,7 @@
 # Security relevant options: They are evaluated by the shell if you call the scripts with the corresponding name
 #EIX_SYNC_OPTS
 #EIX_SYNC_CONF
-#EIX_REMOTE_OPTS='-X -q'
+#EIX_REMOTE_OPTS='-X -H -q'
 #EIX_LAYMAN_OPTS
 #EIX_TEST_OBSOLETE_OPTS
 

@@ -44,7 +44,11 @@ if shopt -q login_shell; then
   export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
   export GNUPGHOME=~/.config/gnupg
   export GREP_COLORS="sl=:cx=:mt=07:35:ms=01;31:mc=01;33:fn=35:ln=32:bn=32:se=36"
+  export NNN_COLORS='2346'
+  export NNN_OPTS="HU"
+  export NNN_TRASH=1
   export NODE_PENDING_DEPRECATION=1
+  export STARSHIP_CONFIG=~/.config/starship/starship.toml
   export SM_SAVE_DIR=~/.xsm
   export SONAR_SCANNER_OPTS="-server"
   export TASKDATA=~/.local/share/task
@@ -52,14 +56,15 @@ if shopt -q login_shell; then
   export TRANSMISSION_HOME=~/.config/transmission
   export WEECHAT_HOME=~/.config/weechat
   export WWW_HOME=~/.config/w3m
-  export NNN_COLORS='2346'
-  #export NNN_MCLICK='^R'
-  export NNN_OPTS="HU"
-  export NNN_TRASH=1
 
   export GOPATH=~/.go
-  export PATH=$(go env GOPATH)/bin:~/.cargo/bin:~/bin:~/.local/bin:$PATH
-  #export PATH=${DOTNET_ROOT}:~/.dotnet/tools:$(go env GOPATH)/bin:~/.cargo/bin:~/.android/platform-tools:~/bin:~/.local/bin:$PATH
+  export PATH=${DOTNET_ROOT}:~/.dotnet/tools:$(go env GOPATH)/bin:~/.cargo/bin:~/bin:~/.local/bin:$PATH
+
+  # Automatically start ssh-agent and load the ssh-key(s) on login
+#  if [ -z "$SSH_AUTH_SOCK" ] ; then
+#    eval $(/usr/bin/ssh-agent -s)
+#    ssh-add
+#  fi
 
   # Start X server
   [[ -t 0 && !$DISPLAY ]] && exec startx

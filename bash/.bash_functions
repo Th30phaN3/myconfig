@@ -46,7 +46,7 @@ pack()
   echo -e "\n-----\nPYTHON PACKAGES:" && pip search "$1";
   echo -e "\n-----\nJS PACKAGES:" && npm search "$1";
   echo -e "\n-----\nCRATES:" && cargo search --color always -v "$1";
-  echo -e "\n-----\nNUGET PACKAGES:" && mono /usr/local/bin/nuget.exe list "$1" -ForceEnglishOutput -NonInteractive;
+  #echo -e "\n-----\nNUGET PACKAGES:" && mono /usr/local/bin/nuget.exe list "$1" -ForceEnglishOutput -NonInteractive;
 }
 
 ## cleanhome: Remove junk, cache data, history files, etc... (! WARNING ! CAN RESET PROGRAMS STATES !)
@@ -251,20 +251,6 @@ maketar() { tar cvzf "${1%%/}.tar.gz" "${1%%/}/" ; }
 ## makezip: Creates a zip archive of $1 (file or folder)
 makezip() { zip -r "${1%%/}.zip" "$1" ; }
 
-## mytop: Show the 10 most used commands in history
-mytop()
-{
-  local COUNT
-  COUNT='{CMD[$4]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}'
-  history | awk "$COUNT" | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n10
-}
-
-## pong: Nothing more useful than watching your cursor bounce (cannot be stopped !)
-pong()
-{
-  yes $COLUMNS $LINES | awk 'BEGIN{x=y=e=f=1}{if(x==$1||!x){e*=-1};if(y==$2||!y){f*=-1};x+=e;y+=f;printf "\033[%s;%sH",y,x;system("sleep .02")}'
-}
-
 ## ntwk: Print useful network info
 ntwk()
 {
@@ -382,24 +368,6 @@ add_genre_mp3()
   /usr/bin/eyeD3 --quiet --encoding utf8 --to-v2.4 --genre "$1" "$2"
 }
 
-## muexif: Complete EXIF metadata for mp3 files based on ID3 tags (USELESS: MP3 tags are read-only !)
-muexif()
-{
-  local SONG TITLE ARTIS ALBUM GENRE NBTRACK TOTRACK YEAR
-  for i in *.mp3; do
-    SONG=$(eyeD3 "$i")
-    TITLE=$(echo "$SONG" | awk -F "title: " '{print $2}' | grep -v '^$')
-    ARTIS=$(echo "$SONG" | awk -F "artist: " '{print $2}' | grep -v '^$')
-    ALBUM=$(echo "$SONG" | awk -F "album: " '{print $2}' | grep -v '^$')
-    GENRE=$(echo "$SONG" | awk -F "genre: " '{print $2}' | grep -v '^$' | sed 's/ ([^)]*)//g')
-    # Write {track number}/{total tracks} in the same tag
-    NBTRACK=$(echo "$SONG" | awk -F "track: " '{print $2}' | grep -v '^$' | sed 's#genre:.*##g' | tr -d '[:space:]')
-    YEAR=$(echo "$SONG" | awk -F "release date: " '{print $2}' | grep -v '^$')
-    echo "|_${TITLE}_|_${ARTIS}_|_${ALBUM}_|_${GENRE}_|_${NBTRACK}_|_${TOTRACK}_|_${YEAR}_|"
-    #exiftool -Title="$TITLE" -Artist="$ARTIS" -Album="$ALBUM" -Genre="$GENRE" -Track="$NBTRACK" -Year="$YEAR" "$i"
-  done
-}
-
 ## togoodmp3: Convert files with $1 extension to 220-260kbps mp3 files
 togoodmp3()
 {
@@ -408,16 +376,7 @@ togoodmp3()
   done
 }
 
-## m2tstomp4: Transform $1 (m2ts file) to mp4 file with 1920x1080 resolution (CPU-intensive function !)
-m2tstomp4()
-{
-  if (( EUID != 0 )); then
-    SUDO='sudo'
-  fi
-  "$SUDO" nice --10 ffmpeg -hide_banner -i "$1" -ar 48000 -ab 128k -vcodec libx264 -s 1920x1080 -aspect 16:9 -crf 25 "${1%.m2ts}.mp4"
-}
-
-## recordX: Record x11 screen and save it as "$1.avi" (or "xrecord.avi" by default)
+## recordX: Record x11 screen and save it as "$1.avi" (or "xrecord.avi" by default). WARNING ! Recording takes a HUGE place !
 recordX() { ffmpeg -f X11grab -s 1920x1080 -r 30 -i :0.0 -qscale 0 -vcodec huffyuv "${1:-xrecord}.avi" ; }
 
 ## cutvid: Cut portion of video $1 beginning from $2 (h:m:s) to $3 (h:m:s) for a simple cut
@@ -438,7 +397,7 @@ kutvid()
   ffmpeg -hide_banner -ss "$2" -i "$1" -to "$3" -c copy -copyts -avoid_negative_ts 1 "$NWFILE"
 }
 
-## mergvid: Concatenate multiple videos together (should be listed in order) with format $1 into new video
+## mergvid: Concatenate multiple videos together (should be listed in order, use 'kutvid') with format $1 into new video
 mergvid() { ffmpeg -hide_banner -f concat -safe 0 -i <(printf "file '$PWD/%s'\n" ./*."$1") -c copy "$RANDOM.$1" ; }
 
 ## cleanvids: Reencode all large mp4 videos (size superior to 1.2G) using 1080p or 720p resolution and H264 (CPU-intensive function !)
@@ -473,7 +432,7 @@ mkthumb()
   NBIMG="${1:-3x5}" # Default to 15 images
   local THUMBDIR FONT
   THUMBDIR="Thumbnails"
-  FONT="/home/wegeee/.local/share/fonts/segoe-ui-light.ttf"
+  FONT="$HOME/.local/share/fonts/segoe-ui-light.ttf"
   mkdir -pv "$THUMBDIR"
   for f in *.*; do
     # Filename without path
@@ -556,6 +515,7 @@ addov()
   if (( EUID != 0 )); then
     SUDO='sudo'
   fi
+  # TODO : use eselect repository instead !
   "$SUDO" layman -a "$1" && "$SUDO" sh -c "echo '*/*::$1' > '/etc/portage/package.mask/ov_$1'"
 }
 

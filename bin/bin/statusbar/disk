@@ -7,7 +7,7 @@
 [ -z "$1" ] && exit
 
 case $BLOCK_BUTTON in
-    1) i3-msg -q exec "${TERMINAL} -e ncdu -e -x --color dark --exclude-from ${HOME}/.config/ncdu/exclude /" ;;
+    1) i3-msg -q exec "${TERMINAL} -e ncdu --extended --one-file-system --color dark -X ${HOME}/.config/ncdu/exclude /" ;;
 	3) notify.sh "$(df -h --output=target,used,size -t ext4 -t fuseblk -t fuse.simple-mtpfs)" ;;
 esac
 
