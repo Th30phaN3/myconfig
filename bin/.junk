@@ -3,6 +3,7 @@
 /home/wegeee/.cache/ccache/*
 /home/wegeee/.cache/composer/*
 /home/wegeee/.cache/easytag/easytag.log
+/home/wegeee/.cache/easytag/*.tmp
 /home/wegeee/.cache/electron/*
 /home/wegeee/.cache/electron-builder/*
 /home/wegeee/.cache/filezilla/*
@@ -13,10 +14,16 @@
 /home/wegeee/.cache/icedtea-web/*
 /home/wegeee/.cache/intellijidea/*
 /home/wegeee/.cache/mesa_shader_cache/*
+/home/wegeee/.cache/mesa_shader_cache_db/*
+/home/wegeee/.cache/matplotlib/tex.cache/*
 /home/wegeee/.cache/mozilla/*
+/home/wegeee/.cache/mpv/*
 /home/wegeee/.cache/MusicBrainz/Picard/network/data8/*
 /home/wegeee/.cache/phpstorm/*
 /home/wegeee/.cache/pip/http/*
+/home/wegeee/.cache/pip/selfcheck/*
+/home/wegeee/.cache/python-entrypoints/*
+/home/wegeee/.cache/qtshadercache-x86_64-little_endian-lp64/*
 /home/wegeee/.cache/ranger/*
 /home/wegeee/.cache/sxiv/*
 /home/wegeee/.cache/thumbnails/*
@@ -29,6 +36,7 @@
 /home/wegeee/.cache/.bluetoothctl_history
 /home/wegeee/.cache/.qt_compose_cache*
 /home/wegeee/.cargo/registry/cache/*
+/home/wegeee/.cargo/.package-cache
 /home/wegeee/.config/csharp.history
 /home/wegeee/.config/Code/Cache/*
 /home/wegeee/.config/Code/CachedData/*
@@ -38,7 +46,12 @@
 /home/wegeee/.config/Code/logs/*
 /home/wegeee/.config/easytag/*.history
 /home/wegeee/.config/geeqie/history
+/home/wegeee/.config/go/telemetry/local/*
+/home/wegeee/.config/go/telemetry/upload/*
 /home/wegeee/.config/intellijidea/terminal/history/*
+/home/wegeee/.config/libreoffice/4/user/uno_packages/cache/*
+/home/wegeee/.config/mh4u-quest-editor/Cache/*
+/home/wegeee/.config/mh4u-quest-editor/GPUCache/*
 /home/wegeee/.config/micro/buffers/*
 /home/wegeee/.config/Microsoft/Microsoft\ Teams/Application\ Cache/Cache/*
 /home/wegeee/.config/Microsoft/Microsoft\ Teams/Cache/*
@@ -50,16 +63,34 @@
 /home/wegeee/.config/Microsoft/Microsoft\ Teams/old_logs*
 /home/wegeee/.config/ncmpcpp/error.log
 /home/wegeee/.config/newsboat/error.log
+/home/wegeee/.config/picom/picom.log
+/home/wegeee/.config/vidcutter/vidcutter.log
 /home/wegeee/.config/VirtualBox/*.log*
+/home/wegeee/.config/vivaldi/component_crx_cache/*
+/home/wegeee/.config/vivaldi/extensions_crx_cache/*
 /home/wegeee/.config/vivaldi/Crash\ Reports/*
+/home/wegeee/.config/vivaldi/Default/blob_storage/*
+/home/wegeee/.config/vivaldi/Default/DawnCache/*
+/home/wegeee/.config/vivaldi/Default/DawnGraphiteCache/*
+/home/wegeee/.config/vivaldi/Default/DawnWebGPUCache/*
+/home/wegeee/.config/vivaldi/Default/GPUCache/*
+/home/wegeee/.config/vivaldi/Default/IndexedDB/*
 /home/wegeee/.config/vivaldi/Default/Service\ Worker/CacheStorage/*
 /home/wegeee/.config/vivaldi/Default/Service\ Worker/ScriptCache/*
+/home/wegeee/.config/vivaldi/Default/SyncedFiles/*
+/home/wegeee/.config/vivaldi/Default/VivaldiThumbnails/*
+/home/wegeee/.config/vivaldi/Default/.com.vivaldi.Vivald*
+/home/wegeee/.config/vivaldi/Default/translatehistory.json
+/home/wegeee/.config/vivaldi/GraphiteDawnCache/*
 /home/wegeee/.config/vivaldi/GrShaderCache/*
 /home/wegeee/.config/vivaldi/ShaderCache/*
+/home/wegeee/.config/vivaldi/AdverseAdSiteList.json
 /home/wegeee/.config/weechat/logs/*
 /home/wegeee/.config/weechat/weechat.log
 /home/wegeee/.dbshell
 /home/wegeee/.dotnet/TelemetryStorageService/*
+/home/wegeee/.dotnet/*entinel*
+/home/wegeee/.dotnet/*ache*
 /home/wegeee/.gnome
 /home/wegeee/.go/pkg/mod/cache/*
 /home/wegeee/.gradle/caches/*
@@ -103,6 +134,7 @@
 /home/wegeee/.serverauth*
 /home/wegeee/.sonar/cache/*
 /home/wegeee/.sonar/_tmp/*
+/home/wegeee/.thumbnails/normal/*
 /home/wegeee/.trash/*
 /home/wegeee/.viminfo
 /home/wegeee/.w3m

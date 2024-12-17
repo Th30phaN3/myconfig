@@ -16,8 +16,8 @@
 [github]
   user=Th30phaN3
 [user]
-	email = theoch.pro@tuta.io
-	name = Th30phaN3
+  email = theoch.pro@tuta.io
+  name = Th30phaN3
 [core]
   #Commands such as commit and tag that lets you edit messages by launching an editor uses the value of this variable when it is set, and the environment variable GIT_EDITOR is not set.
   editor=nano
@@ -29,6 +29,8 @@
 [help]
   #Automatically correct and execute mistyped commands after waiting for the given number of deciseconds (0.1 sec). If more than one command can be deduced from the entered text, nothing will be executed. If the value of this option is negative, the corrected command will be executed immediately. If the value is 0 - the command will be just shown but not executed.
   autocorrect=-1
+[safe]
+  directory = /home/wegeee/app/pywal
 [alias]
 co = checkout
 cp = cherry-pick
@@ -57,5 +59,3 @@ ignored = !git ls-files -v | grep '^[a-z]'
 sync = "!f(){ local branch=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e \"s/* \\(.*\\)/\\1/\"`; git pull origin $branch && git push origin $branch; }; f"
 taggings = "!f(){ echo 'Describe: '; git describe; echo 'Latest 5 tags: '; git tag | sort -V | tail -5; }; f"
 latest-tag = "!f(){ local latest=`git tag | sort -V | tail -1`; git checkout $latest; }; f"
-[safe]
-	directory = /home/wegeee/app/pywal

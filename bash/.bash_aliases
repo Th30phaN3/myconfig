@@ -45,12 +45,11 @@ alias du='du -ach | sort -h'
 alias lsblk='lsblk -po NAME,FSTYPE,SIZE,FSAVAIL,FSUSE%,MODE,LABEL,MOUNTPOINT,HOTPLUG,STATE'
 alias jo='jobs -l'
 alias fr='find -L -readable -regextype posix-extended -regex'
-alias qt='quotes.sh'
 alias trmd='prlimit --verbose --as=4294967296 transmission-daemon'
 alias myvlc='vlc --fullscreen --stereo-mode 1 --disable-screensaver 1 --mouse-hide-timeout 1500 --preferred-resolution -1 --play-and-exit'
 alias chrom='go-chromecast'
 alias audit_sys='sudo lynis audit system --auditor $USER --profile /etc/lynis/custom.prf'
-alias birthday='birthday -W 30 -f $HOME/.config/birthday/dates'  # Use XDG directory
+alias birthday='birthday -W 30 -f $HOME/.config/birthday/dates'
 alias gpalldirs='find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && git pull" \;'     # Git Pull all sub-directories
 alias medexinfo='exiftool -s -FileName -Directory -ImageSize -FileSize -MIMEType -Duration -XResolution -YResolution -VideoFrameRate -BitDepth -AudioFormat -AudioChannels -AudioBitsPerSample -AudioSampleRate -Encoder -AvgBitrate -Artist -Title -Album -Genre'
 alias stripexinfo='exiftool -ProjectRefType= -WindowsAtomUncProjectPath= -IngredientsFilePath= -IngredientsMaskMarkers= -IngredientsInstanceID= -IngredientsDocumentID= -IngredientsFromPart= -HistorySoftwareAgent= -HistoryChanged= -HistoryWhen= -Format= -CreatorTool= -XMPToolkit= -Title= -Comment= -Software= -HDVideo= -TVEpisode= -TVSeason= -TrackNumber='
@@ -62,8 +61,6 @@ alias post='curl --request POST -H "Content-Type: application/json" --data '    
 alias wal='wal -t -n -o $HOME/.config/wal/done.sh --theme '           # Call wall with custom arguments to change themes on-the-fly
 alias getxgeom='xdotool selectwindow getwindowgeometry'                         # Get the x/y position + geometry from the selected x window
 alias timer='echo "Timer started. Stop with Ctrl-D." && date "+%a, %d %b %H:%M:%S" && time cat && date "+%a, %d %b %H:%M:%S"'
-alias weather='curl -s "https://wttr.in/Nantes?2" | sed -n "1,27p"'		# Display weather (large terminal width recommended)
-alias temps='ansiweather -l Nantes,FR -u metric -F -a true -s true -i false -w false -h true -H true -p false -d true'
 alias path='echo -e ${PATH//:/\\n}'						# Print binaries path
 alias bcolor='for code in {0..15}; do echo -e "\e[38;05;${code}m $code: Color"; done' # Print the first 16 colors
 # Use this alias after a command (ex: <command> ; alert) to send a notification when the command finished
@@ -74,7 +71,7 @@ alias mupdf='devour mupdf -r 75'
 alias zathura='devour zathura'
 
 # Kernel / Packages manipulation
-alias kernel_rebuild='sudo make -j5 && sudo make modules_install && sudo mount /boot/efi/ && sudo make install && sudo grub-mkconfig -o /boot/efi/grub/grub.cfg'
+alias kernel_rebuild='sudo make modules_prepare && sudo make -j5 && sudo make modules_install && sudo mount /boot/efi/ && sudo make install && sudo grub-mkconfig -o /boot/efi/grub/grub.cfg'
 alias ehelp='apropos -e portage layman qcheck eselect equery euse emaint genlop'
 alias elogs='tail -f /var/log/emerge-fetch.log' # Show fetch logs when emerging
 alias etime='qlop -Hav'                         # Show average merge time for a package
