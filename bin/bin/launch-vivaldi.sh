@@ -8,4 +8,4 @@
 # Since vivaldi version 5.4.2753.40, the first launch fails (something to do with wayland ?). It works with the option "use-gl=desktop" !
 
 # https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome
-/usr/bin/vivaldi --use-gl=desktop --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" --cast-app-background-color="ff2e2e2e" --default-background-color="ff2e2e2e" --disable-breakpad --disable-speech-api
+/usr/bin/vivaldi --use-gl=desktop --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" --cast-app-background-color="ff2e2e2e" --default-background-color="ff2e2e2e" --disable-breakpad --disable-speech-api
